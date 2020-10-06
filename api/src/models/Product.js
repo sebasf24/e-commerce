@@ -12,10 +12,10 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    Price: {
+    price: {
       type: DataTypes.NUMBER,
       allowNull: false},
-    Stock: {
+    stock: {
       type: DataTypes.NUMBER,
       allowNull: false
     },
