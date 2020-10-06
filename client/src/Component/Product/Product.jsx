@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export default function Producto({ id, name, description, price, stock,img }) {
+export default function Product({ id, name, description, price, stock,img }) {
 
     return (
         <div>
