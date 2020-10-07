@@ -2,13 +2,13 @@ const server = require('express').Router();
 const {Category} = require('../db.js');
 
 server.get('/', (req, res, next) => {
-	/*
+	
 	Category.findAll()
 		.then(categoryId => {
 			res.send(categoryId);
 		})
 		.catch(next);
-	*/
+	
 });
 
 server.post('/',(req,res) => {
@@ -45,6 +45,18 @@ server.delete('/:idCategoria', (req, res)=>{
 
 })
 
+server.put('/:idCategoria', (req, res) => {
+	
+	const  {idCategoria} = req.params;
+	console.log(idCategoria)
+	 Category.findByPk(idCategoria)
+	.then (function(category){
+        category.name = req.body.name;
+        category.description = req.body.description;
+        category.save();
+        res.status(201).send(category);
+	})
+});
 
 
 module.exports = server;
