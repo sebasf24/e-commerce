@@ -1,17 +1,5 @@
-.img{
-    width: 100px;
-    height: 100px;
-}
 
-.product{
-    display: inline;
-    padding-left:200px;
-    padding-right:200px;
-}
-
-.h5{
-    font-weight: bold;
-    font: italic 30px;
-    text-align: center;
-    
+  .div:hover{
+      color: red;
+      cursor: pointer;
   }
