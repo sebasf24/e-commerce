@@ -2,6 +2,7 @@ const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize)=>{
     sequelize.define('categoryproduct', { 
+
         id :{ 
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -9,7 +10,7 @@ module.exports = (sequelize)=>{
             autoIncrement: true,
             allowNull: true
             
-        }
+
 /*         categoryId:{
             type: DataTypes.INTEGER,
         },
