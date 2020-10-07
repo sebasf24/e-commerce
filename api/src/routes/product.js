@@ -18,17 +18,14 @@ server.post('/:idProducto/category/:idCategoria',(req,res) => {
 	 if(!idProducto || !idCategoria){
 	   res.status(400).send("Faltan parametros !!!")
 	} 
-	Product.findByPk(idProducto)
-
-   .then(prod=>{
-	console.log(prod)
+	
 	//console.log(prod.setCategories(idCategoria))
 	Categoryproduct.create({
 		categoryId:idCategoria,
 		productId:idProducto
 	})
 	//prod.setCategories(idCategoria)   	
-   })
+   
    .then(algo=>{
 	res.send(algo)
    })
@@ -37,14 +34,23 @@ server.post('/:idProducto/category/:idCategoria',(req,res) => {
 	res.send(err)})
 }) 
 
-
 server.delete('/:idProducto/category/:idCategoria', (req, res)=>{
 	const  {idProducto, idCategoria} = req.params;
-	
-	Product.findByPk(idProducto)
-	.then(prod=>{
-		prod.remove(idCategoria)
+
+	 if(!idProducto || !idCategoria){
+	   res.status(400).send("Faltan parametros !!!")
+	} 
+
+	Categoryproduct.destroy({
+		where:{
+			productId:idProducto,
+			categoryId:idCategoria
+		}
 	})
+	.then(() => {
+		res.send("ando!!");
+	})
+
 })
 
  server.post('/addProd/',(req,res) => {
