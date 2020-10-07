@@ -53,7 +53,7 @@ server.delete('/:idProducto/category/:idCategoria', (req, res)=>{
 })
 // AGREGAR PRODUCTOS 
  server.post('/',(req,res) => {
-//VERIFICAN 
+//SE VERIFICAN LOS CAMPOS
 	const  {name, description, price, stock, img} = req.body;
 
 	if(!name || !description || !price || !stock){
@@ -72,7 +72,7 @@ server.delete('/:idProducto/category/:idCategoria', (req, res)=>{
 	 })
 
 }) 
-
+//ACTUALIZAR PRODUCTO
 server.put('/:idProducto',(req,res)=>{
 	const  {idProducto} = req.params;
 	const	{name, description, price, stock, img} = req.body
@@ -99,20 +99,7 @@ server.put('/:idProducto',(req,res)=>{
             res.status(200).json(req.body)
         })
 })
-
-server.post('/category/',(req,res) => {
-	 
-	const  {name, description} = req.body;
-	//console.log(req.body)
-	Category.create({
-		name:name,
-		description:description,
-	})
-	.then((cat)=>{
-		//console.log(cat)
-		res.send("Categoria agregada")
-	})
-}) 
+ 
 
 module.exports = server;
 

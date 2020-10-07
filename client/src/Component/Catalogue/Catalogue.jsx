@@ -14,3 +14,4 @@ export default function Cagalogue({ Products }) {
         </div>
     )
 }
+
