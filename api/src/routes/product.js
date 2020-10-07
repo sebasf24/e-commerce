@@ -41,9 +41,13 @@ server.post('/:idProducto/category/:idCategoria',(req,res) => {
 server.delete('/:idProducto/category/:idCategoria', (req, res)=>{
 	const  {idProducto, idCategoria} = req.params;
 	
-	Product.findByPk(idProducto)
-	.then(prod=>{
-		prod.remove(idCategoria)
+	Categoryproduct.destroy({
+		where: {
+			categoryId: idCategoria,
+			productId: idProducto
+		}
+	}).then(nro=>{
+		res.send("ANDO")
 	})
 })
 
