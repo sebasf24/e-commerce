@@ -52,7 +52,7 @@ server.delete('/:idProducto/category/:idCategoria', (req, res)=>{
 	})
 
 })
-
+// por si quieren agregar productos ...
  server.post('/addProd/',(req,res) => {
 	 
 	 const  {name, description, price, stock} = req.body;
@@ -69,7 +69,7 @@ server.delete('/:idProducto/category/:idCategoria', (req, res)=>{
 
 
 }) 
-server.post('/addCat/',(req,res) => {
+server.post('/category/',(req,res) => {
 	 
 	const  {name, description} = req.body;
 	//console.log(req.body)
