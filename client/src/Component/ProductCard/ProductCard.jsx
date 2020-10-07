@@ -1,14 +1,11 @@
-import React, { useState } from 'react';
-import Style from './ProductCard.module.css'
-import Product from '../Product/Product.jsx'
+import React from 'react';
+import Style from './ProductCard.module.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Card } from 'react-bootstrap';
 import {Link} from 'react-router-dom'
 
 
 export default function ProductCard({ Product }) {
-
-    /* const product=()=>{return ()} */
 
     return (
 
@@ -19,7 +16,7 @@ export default function ProductCard({ Product }) {
                 height: '50px'
             }} src={Product.img}/>
             <Card.Body >
-                <Card.Title class="row justify-content-center"><Link to={`/product/${Product.id}`}>{Product.name}</Link></Card.Title>                
+                <Card.Title class="row justify-content-center"><Link to={`/products/${Product.id}`}>{Product.name}</Link></Card.Title>                
                 <Card.Subtitle class="row justify-content-center">${Product.price}</Card.Subtitle>
 
             </Card.Body>
