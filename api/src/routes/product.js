@@ -9,11 +9,9 @@ server.get('/', (req, res, next) => {
 		.catch(next);
 });
 
-
 server.post('/:idProducto/category/:idCategoria',(req,res) => {
 	 
 	const  {idProducto, idCategoria} = req.params;
-
 
 	 if(!idProducto || !idCategoria){
 	   res.status(400).send("Faltan parametros !!!")
@@ -33,10 +31,9 @@ server.post('/:idProducto/category/:idCategoria',(req,res) => {
 	console.log("no anda")   
 	res.send(err)})
 }) 
-
+//ELIMINAR PRODUCTO
 server.delete('/:idProducto/category/:idCategoria', (req, res)=>{
 	const  {idProducto, idCategoria} = req.params;
-
 
 	 if(!idProducto || !idCategoria){
 	   res.status(400).send("Faltan parametros !!!")
@@ -54,10 +51,15 @@ server.delete('/:idProducto/category/:idCategoria', (req, res)=>{
 	})
 
 })
-// por si quieren agregar productos ...
- server.post('/addProd/',(req,res) => {
-	 
-	 const  {name, description, price, stock} = req.body;
+// AGREGAR PRODUCTOS 
+ server.post('/',(req,res) => {
+//SE VERIFICAN LOS CAMPOS
+	const  {name, description, price, stock, img} = req.body;
+
+	if(!name || !description || !price || !stock){
+		res.status(400).send("Los campos enviados no son correctos.")
+	 }
+	
 	 Product.create({
 		 name:name,
 		 description:description,
@@ -65,14 +67,39 @@ server.delete('/:idProducto/category/:idCategoria', (req, res)=>{
 		 stock:stock
 	 })
 	 .then((prod)=>{
-		// console.log(prod)
-		 res.send("producto agregado")
+
+		 res.json( res.status(200).json( req.body))
 	 })
 
-
 }) 
+//ACTUALIZAR PRODUCTO
+server.put('/:idProducto',(req,res)=>{
+	const  {idProducto} = req.params;
+	const	{name, description, price, stock, img} = req.body
 
-
+	if(!idProducto){
+		res.status(400).send("Faltan parametros !!!")
+	}
+	if(!name || !description || !price || !stock){
+		res.status(400).send("Los campos enviados no son correctos.")
+	 }
+	
+	 Product.update(
+		{
+			name:name,
+			description:description,
+			price:price,
+			stock:stock,
+			img:img
+		},
+		{where:
+			{id:idProducto}}
+        )
+        .then((r)=>{
+            res.status(200).json(req.body)
+        })
+})
+ 
 
 module.exports = server;
 
