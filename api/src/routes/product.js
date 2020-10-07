@@ -53,7 +53,7 @@ server.delete('/:idProducto/category/:idCategoria', (req, res)=>{
 })
 // AGREGAR PRODUCTOS 
  server.post('/',(req,res) => {
-//SE  CONTROLAN CAMPOS 
+//VERIFICAN 
 	const  {name, description, price, stock, img} = req.body;
 
 	if(!name || !description || !price || !stock){
@@ -68,17 +68,11 @@ server.delete('/:idProducto/category/:idCategoria', (req, res)=>{
 	 })
 	 .then((prod)=>{
 
-		 res.json( res.status(200).json({
-			name:name,
-			description:description,
-			price:price,
-			stock:stock,
-			img:img
-	}))
+		 res.json( res.status(200).json( req.body))
 	 })
 
 }) 
-//MODIFICAR PROD
+
 server.put('/:idProducto',(req,res)=>{
 	const  {idProducto} = req.params;
 	const	{name, description, price, stock, img} = req.body
@@ -102,13 +96,7 @@ server.put('/:idProducto',(req,res)=>{
 			{id:idProducto}}
         )
         .then((r)=>{
-            res.status(200).json({
-					name:name,
-					description:description,
-					price:price,
-					stock:stock,
-					img:img
-			})
+            res.status(200).json(req.body)
         })
 })
 
