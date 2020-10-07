@@ -71,20 +71,7 @@ server.delete('/:idProducto/category/:idCategoria', (req, res)=>{
 
 
 }) 
-server.post('/category/',(req,res) => {
-	 
-	const  {name, description} = req.body;
-	//console.log(req.body)
-	Category.create({
-		name:name,
-		description:description,
-	})
-	.then((cat)=>{
-		//console.log(cat)
-		res.send("Categoria agregada")
-	})
 
-}) 
 
 
 module.exports = server;
