@@ -10,7 +10,7 @@ module.exports = (sequelize)=>{
             autoIncrement: true,
             allowNull: true
             
-
+        }
 /*         categoryId:{
             type: DataTypes.INTEGER,
         },
