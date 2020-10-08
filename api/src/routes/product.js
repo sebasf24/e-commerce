@@ -9,6 +9,19 @@ server.get('/', (req, res, next) => {
 		.catch(next);
 });
 
+//trae el producto que tenga esa ID
+server.get("/:id", (req,res)=>{
+    const id = req.params.id
+    Product.findOne({
+        where: {id: id},
+        include: {model: Category}
+    })
+    .then(prod=>{
+        return res.send(prod)
+    })
+})
+
+//agrega categoria al producto
 server.post('/:idProducto/category/:idCategoria',(req,res) => {
 	 
 	const  {idProducto, idCategoria} = req.params;
@@ -57,7 +70,7 @@ server.delete('/:idProducto/category/:idCategoria', (req, res)=>{
 	const  {name, description, price, stock, img} = req.body;
 
 	if(!name || !description || !price || !stock){
-		res.status(400).send("Los campos enviados no son correctos.")
+		return res.status(400).send("Los campos enviados no son correctos.")
 	 }
 	
 	 Product.create({
@@ -68,7 +81,7 @@ server.delete('/:idProducto/category/:idCategoria', (req, res)=>{
 	 })
 	 .then((prod)=>{
 
-		 res.json( res.status(200).json( req.body))
+		 res.json( req.body)
 	 })
 
 }) 
