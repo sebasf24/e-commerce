@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {Link} from 'react-router-dom';
 import data from '../../data.js';
 
@@ -23,9 +23,8 @@ export default function Product(props) {
 
                 <Card border="ligth" style={{ width: '30rem',height:'30rem' }} className="text-center" text="dark">
                 <br />
-                <Card.Header><Link to="/"><Button variant="light"  aling="rigth">X</Button></Link></Card.Header>
+                <Card.Header><Link to="/products"><Button variant="light"  aling="rigth">X</Button></Link></Card.Header>
                     <Card.Title>{name}</Card.Title>
-                    <Card.Subtitle>---------------------------------------</Card.Subtitle>
                     <Card.Subtitle>{price}</Card.Subtitle>
                     <br />
                     <Card.Body className="text-justify">
@@ -47,19 +46,3 @@ export default function Product(props) {
 
 }
 
-
-{/* <div>
-            <h1><div>
-            <h1>{name}</h1>
-            <p>{description}</p>
-            <p>{price}</p>
-            <p>{stock}</p>
-            <img src={img}/>
-            <button onClick={()=>alert('hola')}>Add to cart</button>
-        </div></h1>
-            <p>{description}</p>
-            <p>{price}</p>
-            <p>{stock}</p>
-            <img src={img}/>
-            <button onClick={()=>alert('hola')}>Add to cart</button>
-        </div> */}

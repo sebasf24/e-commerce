@@ -9,14 +9,25 @@ server.get('/', (req, res, next) => {
 		.catch(next);
 });
 
+//trae el producto que tenga esa ID
+server.get("/:id", (req,res)=>{
+    const id = req.params.id
+    Product.findOne({
+        where: {id: id},
+        include: {model: Category}
+    })
+    .then(prod=>{
+        return res.send(prod)
+    })
+})
 
+//agrega categoria al producto
 server.post('/:idProducto/category/:idCategoria',(req,res) => {
 	 
 	const  {idProducto, idCategoria} = req.params;
 
-
 	 if(!idProducto || !idCategoria){
-	   res.status(400).send("Faltan parametros !!!")
+	   return res.status(400).send("Faltan parametros !!!")
 	} 
 	
 	//console.log(prod.setCategories(idCategoria))
@@ -33,13 +44,12 @@ server.post('/:idProducto/category/:idCategoria',(req,res) => {
 	console.log("no anda")   
 	res.send(err)})
 }) 
-
+//quitar categoria al producto
 server.delete('/:idProducto/category/:idCategoria', (req, res)=>{
 	const  {idProducto, idCategoria} = req.params;
 
-
 	 if(!idProducto || !idCategoria){
-	   res.status(400).send("Faltan parametros !!!")
+	  return res.status(400).send("Faltan parametros !!!")
 	} 
 
 	Categoryproduct.destroy({
@@ -54,10 +64,15 @@ server.delete('/:idProducto/category/:idCategoria', (req, res)=>{
 	})
 
 })
-// por si quieren agregar productos ...
- server.post('/addProd/',(req,res) => {
-	 
-	 const  {name, description, price, stock} = req.body;
+// AGREGAR PRODUCTOS 
+ server.post('/',(req,res) => {
+//SE VERIFICAN LOS CAMPOS
+	const  {name, description, price, stock, img} = req.body;
+
+	if(!name || !description || !price || !stock){
+		return res.status(400).send("Los campos enviados no son correctos.")
+	 }
+	
 	 Product.create({
 		 name:name,
 		 description:description,
@@ -65,9 +80,7 @@ server.delete('/:idProducto/category/:idCategoria', (req, res)=>{
 		 stock:stock
 	 })
 	 .then((prod)=>{
-		// console.log(prod)
-		 res.send("producto agregado")
-	 })
+
 
 }) 
 
@@ -88,9 +101,4 @@ server.get("/category/:id", (req, res) => {
 })
 
 
-
 module.exports = server;
-
- 
-
-

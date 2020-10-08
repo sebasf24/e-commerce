@@ -16,7 +16,7 @@ module.exports = (sequelize)=>{
         },
         productId: {
             type: DataTypes.INTEGER,
+
         }    
     });
 }
-
