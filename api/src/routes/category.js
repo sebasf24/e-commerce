@@ -45,10 +45,12 @@ server.delete('/:idCategoria', (req, res)=>{
 
 })
 
+
+// Modifica la categoria existente 
 server.put('/:idCategoria', (req, res) => {
-	
 	const  {idCategoria} = req.params;
-	console.log(idCategoria)
+
+
 	 Category.findByPk(idCategoria)
 	.then (function(category){
         category.name = req.body.name;

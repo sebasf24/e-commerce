@@ -69,8 +69,23 @@ server.delete('/:idProducto/category/:idCategoria', (req, res)=>{
 		 res.send("producto agregado")
 	 })
 
-
 }) 
+
+// Crear Ruta que devuelva los productos de X categoría
+
+server.get("/category/:id", (req, res) => {
+	
+	const  {id} = req.params;
+	
+	Categoryproduct.findAll(
+
+		{ where: { categoryId: id } }
+	)
+	.then(function(productId){
+		res.status(200).json(productId);
+		})
+
+})
 
 
 
