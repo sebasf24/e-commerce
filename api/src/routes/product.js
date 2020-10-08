@@ -81,8 +81,55 @@ server.delete('/:idProducto/category/:idCategoria', (req, res)=>{
 	 })
 	 .then((prod)=>{
 
-
+	 })
 }) 
+
+//ACTUALIZAR PRODUCTO
+server.put('/:idProducto',(req,res)=>{
+	const  {idProducto} = req.params;
+	const	{name, description, price, stock, img} = req.body
+
+	if(!idProducto){
+		return	res.status(400).send("Faltan parametros !!!")
+	}
+	if(!name || !description || !price || !stock){
+		return	res.status(400).send("Los campos enviados no son correctos.")
+	 }
+	
+	 Product.update(
+		{
+			name:name,
+			description:description,
+			price:price,
+			stock:stock,
+			img:img
+		},
+		{where:
+			{id:idProducto}}
+        )
+        .then((r)=>{
+            res.status(200).json(req.body)
+        })
+})
+
+//ELIMINAR PRODUCTO
+server.delete('/:idProducto',(req, res)=>{
+	const  {idProducto} = req.params;
+	if(!idProducto){
+		return res.status(400).send("Faltan parametros !!!");
+	}
+	Product.destroy({
+		where:{
+			id:idProducto
+		}
+	})
+	.then(r=>{
+		res.send("El producto se elimino con exito")
+	})
+	.catch(err=>{
+		res.send("algo malir sal")
+	})
+})
 
 // Crear Ruta que devuelva los productos de X categoría
 
