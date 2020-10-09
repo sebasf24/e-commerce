@@ -3,3 +3,54 @@
       color: red;
       cursor: pointer;
   }
+  .card{
+    display: grid;
+    text-align: center;
+    width: 250px;
+    height: 370px;
+    padding: 24px;
+    margin: 10px;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 
+                0 3px 1px -2px rgba(0,0,0,.12), 
+                0 1px 5px 0 rgba(0,0,0,.2);
+                display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+    gap: 0px 0px;
+    grid-template-areas:
+                  "title"
+                  "img"
+                  "img"
+                  "img"
+                  "precio"
+                  "botonlink";
+              }
+  .title { grid-area: title; }
+  .img { grid-area: img; }
+  
+  .precio { 
+    grid-area: precio; 
+    display: grid;
+    place-items: center;
+    font-size: 25px;
+  }
+  
+  .botonlink{
+    grid-area: botonlink; 
+  }
+  .boton { 
+    height: 35px; 
+    width: 100%;
+    background: linear-gradient(45deg,#8e24aa,#ff6e40)!important;
+    border: none;
+    box-shadow: 0 16px 24px 2px rgba(0,0,0,.14), 
+                0 6px 30px 5px rgba(0,0,0,.12), 
+                0 8px 10px -7px rgba(0,0,0,.2);
+  
+  }
+  .blanco{
+    color: white;
+  }
+  
+           
+  
