@@ -80,7 +80,7 @@ server.delete('/:idProducto/category/:idCategoria', (req, res)=>{
 		 stock:stock
 	 })
 	 .then((prod)=>{
-
+		 res.status(201).json(req.body)
 	 })
 }) 
 
@@ -106,7 +106,8 @@ server.put('/:idProducto',(req,res)=>{
 		},
 		{where:
 			{id:idProducto}}
-        )
+		)
+		//agregar esto!!!!!
         .then((r)=>{
             res.status(200).json(req.body)
         })
