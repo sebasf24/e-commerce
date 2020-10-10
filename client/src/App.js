@@ -6,6 +6,7 @@ import Product from './Component/Product/Product.jsx'
 import Catalogue from './Component/Catalogue/Catalogue.jsx'
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import {mostrarProductos} from "../src/actions/products.js"
+import NavBar from './Component/NavBar/navbar.jsx';
 
 
 function App() {  
@@ -24,8 +25,10 @@ function App() {
   },[])
  
   return (
+  
     <Router forceRefresh>
      
+    <Route path='/' component={NavBar}/>
     <Route exact path='/products' render={()=> <Catalogue Products={products}/>} />
     <Route path='/products/:id' component={Product}/>
     <Route path='/addCategory' component={FormCategory}/>

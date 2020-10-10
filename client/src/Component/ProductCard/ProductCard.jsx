@@ -9,7 +9,7 @@ export default function ProductCard({ Product }) {
 
     return (
             <Card className={styles.card}>
-            <Card.Title className={styles.tile}>
+            <Card.Title className={styles.title}>
                 <Link to={`/products/${Product.id}`}>{Product.name}</Link>
             </Card.Title>
             <Card.Img className={styles.img} src={Product.img}/>           
