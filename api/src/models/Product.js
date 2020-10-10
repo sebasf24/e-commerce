@@ -20,7 +20,7 @@ module.exports = (sequelize) => {
       allowNull: false
     },
     img: {
-      type: DataTypes.BLOB
+      type: DataTypes.STRING
     }
   });
 };
