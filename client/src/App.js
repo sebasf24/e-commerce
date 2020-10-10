@@ -1,6 +1,6 @@
 import React,{useEffect} from 'react';
 import './App.css';
-import {Route} from 'react-router-dom';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 import FormCategory from './Component/FormCategory/FormCategory.jsx'
 import Product from './Component/Product/Product.jsx'
 import Catalogue from './Component/Catalogue/Catalogue.jsx'
@@ -24,13 +24,13 @@ function App() {
   },[])
  
   return (
-    <div>
+    <Router forceRefresh>
      
     <Route exact path='/products' render={()=> <Catalogue Products={products}/>} />
     <Route path='/products/:id' component={Product}/>
     <Route path='/addCategory' component={FormCategory}/>
     
-    </div>
+    </Router>
   );
 }
 
