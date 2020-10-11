@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
+import styles from './searchbar.module.css';
 import axios from 'axios';
+import { ImSearch } from "react-icons/im";
+import {Button} from 'react-bootstrap';
 
 const SerchBar = () => {
     const [serch, setSerch] = useState("");
@@ -23,9 +26,6 @@ const SerchBar = () => {
                hijo = hijo + `<h1>${producto.name}</h1>`
             }
         })
-        var div = document.getElementById("product");
-        div.innerHTML = hijo;
-
     }
 
     useEffect(() => {
@@ -46,11 +46,11 @@ const SerchBar = () => {
 
     return (
         <div>
-            <form onSubmit={handlerSubmit}>
-                <input type="text" ref={myRef} onChange={handlerSerch} />
-                <button type="submit">Buscar</button>
+            <form className={styles.form} onSubmit={handlerSubmit}>
+                <Button className={styles.boton} variant="light"><ImSearch/></Button>
+                <input className={styles.buscador} type="text" ref={myRef} placeholder="BUSCAR"
+                onChange={handlerSerch} />
             </form>
-            <div id="product"></div>
         </div>
     )
 }
