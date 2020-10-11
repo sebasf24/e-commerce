@@ -12,11 +12,10 @@ const categorias = ["categoria 1","categoria 2","categoria 3","categoria 4","cat
     return (
      
             <Nav defaultActiveKey="/home" className={`flex-column ${styles.main_menu}`}>
-                <Nav.Link className={styles.hr + ' ' + styles.text }
+                <Nav.Link className={styles.text + ' ' + styles.centrar }
                 eventKey="disabled" 
-                disabled>
-                    CATEGORIAS
-            </Nav.Link>
+                disabled>CATEGORIAS</Nav.Link>
+                <hr class="clearfix w-100"/>
                 {
                     categorias.map(cat=>{
                         return(

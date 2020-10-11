@@ -1,8 +1,9 @@
 import React,{useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector, useStore } from 'react-redux';
-import {mostrarProducto_id} from "../../actions/products.js"
-
+import {mostrarProducto_id} from "../../actions/products.js";
+import styles from './Product.module.css';
+import { BiArrowBack } from "react-icons/bi";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Card, Image, Col, Row, Container, Button } from 'react-bootstrap';
 
@@ -25,33 +26,32 @@ export default function Product(props) {
   
 
     return (
-        <Container style={{ width: '70rem' }}>
-            <Card style={{ border: 'none' }}>
-                <Row >
-                    <Col>
-                        <Image style={{ width: '25rem', height: '15rem' }} src={img} rounded />
-                    </Col>
-                    <Col>
+        <Container className={styles.container}>
+            <Card className={styles.card}>
+                    <Link className={styles.botonlink} to={`/products/`}>
+                        <BiArrowBack/>
+                    </Link>
+                    <div className={styles.imagen}>
+                        <Image 
+                            src={img} 
+                        rounded />
+                    </div>
+                    <Card.Title className={styles.titulo}>{name}</Card.Title>
 
-                        <Card border="ligth" style={{ width: '30rem', height: '30rem' }} className="text-center" text="dark">
-                            <br />
-                            <Card.Header><Link to="/products"><Button variant="light" aling="rigth">X</Button></Link></Card.Header>
-                            <Card.Title>{name}</Card.Title>
-                            <Card.Subtitle>{price}</Card.Subtitle>
-                            <br />
-                            <Card.Body className="text-justify">
-                                <Card.Text className="card-body">
-                                    {description}
-                                </Card.Text>
-                            </Card.Body>
-                            <br />
-                            <Card.Footer>
-                                <Button variant="secondary">Agregar</Button>
-                            </Card.Footer>
-                        </Card>
-                    </Col>
+                    <Card.Subtitle className={styles.stock}>{stock} disponibles</Card.Subtitle>
+                   
+                    <Card.Text className={styles.descrip}>
+                    <hr class="clearfix w-100"/>
+                        {description}
+                    </Card.Text>
 
-                </Row>
+                    <Card.Subtitle className={styles.precio}>{'$'+price}</Card.Subtitle>
+
+                    <Card.Footer className={styles.botones}>
+                        <Button className={styles.boton +' '+ styles.boton1} variant="secondary">AGREGAR AL CARRITO</Button>
+                        <Button className={styles.boton +' '+ styles.boton2} variant="secondary">COMPRAR AHORA</Button>
+                    </Card.Footer>
+                  
             </Card>
         </Container>
     )

@@ -10,9 +10,13 @@ export default function ProductCard({ Product }) {
     return (
             <Card className={styles.card}>
             <Card.Title className={styles.title}>
-                <Link to={`/products/${Product.id}`}>{Product.name}</Link>
+                <Link className={styles.textLink} to={`/products/${Product.id}`}>{Product.name}</Link>
             </Card.Title>
-            <Card.Img className={styles.img} src={Product.img}/>           
+            <div className={styles.imagen }>
+                <Card.Img  className={styles.img} 
+                src={Product.img}/>
+            </div>
+                
                 <Card.Subtitle 
                 className={styles.precio} >
                     ${Product.price}
