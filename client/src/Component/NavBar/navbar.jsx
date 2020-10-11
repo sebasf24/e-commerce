@@ -1,18 +1,27 @@
 import React from 'react';
 import Logo from './technav1.png';
-import style from './navbar.css';
 import { Nav } from 'react-bootstrap';
-
+import styles from './navbar.module.css';
+import SearchBar from '../SearchBar/SearchBar.js';
 export default function NavBar (){
  return (
-     <Nav className="navbar navbar-dark bg-dark">
-         <Nav.Item className={style.logotech}>
+     <Nav className={`navbar navbar-dark bg-dark ${styles.nav}`}>
+         <Nav.Item className={styles.logotech}>
             <Nav.Link href='/'>
-            <img className={style.logotech} src={Logo} width="90" height="40" alt="" />
+            <img className={styles.logotech} src={Logo} width="90" height="40" alt="" />
             </Nav.Link>
         </Nav.Item>
+       
+        <SearchBar className={styles.buscador}/>
+        
         <ul className="nav navbar pull-xs-right">
 
+        <Nav.Item>
+            <Nav.Link href='/admin'>Admin</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+            <Nav.Link href='/products'>Catalogo</Nav.Link>
+        </Nav.Item>
         <Nav.Item>
             <Nav.Link href='/'>Home</Nav.Link>
         </Nav.Item>

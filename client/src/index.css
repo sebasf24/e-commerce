@@ -1,17 +1,29 @@
-body {
+@import url(//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css);
+
+@import url(https://fonts.googleapis.com/css?family=Titillium+Web:300);
+
+@font-face {
+    font-family: 'Titillium Web';
+    font-style: normal;
+    src: local('Titillium WebLight'), local('TitilliumWeb-Light'), url(http://themes.googleusercontent.com/static/fonts/titilliumweb/v2/anMUvcNT0H1YN4FII8wpr24bNCNEoFTpS2BTjF6FB5E.woff) format('woff');
+  }
+  
+html,body{
+width: 100%;
+height: 100%;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background: #ADA996;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #EAEAEA, #DBDBDB, #F2F2F2, #ADA996);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #EAEAEA, #DBDBDB, #F2F2F2, #ADA996); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  font-family: 'Titillium Web';
+  background-image: linear-gradient(to top, #f9f9f9 0%,#f9f9f9 100%);
 
 }
-
+#root{
+  width: 100%;
+  height: 100%;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+a:hover{
+  text-decoration: none !important;
 }

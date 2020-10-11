@@ -17,6 +17,7 @@ const FormProductAdmin = () => {
     const { id, name, description, price, stock, img } = product;
     //leer datos del formulario
     const obtenerInfo = e => {
+        console.log(e.target.name)
         setProduct({
             ...product,
             [e.target.name]: e.target.value
@@ -66,163 +67,26 @@ const FormProductAdmin = () => {
         }
     }
 
+    const cargarProducto=() =>{
+/*         const fs = require('fs');
+
+        let buff = fs.readFileSync(product.img);
+        let base64data = buff.toString('base64');
+
+console.log('Image converted to base 64 is:\n\n' + base64data); */
+        axios.post('http://localhost:3000/products', product, {
+            headers: {
+             
+              'Content-Type': 'application/json'
+            }
+          });
+    }
     const envioformulario = (e) => {
         e.preventDefault();
         let typeSend = e.target.attributes[1].value;
+        console.log(product)
+    
 
-
-        switch (typeSend) {
-            case "add":
-                //validar que ningun campo este vacio
-                if (product.name === '') {
-                    let p = document.getElementById('pName');
-                    p.innerText = "No puede ser vacio";
-                    p.style.color = "red";
-                    p.style.fontWeight = 'bold';
-
-                    setTimeout(() => {
-                        p.innerText = null;
-                    }, 3000);
-                }
-                if (product.description === '') {
-                    let p = document.getElementById('pDescripcion');
-                    p.innerText = "No puede ser vacio";
-                    p.style.color = "red";
-                    p.style.fontWeight = 'bold';
-                    setTimeout(() => {
-                        p.innerText = null;
-                    }, 3000);
-                }
-                if (product.price === '') {
-                    let p = document.getElementById('pPrice');
-                    p.innerText = "No puede ser vacio";
-                    p.style.color = "red";
-                    p.style.fontWeight = 'bold';
-                    setTimeout(() => {
-                        p.innerText = null;
-                    }, 3000);
-                }
-                if (product.stock === '') {
-                    let p = document.getElementById('pStock');
-                    p.innerText = "No puede ser vacio";
-                    p.style.color = "red";
-                    p.style.fontWeight = 'bold';
-                    setTimeout(() => {
-                        p.innerText = null;
-                    }, 3000);
-                }
-                if (product.img === '') {
-                    let p = document.getElementById('pImg');
-                    p.innerText = "No puede ser vacio";
-                    p.style.color = "red";
-                    p.style.fontWeight = 'bold';
-                    setTimeout(() => {
-                        p.innerText = null;
-                    }, 3000);
-                }
-
-                axios.post('/products', product)
-                    .then(res => {
-                        console.log(res);
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    })
-
-                break;
-            case "edit":
-                //validar que ningun campo este vacio
-                if (product.id === '') {
-                    let p = document.getElementById('pId');
-                    p.innerText = "No puede ser vacio";
-                    p.style.color = "red";
-                    p.style.fontWeight = 'bold';
-                    setTimeout(() => {
-                        p.innerText = null;
-                    }, 3000);
-
-                }
-                if (product.name === '') {
-                    let p = document.getElementById('pName');
-                    p.innerText = "No puede ser vacio";
-                    p.style.color = "red";
-                    p.style.fontWeight = 'bold';
-                    setTimeout(() => {
-                        p.innerText = null;
-                    }, 3000);
-
-                }
-                if (product.description === '') {
-                    let p = document.getElementById('pDescripcion');
-                    p.innerText = "No puede ser vacio";
-                    p.style.color = "red";
-                    p.style.fontWeight = 'bold';
-                    setTimeout(() => {
-                        p.innerText = null;
-                    }, 3000);
-                }
-                if (product.price === '') {
-                    let p = document.getElementById('pPrice');
-                    p.innerText = "No puede ser vacio";
-                    p.style.color = "red";
-                    p.style.fontWeight = 'bold';
-                    setTimeout(() => {
-                        p.innerText = null;
-                    }, 3000);
-                }
-                if (product.stock === '') {
-                    let p = document.getElementById('pStock');
-                    p.innerText = "No puede ser vacio";
-                    p.style.color = "red";
-                    p.style.fontWeight = 'bold';
-                    setTimeout(() => {
-                        p.innerText = null;
-                    }, 3000);
-                }
-                if (product.img === '') {
-                    let p = document.getElementById('pImg');
-                    p.innerText = "No puede ser vacio";
-                    p.style.color = "red";
-                    p.style.fontWeight = 'bold';
-                    setTimeout(() => {
-                        p.innerText = null;
-                    }, 3000);
-                }
-
-                axios.put('/products', product)
-                    .then(res => {
-                        console.log(res);
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    })
-
-                break;
-            case "delete":
-                if (product.id === '') {
-                    let p = document.getElementById('pId');
-                    p.innerText = "No puede ser vacio";
-                    p.style.color = "red";
-                    p.style.fontWeight = 'bold';
-                    setTimeout(() => {
-                        p.innerText = null;
-                    }, 3000);
-
-                }
-
-                axios.delete(`/products/${product.id}`)
-                    .then(res => {
-                        console.log(res);
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    })
-
-                break;
-
-            default:
-                break;
-        }
 
         //Cuarto: Reiniciar el form
         setProduct({
@@ -255,8 +119,8 @@ const FormProductAdmin = () => {
                         name='id'
                         onChange={obtenerInfo}
                         value={id}
-                        style={{ display: 'none' }} />
-                    <Button id='btnGet' className='ml-1' variant="primary" type="button" onClick={clickEditId} style={{ display: 'none' }}>Get Product</Button>
+                     />
+                    <Button id='btnGet' className='ml-1' variant="primary" type="button" onClick={clickEditId}>Get Product</Button>
                     <p id="pId"></p>
                 </div>
 
@@ -303,14 +167,14 @@ const FormProductAdmin = () => {
                 <br /><br />
 
                 <Form.Label>Img</Form.Label>
-                <Form.Control type='text' placeholder='img'
+                <Form.Control type='file' placeholder='img'
                     name='img'
                     onChange={obtenerInfo}
                     value={img}
                 /><p id="pImg"></p>
                 <br /><br />
 
-                <Button type="submit" variant="primary">Send</Button>
+                <Button onClick={cargarProducto} type="submit" variant="primary">Send</Button>
 
             </Form>
         </Container>

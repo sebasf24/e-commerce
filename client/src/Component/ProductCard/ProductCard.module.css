@@ -8,12 +8,6 @@
     font-weight: 400;
     src: local('Titillium WebLight'), local('TitilliumWeb-Light'), url(http://themes.googleusercontent.com/static/fonts/titilliumweb/v2/anMUvcNT0H1YN4FII8wpr24bNCNEoFTpS2BTjF6FB5E.woff) format('woff');
   }
-
-
-  .div:hover{
-      color: red;
-      cursor: pointer;
-  }
   .card{
     display: grid;
     text-align: center;
@@ -24,7 +18,7 @@
     box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 
                 0 3px 1px -2px rgba(0,0,0,.12), 
                 0 1px 5px 0 rgba(0,0,0,.2);
-                display: grid;
+
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
     gap: 0px 0px;
@@ -35,22 +29,37 @@
                   "img"
                   "precio"
                   "botonlink";
-              }
+    border-radius: 2px;
+    }
   .title { grid-area: title;
     font-family: 'Titillium Web';
     font-size: 25px}
-  A:link{color:  #323232;}
-  .img { grid-area: img; }
-  
-  .precio { 
-    grid-area: precio; 
-    display: grid;
+
+  .img {
+     width: auto;
+     height: 160px;
+    }
+
+  .imagen{
+  grid-area: img; 
+   display: grid;
     place-items: center;
+    justify-items: center;
+  }
+  .precio { 
+    display: flex;
+    align-items: flex-end;
+    grid-area: precio; 
     font-size: 25px;
+    font-weight: 300;
+    justify-content: center;
   }
   
   .botonlink{
     grid-area: botonlink; 
+    display: flex;
+    align-items: flex-end;
+    
   }
   .boton { 
     height: 35px; 
@@ -60,11 +69,22 @@
     box-shadow: 0 16px 24px 2px rgba(0,0,0,.14), 
                 0 6px 30px 5px rgba(0,0,0,.12), 
                 0 8px 10px -7px rgba(0,0,0,.2);
-  
+                transition: all cubic-bezier(0.215, 0.610, 0.355, 1) .4s;
+      
   }
-  .blanco{
-    color: white;
+.boton:hover{
+    box-shadow: none;
+    transform: translateY(-1.5px);
   }
+.boton:active{
+  transform: translateY(2px);
+}
+
+
+.textLink{
+  color: #6b6f82;
+  pointer-events: none
+}
   
            
   
