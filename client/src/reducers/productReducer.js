@@ -1,4 +1,4 @@
-import {MOSTRAR_PRODUCTOS,MOSTRAR_PRODUCTOID} from "../actions/products.js";
+import {MOSTRAR_PRODUCTOS,MOSTRAR_PRODUCTOID, MOSTRAR_PRODUCTO_CATEGORY} from "../actions/products.js";
 
 const initalStore ={
     products:[],
@@ -20,6 +20,14 @@ export default (state=initalStore, actions) =>{
                 selectedProduct:actions.producto.data
             }
         }
+
+        case MOSTRAR_PRODUCTO_CATEGORY:{
+            return{
+                ...state,
+                products:actions.productos.data
+            }
+        }
+
         default: return state
     }
 }

@@ -24,6 +24,6 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-a:hover{
-  text-decoration: none !important;
+a:link, a:visited, a:active a:hover{
+  text-decoration:none !important;
 }

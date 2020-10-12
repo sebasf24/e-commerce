@@ -6,38 +6,20 @@ import Product from './Component/Product/Product.jsx'
 import Catalogue from './Component/Catalogue/Catalogue.jsx'
 import FormularioAdmin from './Component/formProductAdmin/fornProductAdmin.js.js'
 import homeCategories from './Component/FormCategory/HomeCategories'
-import { useDispatch, useSelector, useStore } from 'react-redux';
-import {mostrarProductos} from "../src/actions/products.js"
+
 import NavBar from './Component/NavBar/navbar.jsx';
-
-
 
 function App() {  
  
- const productsl = useSelector(state=>state.products);
- const {products} = productsl;
- //console.log(products);
- //
- const dispatch=useDispatch();
-  useEffect(()=>{
-
-    dispatch(mostrarProductos())
-    return ()=>{
-
-    }
-  },[])
- 
   return (
   
-    <Router forceRefresh>
-     
+    <Router >
     <Route path='/' component={NavBar}/>
     <Route exact path='/admin' component={FormularioAdmin}/>
-    <Route exact path='/products' render={()=> <Catalogue Products={products}/>} />
-    <Route path='/products/:id' component={Product}/>
-    <Route path='/listCategory' component={homeCategories}/>
+    <Route exact path={['/products','/products/category/:id']} component={Catalogue} />
+    <Route exact path='/products/:id' component={Product}/>
+    <Route exact path='/listCategory' component={homeCategories}/>
     <Route path='/addCategory' component={FormCategory}/>
-    
     </Router>
   );
 }
