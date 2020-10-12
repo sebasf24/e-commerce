@@ -6,15 +6,18 @@ import {Link} from 'react-router-dom'
 
 
 export default function ProductCard({ Product }) {
+    let base64ToString;
+    (Product.img) && (base64ToString = Buffer.from(Product.img.data, "base64").toString())
 
     return (
+        
             <Card className={styles.card}>
             <Card.Title className={styles.title}>
                 <Link className={styles.textLink} to={`/products/${Product.id}`}>{Product.name}</Link>
             </Card.Title>
             <div className={styles.imagen }>
                 <Card.Img  className={styles.img} 
-                src={Product.img}/>
+                src={base64ToString}/>
             </div>
                 
                 <Card.Subtitle 
