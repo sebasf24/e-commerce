@@ -7,7 +7,7 @@ export default function NavBar (){
  return (
      <Nav className={`navbar navbar-dark bg-dark ${styles.nav}`}>
          <Nav.Item className={styles.logotech}>
-            <Nav.Link href='/'>
+            <Nav.Link href='/products'>
             <img className={styles.logotech} src={Logo} width="90" height="40" alt="" />
             </Nav.Link>
         </Nav.Item>

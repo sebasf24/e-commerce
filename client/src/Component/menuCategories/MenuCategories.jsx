@@ -23,6 +23,7 @@ const categorias = ["categoria 1","categoria 2","categoria 3","categoria 4","cat
                         )
                     })
                 }
+                <Nav.Link href='/listCategory' className={styles.text}>Nueva Categoria</Nav.Link>
 
             </Nav>
         
