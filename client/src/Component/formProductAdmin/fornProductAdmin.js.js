@@ -17,11 +17,13 @@ const FormProductAdmin = () => {
     const { id, name, description, price, stock, img } = product;
     //leer datos del formulario
     const obtenerInfo = e => {
-        console.log(e.target.name)
+        console.log('producto imagen', product.img);
+
         setProduct({
             ...product,
             [e.target.name]: e.target.value
         })
+
     }
 
     //obtener los datos de agregar
@@ -76,15 +78,33 @@ const FormProductAdmin = () => {
 console.log('Image converted to base 64 is:\n\n' + base64data); */
         axios.post('http://localhost:3000/products', product, {
             headers: {
-             
-              'Content-Type': 'application/json'
+                'Content-Type': 'application/json'
             }
           });
     }
+
+    function encodeImageFileAsURL(e) {
+        var input = e.target;
+        var fReader = new FileReader();
+        fReader.readAsDataURL(input.files[0]);
+        fReader.onloadend = function (event) {
+            //console.log(event);
+            var base64=event.target.result;
+            let buff = new Buffer(base64, 'base64');
+
+            setProduct({
+                ...product,
+                img: base64
+            })
+
+            //console.log(event.target.result);
+        }
+      }
+
     const envioformulario = (e) => {
         e.preventDefault();
         let typeSend = e.target.attributes[1].value;
-        console.log(product)
+        console.log(product.img)
     
 
 
@@ -169,9 +189,10 @@ console.log('Image converted to base 64 is:\n\n' + base64data); */
                 <Form.Label>Img</Form.Label>
                 <Form.Control type='file' placeholder='img'
                     name='img'
-                    onChange={obtenerInfo}
-                    value={img}
+                    onChange={encodeImageFileAsURL}
+                    //value={img}
                 /><p id="pImg"></p>
+                {/* <img src={product.img}/> */}
                 <br /><br />
 
                 <Button onClick={cargarProducto} type="submit" variant="primary">Send</Button>

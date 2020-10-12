@@ -14,6 +14,13 @@ export default function Product(props) {
     
     const {selectedProduct}=productS;
     const { name, description, price, stock, img }=selectedProduct;
+    
+    let base64ToString;
+    (img) && (base64ToString = Buffer.from(img.data, "base64").toString())
+    
+    
+
+    
 
     const dispatch=useDispatch();
   useEffect(()=>{
@@ -32,8 +39,8 @@ export default function Product(props) {
                         <BiArrowBack/>
                     </Link>
                     <div className={styles.imagen}>
-                        <Image 
-                            src={img} 
+                        <Image width='300px' height='auto'
+                            src={base64ToString} 
                         rounded />
                     </div>
                     <Card.Title className={styles.titulo}>{name}</Card.Title>
