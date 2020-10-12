@@ -20,7 +20,7 @@ export default function Product(props) {
     
     
 
-    
+    var imagen = "https://www.pixinvent.com/materialize-material-design-admin-template/laravel/demo-4/images/cards/headphones-2.png"
 
     const dispatch=useDispatch();
   useEffect(()=>{
@@ -39,7 +39,7 @@ export default function Product(props) {
                         <BiArrowBack/>
                     </Link>
                     <div className={styles.imagen}>
-                        <Image width='300px' height='auto'
+                        <Image className={styles.img}
                             src={base64ToString} 
                         rounded />
                     </div>
