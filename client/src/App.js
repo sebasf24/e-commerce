@@ -5,7 +5,7 @@ import FormCategory from './Component/FormCategory/FormCategory.jsx'
 import Product from './Component/Product/Product.jsx'
 import Catalogue from './Component/Catalogue/Catalogue.jsx'
 import FormularioAdmin from './Component/formProductAdmin/fornProductAdmin.js.js'
-
+import homeCategories from './Component/FormCategory/HomeCategories'
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import {mostrarProductos} from "../src/actions/products.js"
 import NavBar from './Component/NavBar/navbar.jsx';
@@ -35,6 +35,7 @@ function App() {
     <Route exact path='/admin' component={FormularioAdmin}/>
     <Route exact path='/products' render={()=> <Catalogue Products={products}/>} />
     <Route path='/products/:id' component={Product}/>
+    <Route path='/listCategory' component={homeCategories}/>
     <Route path='/addCategory' component={FormCategory}/>
     
     </Router>
