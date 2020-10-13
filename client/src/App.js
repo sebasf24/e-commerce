@@ -13,7 +13,7 @@ function App() {
  
   return (
   
-    <Router >
+    <Router forceRefresh >
     <Route path='/' component={NavBar}/>
     <Route exact path='/admin' component={FormularioAdmin}/>
     <Route exact path={['/products','/products/category/:id']} component={Catalogue} />

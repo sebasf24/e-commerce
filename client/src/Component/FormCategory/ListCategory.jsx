@@ -31,8 +31,6 @@ export default function ListCategory() {
          )
      })
 
-     console.log(categories)
-
     return(
         <Container>
             <Table striped bordered hover>
