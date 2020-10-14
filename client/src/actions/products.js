@@ -62,7 +62,14 @@ export function editarProducto(product){
                 .then(json=>{
                     dispatch({
                         type:EDITAR_PRODUCTOID,
-                        producto:json
+                        producto:json})
+                    })
+    }
+}    
+
+    
+    
+                     
 export function mostrarProducto_category(id){
     return function(dispatch){
         return axios.get(`http://localhost:3000/products/category/${id}`)
