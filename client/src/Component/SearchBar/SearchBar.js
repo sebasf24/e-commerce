@@ -23,19 +23,20 @@ const SerchBar = () => {
                    ...product,
                    producto
                ])
-               hijo = hijo + `<h1>${producto.name}</h1>`
+               hijo = hijo + `<li><h1>${producto.name}</h1></li>`
             }
         })
+        document.getElementById('busqueda').innerHTML = hijo;
     }
 
     useEffect(() => {
-        axios.get('/products')
+       /*  axios.get('/products')
           .then(res => {
               setProduct(res);
           })
           .catch(err => {
               console.log(err);
-          })
+          }) */
     });
 
     const handlerSubmit = (e) => {
@@ -50,6 +51,8 @@ const SerchBar = () => {
                 <Button className={styles.boton} variant="light"><ImSearch/></Button>
                 <input className={styles.buscador} type="text" ref={myRef} placeholder="BUSCAR"
                 onChange={handlerSerch} />
+                <ul id="busqueda" style={{backgroundColor:"white"}}>
+                </ul>
             </form>
         </div>
     )
