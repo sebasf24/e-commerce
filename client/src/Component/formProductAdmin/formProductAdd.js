@@ -2,14 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { Button, Form, Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useDispatch, useSelector, useStore } from 'react-redux';
-import { mostrarProductos } from "../../actions/products.js";
-import style from '../Catalogue/Catalogue.module.css'
-import ProductCard from '../ProductCard/ProductCard'
-import axios from 'axios';
+import { mostrarProductos, agregarProducto } from "../../actions/products.js";
+import style from '../Catalogue/Catalogue.module.css';
+import ProductCard from '../ProductCard/ProductCard';
 
 const FormProductAdd = () => {
     const productS1 = useSelector(state => state.products);
-    const [productS, setProductS] = useState()
+    console.log(productS1);
+    const [productS, setProductS] = useState();
+    //setProductS(productS1.products);
     const [product, setProduct] = useState({
         id: '',
         name: '',
@@ -25,13 +26,10 @@ const FormProductAdd = () => {
 
     //leer datos del formulario
     const obtenerInfo = e => {
-        console.log('producto imagen', product.img);
-
         setProduct({
             ...product,
             [e.target.name]: e.target.value
         })
-
     }
 
     function encodeImageFileAsURL(e) {
@@ -53,13 +51,9 @@ const FormProductAdd = () => {
 
     const envioformulario = (e) => {
         e.preventDefault();
-
-        axios.post('http://localhost:3000/products', product, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
+        dispatch(agregarProducto(product))
         //Cuarto: Reiniciar el form
+        console.log(productS);
         setProduct({
             id: '',
             name: '',
@@ -76,69 +70,68 @@ const FormProductAdd = () => {
         setProductS(
             productS1.products
         )
-        
         return ()=> {
-            
+
         }
     }, [])
 
     return (
-        <Container id='container'>
+        <Container id='container' className='container-fluid col-6 mt-4 bg-white p-3'>
             <Form id='formProduct' name="add" onSubmit={envioformulario}>
 
-                <Form.Label id='formTitle'>Add Product</Form.Label><br/>
+                <Form.Label id='formTitle'>Agregar Producto</Form.Label><br/>
 
-                <Form.Label>Name</Form.Label>
-                <Form.Control column="sm" size="sm" type='text' placeholder='name'
+                <Form.Label>Nombre</Form.Label>
+                <Form.Control column="sm" size="sm" type='text' placeholder='Nombre'
                     name='name'
                     onChange={obtenerInfo}
                     value={name}
                     required
                 /><p id="pName"></p>
-                <br /><br />
+                
 
-                <Form.Label>Description</Form.Label>
-                <Form.Control type='text' placeholder='description'
+                <Form.Label>Descripción</Form.Label>
+                <Form.Control type='text' placeholder='Descripción'
                     name='description'
                     onChange={obtenerInfo}
                     value={description}
                     required
                 /><p id="pDescripcion"></p>
-                <br /><br />
+                
 
-                <Form.Label>Price</Form.Label>
-                <Form.Control type='number' placeholder='price'
+                <Form.Label>Precio</Form.Label>
+                <Form.Control type='number' placeholder='Precio'
                     name='price'
                     onChange={obtenerInfo}
                     value={price}
                     required
                 /> <p id='pPrice'></p>
-                <br /><br />
+                
 
                 <Form.Label >Stock</Form.Label>
-                <Form.Control type='number' placeholder='stock'
+                <Form.Control type='number' placeholder='Stock'
                     name='stock'
                     onChange={obtenerInfo}
                     value={stock}
                     required
                 /><p id="pStock"></p>
-                <br /><br />
+                
 
-                <Form.Label>Img</Form.Label>
-                <Form.Control type='file' placeholder='img'
+                <Form.Label>Imagen</Form.Label>
+                <Form.Control type='file' placeholder='Imagen'
                     name='img'
                     onChange={encodeImageFileAsURL}
                     //value={img}
                     required
                 /><p id="pImg"></p>
                  <img src={product.img} width="70%"/> 
-                <br /><br />
+                
 
                 <Form.Group controlId="formBasic">
-                    <Button type="submit" variant="primary">Add</Button>
+                    <Button type="submit" variant="primary">Agregar</Button>
                 </Form.Group>
 
-                <Form.Label>Products</Form.Label>
+                <Form.Label>Productos</Form.Label>
                 <div style={{borderTop: '1px solid black'}} className={style.productos} id="producto">
                     {
                         productS1.products ? 

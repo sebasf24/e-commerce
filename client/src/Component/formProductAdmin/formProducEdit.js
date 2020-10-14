@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Button, Form, Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import axios from 'axios';
+import { useDispatch, useSelector, useStore } from 'react-redux';
+import { mostrarProducto_id, editarProducto } from "../../actions/products.js";
 
 const FormProductEdit = () => {
     const [product, setProduct] = useState({
@@ -15,27 +16,23 @@ const FormProductEdit = () => {
 
     // extrae los valores
     const { id, name, description, price, stock, img } = product;
+
+    const productS1 = useSelector(state => state.products);
+    //console.log(productS1);
+    let base64ToString;
+    (productS1.selectedProduct.img) && (base64ToString = Buffer.from(productS1.selectedProduct.img.data, "base64").toString())
+    
+    
+
+    const dispatch = useDispatch();
+
     //leer datos del formulario
     const obtenerInfo = e => {
-        console.log('producto imagen', product.img);
-
         setProduct({
             ...product,
             [e.target.name]: e.target.value
         })
-
     }
-
-     const clickEditId = () => {
-        if (product.id !== '') {
-
-            axios.get(`/product/${product.id}`)
-                .then(res => {
-                    setProduct(res);
-                })
-        }
-    }
-
 
     function encodeImageFileAsURL(e) {
         var input = e.target;
@@ -43,15 +40,13 @@ const FormProductEdit = () => {
         fReader.readAsDataURL(input.files[0]);
         fReader.onloadend = function (event) {
             //console.log(event);
-            var base64=event.target.result;
+            var base64 = event.target.result;
             let buff = new Buffer(base64, 'base64');
 
             setProduct({
                 ...product,
                 img: base64
             })
-
-            //console.log(event.target.result);
         }
     }
 
@@ -70,52 +65,52 @@ const FormProductEdit = () => {
     }
 
     return (
-        <Container id='container'>
-            <Form id='formProduct' name="edit" onSubmit={envioformulario}>
+        <Container id='container' className='container-fluid col-6 mt-4 bg-white p-3'>
+            <Form id='formProduct' name="editar" onSubmit={envioformulario}>
 
-            <Form.Label id='formTitle'>Edit Product</Form.Label>
+                <Form.Label id='formTitle'>Editar Producto</Form.Label>
 
                 <div>
-                    <input id="input" type="text" placeholder="Insert id"
+                    <input id="input" type="number" placeholder="Insert id"
                         name='id'
                         onChange={obtenerInfo}
                         value={id}
                         required
-                     />
-                    <Button id='btnGet' className='ml-1' variant="primary" type="button" onClick={clickEditId}>Get Product</Button>
+                    />
+                    <Button id='btnGet' className='ml-1 mt-3' variant="primary" type="button" onClick={() => dispatch(mostrarProducto_id(product.id))}>Obtener Producto</Button>
                     <p id="pId"></p>
                 </div>
 
-                <Form.Group controlId="formBasic">
+                {/* <Form.Group controlId="formBasic">
                     <Button variant="primary" type="button">Traer Productos</Button>
-                </Form.Group>
+                </Form.Group> */}
 
-                <Form.Label>Name</Form.Label>
-                <Form.Control column="sm" size="sm" type='text' placeholder='name'
+                <Form.Label>Nombre</Form.Label>
+                <Form.Control column="sm" size="sm" type='text' placeholder='nombre'
                     name='name'
                     onChange={obtenerInfo}
                     value={name}
                     required
-                /><p id="pName"></p>
-                <br /><br />
+                /><p id="pName" className='pt-3'>{productS1.selectedProduct.name}</p>
+                
 
-                <Form.Label>Description</Form.Label>
-                <Form.Control type='text' placeholder='description'
+                <Form.Label>Descripción</Form.Label>
+                <Form.Control type='text' placeholder='descripción'
                     name='description'
                     onChange={obtenerInfo}
                     value={description}
                     required
-                /><p id="pDescripcion"></p>
-                <br /><br />
+                /><p id="pDescripcion" className='pt-3'>{productS1.selectedProduct.description}</p>
+               
 
-                <Form.Label>Price</Form.Label>
-                <Form.Control type='number' placeholder='price'
+                <Form.Label>Precio</Form.Label>
+                <Form.Control type='number' placeholder='precio'
                     name='price'
                     onChange={obtenerInfo}
                     value={price}
                     required
-                /> <p id='pPrice'></p>
-                <br /><br />
+                /> <p id='pPrice' className='pt-3'>{productS1.selectedProduct.price}</p>
+                
 
                 <Form.Label >Stock</Form.Label>
                 <Form.Control type='number' placeholder='stock'
@@ -123,20 +118,20 @@ const FormProductEdit = () => {
                     onChange={obtenerInfo}
                     value={stock}
                     required
-                /><p id="pStock"></p>
-                <br /><br />
+                /><p id="pStock" className='pt-3'>{productS1.selectedProduct.stock}</p>
+               
 
-                <Form.Label>Img</Form.Label>
-                <Form.Control type='file' placeholder='img'
+                <Form.Label>Imagen</Form.Label>
+                <Form.Control type='file' placeholder='imagen'
                     name='img'
                     onChange={encodeImageFileAsURL}
                     //value={img}
                     required
-                /><p id="pImg"></p>
-                {/* <img src={product.img}/> */}
-                <br /><br />
-
-                <Button type="submit" variant="primary">Send</Button>
+                /><p id="pImg" className='pt-3'></p>
+                <img src={base64ToString} width="300px" />
+                
+               
+                <Button type="submit" className='mt-3' onClick={() => dispatch(editarProducto(product))} variant="primary">Enviar</Button>
 
             </Form>
         </Container>

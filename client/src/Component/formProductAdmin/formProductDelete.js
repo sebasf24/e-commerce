@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Button, Form, Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import axios from 'axios';
+import { useDispatch, useSelector, useStore } from 'react-redux';
+import { mostrarProducto_id, eliminarProducto } from "../../actions/products.js";
+
 
 const FormProductDelete = () => {
     const [product, setProduct] = useState({
@@ -15,27 +17,21 @@ const FormProductDelete = () => {
 
     // extrae los valores
     const { id, name, description, price, stock, img } = product;
+
+    const productS1 = useSelector(state => state.products);
+    let base64ToString;
+    (productS1.selectedProduct.img) && (base64ToString = Buffer.from(productS1.selectedProduct.img.data, "base64").toString())
+
+
+    const dispatch = useDispatch();
+
     //leer datos del formulario
     const obtenerInfo = e => {
-        console.log('producto imagen', product.img);
-
         setProduct({
             ...product,
             [e.target.name]: e.target.value
         })
-
     }
-
-    const clickEditId = () => {
-        if (product.id !== '') {
-
-            axios.get(`/product/${product.id}`)
-                .then(res => {
-                    setProduct(res);
-                })
-        }
-    }
-
 
     function encodeImageFileAsURL(e) {
         var input = e.target;
@@ -43,7 +39,7 @@ const FormProductDelete = () => {
         fReader.readAsDataURL(input.files[0]);
         fReader.onloadend = function (event) {
             //console.log(event);
-            var base64=event.target.result;
+            var base64 = event.target.result;
             let buff = new Buffer(base64, 'base64');
 
             setProduct({
@@ -53,97 +49,65 @@ const FormProductDelete = () => {
 
             //console.log(event.target.result);
         }
-      }
-
-    const envioformulario = (e) => {
-        e.preventDefault();
-        let typeSend = e.target.attributes[1].value;
-        console.log(product.img)
-    
-
-
-        //Cuarto: Reiniciar el form
-        setProduct({
-            id: '',
-            name: '',
-            description: '',
-            price: '',
-            stock: '',
-            img: ''
-        });
-    }
-
-    const clickGet = () => {
-        axios.get("/products")
-            .then(res => {
-                console.log(res);
-            })
-            .catch(err => {
-                console.log(err);
-            })
     }
 
     return (
-        <Container id="container">
-            <Form id='formProduct' name="add" onSubmit={envioformulario}>
+        <Container id="container" className='container-fluid col-6 mt-4 bg-white p-3'>
+            <Form id='formProduct' name="add">
 
-                <Form.Label id='formTitle'>Delete Product</Form.Label>
+                <Form.Label id='formTitle'>Eliminar Producto</Form.Label>
                 <div>
                     <input id="input" type="text" placeholder="Insert id"
                         name='id'
                         onChange={obtenerInfo}
                         value={id}
-                     />
-                    <Button id='btnGet' className='ml-1' variant="primary" type="button" onClick={clickEditId}>Get Product</Button>
+                    />
+                    <Button id='btnGet' className='ml-1 mt-3' variant="primary" type="button" onClick={() => dispatch(mostrarProducto_id(product.id))}>Obtener Producto</Button>
                     <p id="pId"></p>
                 </div>
 
-                <Form.Group controlId="formBasic">
-                    <Button variant="primary" type="button" onClick={clickGet}>Traer Productos</Button>
-                </Form.Group>
-
-                <Form.Label>Name</Form.Label>
-                <Form.Control column="sm" size="sm" type='text' placeholder='name'
+                <Form.Label>Nombre</Form.Label>
+                <Form.Control column="sm" size="sm" type='text' placeholder='Nombre'
                     name='name'
                     onChange={obtenerInfo}
-                    value={name}
+                    value={productS1.selectedProduct.name}
                 /><p id="pName"></p>
-                <br /><br />
+                
 
-                <Form.Label>Description</Form.Label>
-                <Form.Control type='text' placeholder='description'
+                <Form.Label>Descripción</Form.Label>
+                <Form.Control type='text' placeholder='Descripción'
                     name='description'
                     onChange={obtenerInfo}
-                    value={description}
+                    value={productS1.selectedProduct.description}
                 /><p id="pDescripcion"></p>
-                <br /><br />
+                
 
-                <Form.Label>Price</Form.Label>
-                <Form.Control type='number' placeholder='price'
+                <Form.Label>Precio</Form.Label>
+                <Form.Control type='number' placeholder='Precio'
                     name='price'
                     onChange={obtenerInfo}
-                    value={price}
+                    value={productS1.selectedProduct.price}
                 /> <p id='pPrice'></p>
-                <br /><br />
+                
 
                 <Form.Label >Stock</Form.Label>
                 <Form.Control type='number' placeholder='stock'
                     name='stock'
                     onChange={obtenerInfo}
-                    value={stock}
+                    value={productS1.selectedProduct.stock}
                 /><p id="pStock"></p>
-                <br /><br />
+                
 
                 <Form.Label>Img</Form.Label>
                 <Form.Control type='file' placeholder='img'
                     name='img'
                     onChange={encodeImageFileAsURL}
-                    //value={img}
+                //value={img}
                 /><p id="pImg"></p>
-                {/* <img src={product.img}/> */}
-                <br /><br />
+                <img src={base64ToString}/> 
+                
 
-                <Button type="submit" variant="primary">Send</Button>
+                <Button type="submit" className='mt-3' variant="primary">Eliminar</Button>
 
             </Form>
         </Container>

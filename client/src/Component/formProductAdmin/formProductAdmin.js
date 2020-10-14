@@ -4,7 +4,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import FormAdd from './formProductAdd';
 import FormEdit from './formProducEdit';
 import FormDelete from './formProductDelete';
-import axios from 'axios';
 
 const FormProductAdmin = () => {
     const [click, setclick] = useState({
@@ -31,20 +30,18 @@ const FormProductAdmin = () => {
    
 
     return (
-        <Container>
-            <br/>
-
-                <Form.Group controlId="formBasic">
-                    <Button className='mr-3' variant="primary" type="button" onClick={clickAdd}>Add</Button>
-                    <Button className='mr-3' variant='primary' type="button" onClick={clickEdit}>Edit</Button>
-                    <Button variant='danger' type="button" onClick={clickDelete}>Delele</Button>
-                </Form.Group><br />
+        <Container className='container-fluid col-6 mt-4 bg-white p-3'>
+            <Form>
+                <Form.Group className='container-fluid col-6 mt-4 bg-white p-3' controlId="formBasic ">
+                    <Button className='mr-3' variant="primary" type="button" onClick={clickAdd}>Agregar</Button>
+                    <Button className='mr-3' variant='primary' type="button" onClick={clickEdit}>Editar</Button>
+                    <Button variant='danger' type="button" onClick={clickDelete}>Eliminar</Button>
+                </Form.Group>
 
                 <div id="formPage">
                     {click.clicked}
                 </div>
-
-
+                </Form>
         </Container>
     )
 }
