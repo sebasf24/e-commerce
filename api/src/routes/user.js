@@ -66,9 +66,7 @@ server.put('/:id',(req, res)=>{
 
 })
 
-module.exports=server;
 
-})
 //Ruta para modificar Usuario
 server.put('/:id',(req, res)=>{
     const {id}= req.params;
