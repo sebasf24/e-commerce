@@ -2,7 +2,7 @@ import axios from 'axios';
 export const MOSTRAR_PRODUCTOS = "MOSTRAR_PRODUCTOS";
 export const MOSTRAR_PRODUCTOID= "MOSTRAR_PRODUCTOID";
 export const AGREGAR_PRODUCTOID= "AGREGAR_PRODUCTOID";
-export const EDITAR_PRODUCTOID= "EDITAT_PRODUCTOID";
+export const EDITAR_PRODUCTOID= "EDITAR_PRODUCTOID";
 export const ELIMINAR_PRODUCTOID= "MOSTRAR_PRODUCTOID";
 export const MOSTRAR_PRODUCTO_CATEGORY = "MOSTRAR_PRODUCTO_CATEGORY";
 
@@ -64,12 +64,9 @@ export function editarProducto(product){
                         type:EDITAR_PRODUCTOID,
                         producto:json})
                     })
-    }
-}    
-
-    
-    
-                     
+                }
+            }
+            
 export function mostrarProducto_category(id){
     return function(dispatch){
         return axios.get(`http://localhost:3000/products/category/${id}`)
