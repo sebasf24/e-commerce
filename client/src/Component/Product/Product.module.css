@@ -20,7 +20,7 @@
 }
 .card {
     padding: 25px;
-    width: 70%;
+    width: 60%;
     height: auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -41,7 +41,12 @@
             0 1px 5px 0 rgba(0,0,0,.2);
 
   }
+  .img{
+    max-width:230px; 
+    max-height:275px;
+  }
   .imagen { 
+      padding: 20px;
       grid-area: imagen; 
       display: grid;
       place-items: center;
