@@ -67,3 +67,31 @@ server.put('/:id',(req, res)=>{
 })
 
 module.exports=server;
+
+})
+//Ruta para modificar Usuario
+server.put('/:id',(req, res)=>{
+    const {id}= req.params;
+    User.update({
+        name:req.body.name,
+        lastname:req.body.lastname,
+        dni:req.body.dni,
+        email:req.body.email,
+        username:req.body.username,
+        password:req.body.password,
+        image:req.body.image,
+        typeUser:req.body.typeUser,
+    },
+    {
+        where:{id}
+    })
+    .then((user)=>{
+        res.send(user)
+    })
+    .catch(error=>{
+        res.status(500).send("Error: "+ error)
+    })
+
+})
+
+module.exports=server;
