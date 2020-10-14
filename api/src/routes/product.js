@@ -135,10 +135,16 @@ server.get("/category/:id", (req, res) => {
 	
 	const  {id} = req.params;
 	
-	Categoryproduct.findAll(
-
-		{ where: { categoryId: id } }
-	)
+	Product.findAll({
+		include:[{
+			model:Category,
+			attributes: ['id','name'],
+			where:{
+				id:id
+			},
+			through: {attributes: []}
+		}]
+	})
 	.then(function(productId){
 		res.status(200).json(productId);
 		})

@@ -20,6 +20,7 @@ export default (state=initalStore, actions) =>{
             }
         }
 
+
         case AGREGAR_PRODUCTOID:{
             return{
                 product:actions.producto.data
@@ -41,6 +42,14 @@ export default (state=initalStore, actions) =>{
             }
         }
         
+
+        case MOSTRAR_PRODUCTO_CATEGORY:{
+            return{
+                ...state,
+                products:actions.productos.data
+            }
+        }
+
         default: return state
     }
 }

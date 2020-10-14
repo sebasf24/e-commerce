@@ -4,6 +4,7 @@ export const MOSTRAR_PRODUCTOID= "MOSTRAR_PRODUCTOID";
 export const AGREGAR_PRODUCTOID= "AGREGAR_PRODUCTOID";
 export const EDITAR_PRODUCTOID= "EDITAT_PRODUCTOID";
 export const ELIMINAR_PRODUCTOID= "MOSTRAR_PRODUCTOID";
+export const MOSTRAR_PRODUCTO_CATEGORY = "MOSTRAR_PRODUCTO_CATEGORY";
 
 //const fetch = require('node-fetch');
 
@@ -62,6 +63,14 @@ export function editarProducto(product){
                     dispatch({
                         type:EDITAR_PRODUCTOID,
                         producto:json
+export function mostrarProducto_category(id){
+    return function(dispatch){
+        return axios.get(`http://localhost:3000/products/category/${id}`)
+
+                .then(json=>{
+                    dispatch({
+                        type:MOSTRAR_PRODUCTO_CATEGORY,
+                        productos:json
                     })
                 })
                 .catch(err=>{console.log(err)})
