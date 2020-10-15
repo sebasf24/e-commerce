@@ -5,6 +5,14 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('order_line', {
+    id:{
+      type:DataTypes.INTEGER,
+      primaryKey:true,
+      valueDefault:1,
+      autoIncrement:true,
+      allowNull:true
+
+    },
     price: {
       type: DataTypes.DECIMAL,
       allowNull: false
@@ -12,6 +20,12 @@ module.exports = (sequelize) => {
     cantidad: {
       type: DataTypes.INTEGER,
       allowNull: false
+    },
+    productId:{
+      type:DataTypes.INTEGER
+    },
+    orderId:{
+      type:DataTypes.INTEGER
     }
 
   });
