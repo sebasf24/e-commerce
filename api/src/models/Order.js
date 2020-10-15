@@ -8,6 +8,7 @@ module.exports = (sequelize) => {
     estado: {
       type: DataTypes.ENUM,
       values:['carrito', 'procesando','enviada','cancelada', 'completada'],
+      valueDefault: 'carrito',
       allowNull: false
     }
 

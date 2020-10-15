@@ -4,7 +4,7 @@ import {BrowserRouter as Router, Route} from 'react-router-dom';
 import FormCategory from './Component/FormCategory/FormCategory.jsx'
 import Product from './Component/Product/Product.jsx'
 import Catalogue from './Component/Catalogue/Catalogue.jsx'
-import FormularioAdmin from './Component/formProductAdmin/fornProductAdmin.js.js'
+import FormularioAdmin from './Component/formProductAdmin/formProductAdmin.js'
 import homeCategories from './Component/FormCategory/HomeCategories'
 
 import NavBar from './Component/NavBar/navbar.jsx';

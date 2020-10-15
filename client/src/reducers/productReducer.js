@@ -1,4 +1,4 @@
-import {MOSTRAR_PRODUCTOS,MOSTRAR_PRODUCTOID, MOSTRAR_PRODUCTO_CATEGORY} from "../actions/products.js";
+import {MOSTRAR_PRODUCTOS,MOSTRAR_PRODUCTOID,AGREGAR_PRODUCTOID,EDITAR_PRODUCTOID,MOSTRAR_PRODUCTO_CATEGORY,ELIMINAR_PRODUCTOID} from "../actions/products.js";
 
 const initalStore ={
     products:[],
@@ -8,7 +8,6 @@ const initalStore ={
 export default (state=initalStore, actions) =>{
     switch(actions.type){
         case MOSTRAR_PRODUCTOS:{
-            
             return{
                 ...state,
                 products:actions.productos.data
@@ -20,6 +19,29 @@ export default (state=initalStore, actions) =>{
                 selectedProduct:actions.producto.data
             }
         }
+
+
+        case AGREGAR_PRODUCTOID:{
+            return{
+                product:actions.producto.data
+            }
+        }
+
+        case EDITAR_PRODUCTOID:{
+            return{
+                ...state,
+                product:actions.producto.data,
+                selectedProduct: []
+            }
+        }
+
+        case ELIMINAR_PRODUCTOID:{
+            return{
+               product:actions.producto.data,
+               selectedProduct: []
+            }
+        }
+        
 
         case MOSTRAR_PRODUCTO_CATEGORY:{
             return{
