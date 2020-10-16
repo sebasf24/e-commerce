@@ -1,30 +1,50 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Button, Form, Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useDispatch, useSelector, useStore } from 'react-redux';
-import { mostrarProducto_id, editarProducto } from "../../actions/products.js";
+import { useDispatch, useSelector} from 'react-redux';
+import { editarProducto } from "../../actions/products.js";
+import {listCategory} from '../../actions/category';
 
-const FormProductEdit = () => {
-    const [product, setProduct] = useState({
-        id: '',
-        name: '',
-        description: '',
-        price: '',
-        stock: '',
-        img: ''
-    })
-
+const FormProductEdit = (productEdit) => {
     // extrae los valores
-    const { id, name, description, price, stock, img } = product;
-
-    const productS1 = useSelector(state => state.products);
-    //console.log(productS1);
-    let base64ToString;
-    (productS1.selectedProduct.img) && (base64ToString = Buffer.from(productS1.selectedProduct.img.data, "base64").toString())
-    
-    
-
     const dispatch = useDispatch();
+    const categ=useSelector(store=>store.category);
+    const categories=categ.category;
+    useEffect(()=>{
+         dispatch(listCategory())
+     },[]);
+     
+    let { id, name, description, price, stock, img } = productEdit.product;
+    //pasa la imagen a base 64 desde un buffer
+    let base64ToString;
+    (img) && (base64ToString = Buffer.from(img.data, "base64").toString())
+    //crea los checkbox con las categorias
+    const [checkboxes, setCheckboxes] = useState([]);
+    useEffect(
+		() => {
+			const categoryTypes = categories.map(c => ({
+				name: c.name,
+				id: c.id,
+				add: false
+			}));
+
+			setCheckboxes(categoryTypes);
+		},
+		[categories]
+	);
+    const [product, setProduct] = useState({
+        id: id,
+        name: name,
+        description: description,
+        price: price,
+        stock: stock,
+        img: base64ToString
+    });
+    
+    
+
+    
 
     //leer datos del formulario
     const obtenerInfo = e => {
@@ -49,90 +69,112 @@ const FormProductEdit = () => {
             })
         }
     }
+    
+    const handleCategoryChecks = e => {
+		const modifiedCategories = [...checkboxes];
+		modifiedCategories[e.target.value].add = e.target.checked;
+		setCheckboxes(modifiedCategories);
+	};
+
 
     const envioformulario = (e) => {
         e.preventDefault();
-
-        //Cuarto: Reiniciar el form
-        setProduct({
-            id: '',
-            name: '',
-            description: '',
-            price: '',
-            stock: '',
-            img: ''
-        });
+        dispatch(editarProducto(product))
+        for (let i=0;i<checkboxes.length;i++){
+            if(checkboxes[i].add === true){
+                axios.post(`http://localhost:3000/products/${product.id}/category/${checkboxes[i].id}`, product,{
+                headers:{"Content-type":"application/json; charset=UTF-8"}})
+            }
+        }
+         
+         return;
+       
     }
 
     return (
         <Container id='container' className='container-fluid col-6 mt-4 bg-white p-3'>
-            <Form id='formProduct' name="editar" onSubmit={envioformulario}>
+            <Form id='formProduct' name="editar">
 
                 <Form.Label id='formTitle'>Editar Producto</Form.Label>
 
-                <div>
-                    <input id="input" type="number" placeholder="Insert id"
-                        name='id'
-                        onChange={obtenerInfo}
-                        value={id}
-                        required
-                    />
-                    <Button id='btnGet' className='ml-1 mt-3' variant="primary" type="button" onClick={() => dispatch(mostrarProducto_id(product.id))}>Obtener Producto</Button>
-                    <p id="pId"></p>
-                </div>
-
-                {/* <Form.Group controlId="formBasic">
-                    <Button variant="primary" type="button">Traer Productos</Button>
-                </Form.Group> */}
 
                 <Form.Label>Nombre</Form.Label>
                 <Form.Control column="sm" size="sm" type='text' placeholder='nombre'
                     name='name'
                     onChange={obtenerInfo}
-                    value={name}
+                    value={product.name}
                     required
-                /><p id="pName" className='pt-3'>{productS1.selectedProduct.name}</p>
+                />
                 
 
                 <Form.Label>Descripción</Form.Label>
                 <Form.Control type='text' placeholder='descripción'
                     name='description'
                     onChange={obtenerInfo}
-                    value={description}
+                    value={product.description}
                     required
-                /><p id="pDescripcion" className='pt-3'>{productS1.selectedProduct.description}</p>
+                />
                
 
                 <Form.Label>Precio</Form.Label>
                 <Form.Control type='number' placeholder='precio'
                     name='price'
                     onChange={obtenerInfo}
-                    value={price}
+                    value={product.price}
                     required
-                /> <p id='pPrice' className='pt-3'>{productS1.selectedProduct.price}</p>
+                /> 
                 
 
                 <Form.Label >Stock</Form.Label>
                 <Form.Control type='number' placeholder='stock'
                     name='stock'
                     onChange={obtenerInfo}
-                    value={stock}
+                    value={product.stock}
                     required
-                /><p id="pStock" className='pt-3'>{productS1.selectedProduct.stock}</p>
-               
+                />
+
+                <Form.Group>
+                    <Form.Label>Categorias</Form.Label>
+                   
+					{checkboxes.map((categoria, i) => {
+						return (
+							<Form.Label>
+                                <input
+									type="checkbox"
+									className="checks"
+									value={i}
+									checked={categoria.add}
+									onChange={handleCategoryChecks}
+								/>{categoria.name}
+                            </Form.Label>
+								
+								
+							
+						);
+					})}
+				
+                </Form.Group>
 
                 <Form.Label>Imagen</Form.Label>
                 <Form.Control type='file' placeholder='imagen'
                     name='img'
                     onChange={encodeImageFileAsURL}
-                    //value={img}
-                    required
-                /><p id="pImg" className='pt-3'></p>
-                <img src={base64ToString} width="300px" />
+                    //value={base64ToString}
+                />
+                <img src={product.img} width="300px" />
                 
-               
-                <Button type="submit" className='mt-3' onClick={() => dispatch(editarProducto(product))} variant="primary">Enviar</Button>
-
+                <Form.Group controlId="formBasic">
+                    <Button type="submit" className='mt-3' variant="primary" onClick={() => {
+                        dispatch(editarProducto(product))
+                        for (let i = 0; i < checkboxes.length; i++) {
+                            if (checkboxes[i].add === true) {
+                                axios.post(`http://localhost:3000/products/${product.id}/category/${checkboxes[i].id}`, product, {
+                                    headers: { "Content-type": "application/json; charset=UTF-8" }
+                                })
+                            }
+                        }
+                    }}>Editar</Button>
+                </Form.Group>
             </Form>
         </Container>
     )
