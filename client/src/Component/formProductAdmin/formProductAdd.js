@@ -44,19 +44,6 @@ const FormProductAdd = () => {
         }
     }
 
-    const envioformulario = (e) => {
-        e.preventDefault();
-        //Cuarto: Reiniciar el form
-        //console.log(productS);
-        setProduct({
-            id: '',
-            name: '',
-            description: '',
-            price: '',
-            stock: '',
-            img: ''
-        });
-    }
 
     const dispatch = useDispatch();
     useEffect(() => {
