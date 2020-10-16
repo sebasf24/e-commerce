@@ -128,3 +128,5 @@ server.delete('/:id', (req, res) => {
 });
 
 
+module.exports = server;
+
