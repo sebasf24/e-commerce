@@ -13,15 +13,14 @@
     text-align: center;
     width: 250px;
     height: 370px;
-    padding: 24px;
+    padding: 10px;
     margin: 10px;
     box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 
                 0 3px 1px -2px rgba(0,0,0,.12), 
                 0 1px 5px 0 rgba(0,0,0,.2);
 
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr 3fr 1fr 1fr 1fr;
-    gap: 0px 0px;
+    grid-template-rows: auto auto auto auto auto;
     grid-template-areas:
                   "title"
                   "img"
@@ -30,30 +29,25 @@
                   "botonlink";
     border-radius: 2px;
     }
-  .title { grid-area: title;
+  .title { 
+    overflow: hidden;
+    grid-area: title;
     font-family: 'Titillium Web';
-    font-size: 25px}
+    font-size: 3vh
+  }
 
   .img {
     max-width:200px; 
-    max-height:140px; 
+    max-height:160px; 
     width: auto; 
     height: auto;
     }
 
   .imagen{
   grid-area: img; 
-   display: grid;
-    place-items: center;
-    justify-items: center;
-  }
-
-  .imgGris{
-    filter: grayscale(1);
-    max-width:200px; 
-    max-height:140px; 
-    width: auto; 
-    height: auto;
+  display: grid;
+  place-items: center;
+  justify-items: center;
   }
   .precio { 
     display: flex;
@@ -65,18 +59,17 @@
   }
   
   .botonlink{
-    grid-area: botonlink; 
-    display: flex;
+    display: grid;
     align-items: flex-end;
-    
+    grid-area: botonlink; 
   }
   .boton { 
-    height: 35px; 
+    height: 5vh; 
     width: 100%;
     background: linear-gradient(45deg, #1292FF, #716BF9)!important;
     border: none;
-    box-shadow: 0 16px 14px 2px rgba(0,0,0,.14), 
-                0 6px 20px 5px rgba(0,0,0,.12), 
+    box-shadow: 0 16px 24px 2px rgba(0,0,0,.14), 
+                0 6px 30px 5px rgba(0,0,0,.12), 
                 0 8px 10px -7px rgba(0,0,0,.2);
                 transition: all cubic-bezier(0.215, 0.610, 0.355, 1) .4s;
       
@@ -90,10 +83,9 @@
 }
 
 .botoncart{
-  height : 35px;
+  height: 5vh;
   width: 100%;
   border : none;
-  margin-top: 10px;
   box-shadow: 0 16px 24px 2px rgba(0,0,0,.14), 
                 0 6px 30px 5px rgba(0,0,0,.12), 
                 0 8px 10px -7px rgba(0,0,0,.2);
@@ -118,5 +110,4 @@
     font-size: 25px;
     grid-area: botonlink;
 }
-           
-  
+   
