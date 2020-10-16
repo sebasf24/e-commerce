@@ -60,6 +60,7 @@ export function editarProducto(product){
         return axios.put(`http://localhost:3000/products/${product.id}`, product, {
             headers:{"Content-type":"application/json; charset=UTF-8"}})
                 .then(json=>{
+                    console.log('json:',json)
                     dispatch({
                         type:EDITAR_PRODUCTOID,
                         producto:json})

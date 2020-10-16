@@ -30,15 +30,13 @@ export default (state=initalStore, actions) =>{
         case EDITAR_PRODUCTOID:{
             return{
                 ...state,
-                product:actions.producto.data,
-                selectedProduct: []
+                products:actions.producto.data
             }
         }
 
         case ELIMINAR_PRODUCTOID:{
             return{
-               product:actions.producto.data,
-               selectedProduct: []
+               products: state.products.filter( product=> product.id !== actions.data.id)
             }
         }
         
