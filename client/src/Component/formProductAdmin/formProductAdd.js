@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Form, Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useDispatch, useSelector, useStore } from 'react-redux';
+import { useDispatch} from 'react-redux';
 import { mostrarProductos, agregarProducto } from "../../actions/products.js";
-import style from '../Catalogue/Catalogue.module.css';
-import ProductCard from '../ProductCard/ProductCard';
+import {Link} from 'react-router-dom'
 
 const FormProductAdd = () => {
-    const productS1 = useSelector(state => state.products);
-    console.log(productS1);
-    const [productS, setProductS] = useState();
-    //setProductS(productS1.products);
+    //const dispatch=useDispatch()
     const [product, setProduct] = useState({
         id: '',
         name: '',
@@ -39,7 +35,6 @@ const FormProductAdd = () => {
         fReader.onloadend = function (event) {
             //console.log(event);
             var base64 = event.target.result;
-            let buff = new Buffer(base64, 'base64');
 
             setProduct({
                 ...product,
@@ -51,9 +46,8 @@ const FormProductAdd = () => {
 
     const envioformulario = (e) => {
         e.preventDefault();
-        dispatch(agregarProducto(product))
         //Cuarto: Reiniciar el form
-        console.log(productS);
+        //console.log(productS);
         setProduct({
             id: '',
             name: '',
@@ -67,9 +61,6 @@ const FormProductAdd = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(mostrarProductos())
-        setProductS(
-            productS1.products
-        )
         return ()=> {
 
         }
@@ -77,11 +68,12 @@ const FormProductAdd = () => {
 
     return (
         <Container id='container' className='container-fluid col-6 mt-4 bg-white p-3'>
-            <Form id='formProduct' name="add" onSubmit={envioformulario}>
+            <Link to={`/admin`}><Button className='mr-3' variant="primary" type="button" >Volver atras</Button></Link>
+            <Form id='formProduct' name="add" >
 
                 <Form.Label id='formTitle'>Agregar Producto</Form.Label><br/>
 
-                <Form.Label>Nombre</Form.Label>
+                <Form.Label>Name</Form.Label>
                 <Form.Control column="sm" size="sm" type='text' placeholder='Nombre'
                     name='name'
                     onChange={obtenerInfo}
@@ -99,7 +91,7 @@ const FormProductAdd = () => {
                 /><p id="pDescripcion"></p>
                 
 
-                <Form.Label>Precio</Form.Label>
+                <Form.Label>Price</Form.Label>
                 <Form.Control type='number' placeholder='Precio'
                     name='price'
                     onChange={obtenerInfo}
@@ -115,9 +107,9 @@ const FormProductAdd = () => {
                     value={stock}
                     required
                 /><p id="pStock"></p>
-                
 
-                <Form.Label>Imagen</Form.Label>
+
+                <Form.Label>Image</Form.Label>
                 <Form.Control type='file' placeholder='Imagen'
                     name='img'
                     onChange={encodeImageFileAsURL}
@@ -128,20 +120,11 @@ const FormProductAdd = () => {
                 
 
                 <Form.Group controlId="formBasic">
-                    <Button type="submit" variant="primary">Agregar</Button>
+                    
+                    <Button type="submit" variant="primary" onClick={()=> dispatch(agregarProducto(product))} >Agregar</Button>
+    
                 </Form.Group>
 
-                <Form.Label>Productos</Form.Label>
-                <div style={{borderTop: '1px solid black'}} className={style.productos} id="producto">
-                    {
-                        productS1.products ? 
-                        productS1.products.map(product => {
-                            return (<ProductCard Product={product} />)
-                        })
-                        :
-                        <div></div> 
-                    }
-                </div>
             </Form>
         </Container>
     )
