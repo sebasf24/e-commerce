@@ -112,4 +112,21 @@ server.post('/:idUser/cart', (req, res) => {
 
 });
 
-module.exports=server;
+//Ruta para eliminar un usuario
+server.delete('/:id', (req, res) => {
+    const {id} = req.params;
+    User.destroy({ where: {id} })
+    .then(user=>{
+        if (!user){
+            //sino lo encuentra un usuario devuelve un error
+            return res.status(400).send("El usuario no existe");
+        } else {
+            //sino, borra usuario
+            return res.status(200).send("El usuario fue eliminado")
+        }
+    })
+});
+
+
+module.exports = server;
+
