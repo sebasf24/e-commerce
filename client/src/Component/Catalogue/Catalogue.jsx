@@ -10,9 +10,11 @@ export default function Cagalogue() {
    var cat=window.location.href
 const productsl = useSelector(state=>state.products);
  let products = productsl.products;
- console.log(products);
- if(products === 'No hay publicaciones que coincidan con tu búsqueda.'){
-     products = [];
+ let sinStock = products.filter(el => el.stock===0)
+ let conStock= products.filter(el=> el.stock > 0)
+ let productos = conStock.concat(sinStock)
+ if(productos === 'No hay publicaciones que coincidan con tu búsqueda.'){
+     productos = [];
  }
  const dispatch=useDispatch();
   useEffect(()=>{
@@ -27,8 +29,8 @@ const productsl = useSelector(state=>state.products);
 
             <MenuCategories className={style.menuCategories}/>
             <div className={style.productos}>
-                { products ? 
-                products.map(product => {
+                { productos ? 
+                productos.map(product => {
                     return (<ProductCard Product={product} />)
                 })
                 :
