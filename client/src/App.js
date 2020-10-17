@@ -7,11 +7,14 @@ import Catalogue from './Component/Catalogue/Catalogue.jsx'
 import FormularioAdmin from './Component/formProductAdmin/formProductAdmin.js'
 import homeCategories from './Component/FormCategory/HomeCategories'
 import Cart from './Component/carrito/Cart.jsx'
+import { useSelector } from 'react-redux';
 
 import NavBar from './Component/NavBar/navbar.jsx';
 
+
 function App() {  
- 
+  const productsl = useSelector(state=>state.products);
+
   return (
   
     <Router >
@@ -22,6 +25,8 @@ function App() {
     <Route exact path='/products/:id' component={Product}/>
     <Route exact path='/listCategory' component={homeCategories}/>
     <Route path='/addCategory' component={FormCategory}/>
+    <Route exact path='/search' render={()=> <Catalogue Products={productsl.products}/>} />
+    
     </Router>
   );
 }

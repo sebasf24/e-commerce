@@ -5,6 +5,7 @@ export const AGREGAR_PRODUCTOID= "AGREGAR_PRODUCTOID";
 export const EDITAR_PRODUCTOID= "EDITAR_PRODUCTOID";
 export const ELIMINAR_PRODUCTOID= "MOSTRAR_PRODUCTOID";
 export const MOSTRAR_PRODUCTO_CATEGORY = "MOSTRAR_PRODUCTO_CATEGORY";
+export const BUSCAR_PRODUCTOIDS = "BUSCAR_PRODUCTOIDS";
 
 //const fetch = require('node-fetch');
 
@@ -91,6 +92,21 @@ export function eliminarProducto(id){
                 .then(json=>{
                     dispatch({
                         type:ELIMINAR_PRODUCTOID,
+                        producto:json
+                    })
+                })
+                .catch(err=>{console.log(err)})
+
+    }
+}
+
+export function mostrarBusqueda(search){
+    return function(dispatch){
+        return axios.get(`http://localhost:3000/search/?query=${search}`)
+
+                .then(json=>{   
+                    dispatch({
+                        type:BUSCAR_PRODUCTOIDS,
                         producto:json
                     })
                 })
