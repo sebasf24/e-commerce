@@ -15,16 +15,16 @@ server.get('/',(req,res)=>{
     Product.findAll({
         where:{ [Op.or]: {
             name: {
-           [Op.like] : '%'+search+'%'}
+           [Op.iLike] : '%'+search+'%'}
             ,
             description:{
-            [Op.like] : '%'+search+'%'   
+            [Op.iLike] : '%'+search+'%'   
             }}
             }
     })
     .then(products => {
         if(products== false){
-            return res.send("No hay resultados para: "+ search)
+            return res.send('No hay publicaciones que coincidan con tu búsqueda.')
         }
         res.send(products);
     })
