@@ -17,10 +17,41 @@ export default function ProductCard({ Product }) {
         if(!localStorage.carritoLocal){
             localStorage.setItem("carritoLocal",JSON.stringify([]))
         }
-        localStorage.setItem("carritoLocal",JSON.stringify(
-            JSON.parse(localStorage.getItem("carritoLocal"))
-                .concat(Product)
+
+      
+     
+        console.log("Product", Product);
+        // existe = no
+        // Loop recorriendo ls 
+        //     pregunto si id = Producto id
+        //      existe = si
+        // End Loop
+        // if existe == no
+        //      lo agrego
+        // else
+        //      lo ignoro
+        var ls = JSON.parse(localStorage.getItem("carritoLocal"));
+        console.log("ls=",ls);
+        var existe = false;
+        console.log("ls.length=" + ls.length);
+        for (let i = 0; i < ls.length; i++) {
+            console.log( "i=" + i + " || ", ls[i].id , " ||", Product.id );
+            if(ls[i].id == Product.id)
+                existe = true;
+        } 
+        if(existe == false)
+            {
+            console.log("id != P.id lo agrego") ;
+            localStorage.setItem("carritoLocal",JSON.stringify(
+            JSON.parse(localStorage.getItem("carritoLocal"))            
+            .concat(Product)
             ))
+            }
+        else
+            {
+            console.log("id == P.id lo ignoro") ;
+            }
+        console.log("ls=", localStorage.getItem("carritoLocal"));
         dispatch(agregarProductoCarrito(Product))
         
     }
