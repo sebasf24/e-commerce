@@ -1,0 +1,10 @@
+.boton{  
+    margin: 30px;
+    font-size: 12px;
+    width: 200px;
+    border: none;
+    font-style: initial;
+    pointer-events: auto;
+    text-transform: uppercase;
+    background: linear-gradient(45deg, #1292FF, #716BF9)!important; 
+}
