@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Swal from 'sweetalert2';
 import { Button, Form, Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useDispatch, useSelector, useStore } from 'react-redux';
@@ -53,7 +54,7 @@ const FormProductDelete = () => {
 
     return (
         <Container id="container" className='container-fluid col-6 mt-4 bg-white p-3'>
-            <Form id='formProduct' name="add">
+            <Form id='formProduct' name="add" >
 
                 <Form.Label id='formTitle'>Eliminar Producto</Form.Label>
                 <div>
@@ -72,7 +73,7 @@ const FormProductDelete = () => {
                     onChange={obtenerInfo}
                     value={productS1.selectedProduct.name}
                 /><p id="pName"></p>
-                
+
 
                 <Form.Label>Descripción</Form.Label>
                 <Form.Control type='text' placeholder='Descripción'
@@ -80,7 +81,7 @@ const FormProductDelete = () => {
                     onChange={obtenerInfo}
                     value={productS1.selectedProduct.description}
                 /><p id="pDescripcion"></p>
-                
+
 
                 <Form.Label>Precio</Form.Label>
                 <Form.Control type='number' placeholder='Precio'
@@ -88,7 +89,7 @@ const FormProductDelete = () => {
                     onChange={obtenerInfo}
                     value={productS1.selectedProduct.price}
                 /> <p id='pPrice'></p>
-                
+
 
                 <Form.Label >Stock</Form.Label>
                 <Form.Control type='number' placeholder='stock'
@@ -96,7 +97,7 @@ const FormProductDelete = () => {
                     onChange={obtenerInfo}
                     value={productS1.selectedProduct.stock}
                 /><p id="pStock"></p>
-                
+
 
                 <Form.Label>Img</Form.Label>
                 <Form.Control type='file' placeholder='img'
@@ -104,8 +105,7 @@ const FormProductDelete = () => {
                     onChange={encodeImageFileAsURL}
                 //value={img}
                 /><p id="pImg"></p>
-                <img src={base64ToString}/> 
-                
+                <img src={base64ToString} />
 
                 <Button type="submit" className='mt-3' variant="primary">Eliminar</Button>
 
@@ -115,4 +115,5 @@ const FormProductDelete = () => {
 }
 
 export default FormProductDelete;
+
 

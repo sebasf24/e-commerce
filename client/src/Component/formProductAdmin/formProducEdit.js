@@ -1,20 +1,25 @@
 import React, { useState, useEffect } from 'react';
+import Swal from 'sweetalert2';
 import axios from 'axios';
 import { Button, Form, Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { editarProducto } from "../../actions/products.js";
-import {listCategory} from '../../actions/category';
+import { listCategory } from '../../actions/category';
+import { useHistory } from 'react-router-dom';
 
 const FormProductEdit = (productEdit) => {
     // extrae los valores
+    console.log(productEdit)
     const dispatch = useDispatch();
-    const categ=useSelector(store=>store.category);
-    const categories=categ.category;
-    useEffect(()=>{
-         dispatch(listCategory())
-     },[]);
-     
+    const categ = useSelector(store => store.category);
+    const categories = categ.category;
+    useEffect(() => {
+        dispatch(listCategory())
+    }, []);
+
+    const history = useHistory();
+
     let { id, name, description, price, stock, img } = productEdit.product;
     //pasa la imagen a base 64 desde un buffer
     let base64ToString;
@@ -22,17 +27,17 @@ const FormProductEdit = (productEdit) => {
     //crea los checkbox con las categorias
     const [checkboxes, setCheckboxes] = useState([]);
     useEffect(
-		() => {
-			const categoryTypes = categories.map(c => ({
-				name: c.name,
-				id: c.id,
-				add: false
-			}));
+        () => {
+            const categoryTypes = categories.map(c => ({
+                name: c.name,
+                id: c.id,
+                add: false
+            }));
 
-			setCheckboxes(categoryTypes);
-		},
-		[categories]
-	);
+            setCheckboxes(categoryTypes);
+        },
+        [categories]
+    );
     const [product, setProduct] = useState({
         id: id,
         name: name,
@@ -41,10 +46,10 @@ const FormProductEdit = (productEdit) => {
         stock: stock,
         img: base64ToString
     });
-    
-    
 
-    
+
+
+
 
     //leer datos del formulario
     const obtenerInfo = e => {
@@ -52,6 +57,7 @@ const FormProductEdit = (productEdit) => {
             ...product,
             [e.target.name]: e.target.value
         })
+        
     }
 
     function encodeImageFileAsURL(e) {
@@ -69,31 +75,32 @@ const FormProductEdit = (productEdit) => {
             })
         }
     }
-    
+
     const handleCategoryChecks = e => {
-		const modifiedCategories = [...checkboxes];
-		modifiedCategories[e.target.value].add = e.target.checked;
-		setCheckboxes(modifiedCategories);
-	};
+        const modifiedCategories = [...checkboxes];
+        modifiedCategories[e.target.value].add = e.target.checked;
+        setCheckboxes(modifiedCategories);
+    };
 
 
     const envioformulario = (e) => {
         e.preventDefault();
-        dispatch(editarProducto(product))
-        for (let i=0;i<checkboxes.length;i++){
-            if(checkboxes[i].add === true){
-                axios.post(`http://localhost:3000/products/${product.id}/category/${checkboxes[i].id}`, product,{
-                headers:{"Content-type":"application/json; charset=UTF-8"}})
-            }
-        }
-         
-         return;
-       
+        // for (let i = 0; i < checkboxes.length; i++) {
+        //     if (checkboxes[i].add === true) {
+        //         axios.post(`http://localhost:3000/products/${product.id}/category/${checkboxes[i].id}`, product, {
+        //             headers: { "Content-type": "application/json; charset=UTF-8" }
+        //         })
+        //     }
+        // }
+    }
+
+    const redireccionarEdicion = product => {
+        history.push('/administrar')
     }
 
     return (
         <Container id='container' className='container-fluid col-6 mt-4 bg-white p-3'>
-            <Form id='formProduct' name="editar">
+            <Form id='formProduct' name="editar" onSubmit={envioformulario} >
 
                 <Form.Label id='formTitle'>Editar Producto</Form.Label>
 
@@ -105,7 +112,7 @@ const FormProductEdit = (productEdit) => {
                     value={product.name}
                     required
                 />
-                
+
 
                 <Form.Label>Descripción</Form.Label>
                 <Form.Control type='text' placeholder='descripción'
@@ -114,7 +121,7 @@ const FormProductEdit = (productEdit) => {
                     value={product.description}
                     required
                 />
-               
+
 
                 <Form.Label>Precio</Form.Label>
                 <Form.Control type='number' placeholder='precio'
@@ -122,8 +129,8 @@ const FormProductEdit = (productEdit) => {
                     onChange={obtenerInfo}
                     value={product.price}
                     required
-                /> 
-                
+                />
+
 
                 <Form.Label >Stock</Form.Label>
                 <Form.Control type='number' placeholder='stock'
@@ -135,48 +142,69 @@ const FormProductEdit = (productEdit) => {
 
                 <Form.Group>
                     <Form.Label>Categorias</Form.Label>
-                   
-					{checkboxes.map((categoria, i) => {
-						return (
-							<Form.Label>
+
+                    {checkboxes.map((categoria, i) => {
+                        return (
+                            <Form.Label>
                                 <input
-									type="checkbox"
-									className="checks"
-									value={i}
-									checked={categoria.add}
-									onChange={handleCategoryChecks}
-								/>{categoria.name}
+                                    type="checkbox"
+                                    className="checks"
+                                    value={i}
+                                    checked={categoria.add}
+                                    onChange={handleCategoryChecks}
+                                />{categoria.name}
                             </Form.Label>
-								
-								
-							
-						);
-					})}
-				
+
+
+
+                        );
+                    })}
+
                 </Form.Group>
 
                 <Form.Label>Imagen</Form.Label>
                 <Form.Control type='file' placeholder='imagen'
                     name='img'
                     onChange={encodeImageFileAsURL}
-                    //value={base64ToString}
+                //value={base64ToString}
                 />
                 <img src={product.img} width="300px" />
-                
+
                 <Form.Group controlId="formBasic">
-                    <Button type="submit" className='mt-3' variant="primary" onClick={() => {
-                        dispatch(editarProducto(product))
-                        for (let i = 0; i < checkboxes.length; i++) {
-                            if (checkboxes[i].add === true) {
-                                axios.post(`http://localhost:3000/products/${product.id}/category/${checkboxes[i].id}`, product, {
-                                    headers: { "Content-type": "application/json; charset=UTF-8" }
+                    <Button type="button" className='mt-3' variant="primary" onClick={() => {
+                        Swal.fire({
+                            title: '¿Esta seguro que desea editar?',
+                            text: "¡No podrás revertir esto!",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Si, editar'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                dispatch(editarProducto(product))
+                                for (let i = 0; i < checkboxes.length; i++) {
+                                    if (checkboxes[i].add === true) {
+                                        axios.post(`http://localhost:3000/products/${product.id}/category/${checkboxes[i].id}`, product, {
+                                            headers: { "Content-type": "application/json; charset=UTF-8" }
+                                        })
+                                    }
+                                }
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Producto editado exitosamente',
+                                    showConfirmButton: false,
+                                    timer: 1500
                                 })
+                                setTimeout(function () {  window.location.pathname = '/administrar'; }, 1000);
                             }
-                        }
+                        })
+
+
                     }}>Editar</Button>
                 </Form.Group>
             </Form>
-        </Container>
+        </Container >
     )
 }
 

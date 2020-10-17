@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import Swal from 'sweetalert2';
 import { Button, Form, Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { mostrarProductos, agregarProducto } from "../../actions/products.js";
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const FormProductAdd = () => {
     //const dispatch=useDispatch()
@@ -44,21 +45,40 @@ const FormProductAdd = () => {
         }
     }
 
+    const envioformulario = (e) => {
+        Swal.fire({
+            icon: 'success',
+            title: 'Producto agregado con exito',
+        })
+        e.preventDefault();
+        dispatch(agregarProducto(product))
+        //Cuarto: Reiniciar el form
+        //console.log(productS);
+        setProduct({
+            id: '',
+            name: '',
+            description: '',
+            price: '',
+            stock: '',
+            img: ''
+        });
+    }
+
 
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(mostrarProductos())
-        return ()=> {
+        return () => {
 
         }
     }, [])
 
     return (
         <Container id='container' className='container-fluid col-6 mt-4 bg-white p-3'>
-            <Link to={`/admin`}><Button className='mr-3' variant="primary" type="button" >Volver atras</Button></Link>
-            <Form id='formProduct' name="add" >
+            <Link to={`/administrar`}><Button className='mr-3' variant="primary" type="button" >Volver atras</Button></Link>
+            <Form id='formProduct' name="add" onSubmit={envioformulario} >
 
-                <Form.Label id='formTitle'>Agregar Producto</Form.Label><br/>
+                <Form.Label id='formTitle'>Agregar Producto</Form.Label><br />
 
                 <Form.Label>Name</Form.Label>
                 <Form.Control column="sm" size="sm" type='text' placeholder='Nombre'
@@ -67,7 +87,7 @@ const FormProductAdd = () => {
                     value={name}
                     required
                 /><p id="pName"></p>
-                
+
 
                 <Form.Label>Descripción</Form.Label>
                 <Form.Control type='text' placeholder='Descripción'
@@ -76,7 +96,7 @@ const FormProductAdd = () => {
                     value={description}
                     required
                 /><p id="pDescripcion"></p>
-                
+
 
                 <Form.Label>Price</Form.Label>
                 <Form.Control type='number' placeholder='Precio'
@@ -85,7 +105,7 @@ const FormProductAdd = () => {
                     value={price}
                     required
                 /> <p id='pPrice'></p>
-                
+
 
                 <Form.Label >Stock</Form.Label>
                 <Form.Control type='number' placeholder='Stock'
@@ -103,13 +123,13 @@ const FormProductAdd = () => {
                     //value={img}
                     required
                 /><p id="pImg"></p>
-                 <img src={product.img} width="70%"/> 
-                
+                <img src={product.img} width="70%" />
+
 
                 <Form.Group controlId="formBasic">
-                    
-                    <Button type="submit" variant="primary" onClick={()=> dispatch(agregarProducto(product))} >Agregar</Button>
-    
+
+                    <Button type="submit" variant="primary">Agregar</Button>
+
                 </Form.Group>
 
             </Form>
