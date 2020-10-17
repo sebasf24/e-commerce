@@ -21,7 +21,7 @@ export default function NavBar (){
         <ul className="nav navbar pull-xs-left">
         <Nav.Item className={styles.logotech}>
             <Nav.Link href='#'>
-              <Link to={'/products'}>
+              <Link to={'/'}>
                 <img className={styles.logotech} src={Logo} width="90" height="40" alt="" />
               </Link>  
             </Nav.Link>
@@ -42,7 +42,8 @@ export default function NavBar (){
             </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-            <Nav.Link href='#'>Home</Nav.Link>
+            <Nav.Link href='#'>
+                <Link to="/">Home</Link></Nav.Link>
         </Nav.Item>
         <Nav.Item>
             <Nav.Link href='#'>Sobre Nosotros</Nav.Link>

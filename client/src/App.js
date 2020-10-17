@@ -1,6 +1,6 @@
 import React,{useEffect} from 'react';
 import './App.css';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import FormCategory from './Component/FormCategory/FormCategory.jsx'
 import Product from './Component/Product/Product.jsx'
 import Catalogue from './Component/Catalogue/Catalogue.jsx'
@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 import ListUser from './Component/User/ListUser'
 import FormAddUser from './Component/User/FormAddUser'
 import  DashboardAdmin  from './Component/Dashboard/DashboardAdmin';
+import Home from './Component/home/home.jsx'
 
 import NavBar from './Component/NavBar/navbar.jsx';
 
@@ -21,7 +22,11 @@ function App() {
   return (
   
     <Router >
-    <Route path='/' component={NavBar}/>
+    
+    <Switch>
+      <Route exact path='/' render={Home}/>
+      <Route component={ NavBar } />
+    </Switch>
     <Route exact path='/cart' component={Cart}/>
     <Route exact path='/admin' component={DashboardAdmin}/>
     <Route exact path={['/products','/products/category/:id']} component={Catalogue} />

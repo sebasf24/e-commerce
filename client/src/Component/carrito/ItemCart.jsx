@@ -21,8 +21,7 @@ export default function Items({producto}){
     }
     (producto.img) && (base64ToString = Buffer.from(producto.img.data, "base64").toString())
 
-    let descripcion = producto.description.substring(0, 70)
-    if(descripcion.length == 70){ descripcion = descripcion+"(...)" }
+   
 
     return(
         
@@ -35,7 +34,7 @@ export default function Items({producto}){
                     <Card.Title>{ producto.name}</Card.Title>
                 </Link>    
                     <Card.Subtitle>{ producto.price }</Card.Subtitle>
-                    <Card.Text>{descripcion}</Card.Text>
+                   
                 
                 </div>
 
