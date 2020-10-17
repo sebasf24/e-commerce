@@ -9,7 +9,11 @@ import {mostrarProductos,mostrarProducto_category} from "../../actions/products.
 export default function Cagalogue() {
    var cat=window.location.href
 const productsl = useSelector(state=>state.products);
- const {products} = productsl;
+ let products = productsl.products;
+ console.log(products);
+ if(products === 'No hay publicaciones que coincidan con tu búsqueda.'){
+     products = [];
+ }
  const dispatch=useDispatch();
   useEffect(()=>{
     if(cat.split('/')[4] =='category'){
@@ -28,7 +32,7 @@ const productsl = useSelector(state=>state.products);
                     return (<ProductCard Product={product} />)
                 })
                 :
-                <div></div> 
+                <h1>No hay publicaciones que coincidan con tu búsqueda.</h1>
                 }
             </div>
                
