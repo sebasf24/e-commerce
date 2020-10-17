@@ -1,0 +1,19 @@
+.Container{
+    width: 100%;
+    margin-top: 100px;
+    margin-left: 350px;
+ 
+ }
+ .boton{  
+     margin: 15px;
+     margin-left: 200px;
+     font-size: 17px;
+     width: 300px;
+     border: none;
+     pointer-events: auto;
+     text-transform: uppercase;
+     background: linear-gradient(45deg, #1292FF, #716BF9)!important; 
+ }
+ .Card{
+     margin-top: 70px;
+ }
