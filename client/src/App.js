@@ -10,8 +10,11 @@ import Cart from './Component/carrito/Cart.jsx'
 import { useSelector } from 'react-redux';
 import ListUser from './Component/User/ListUser'
 import FormAddUser from './Component/User/FormAddUser'
-import  DashboardAdmin  from './Component/Dashboard/DashboardAdmin';
+import  DashboardAdmin  from './Component/Dashboard/DashboardAdmin'; 
 import Order from './Component/Order/Order.jsx';
+import FormAdmin from './Component/formProductAdmin/formProductAdmin';
+import FormAdminAdd from './Component/formProductAdmin/formProductAdd';
+
 
 import NavBar from './Component/NavBar/navbar.jsx';
 
@@ -34,6 +37,9 @@ function App() {
     <Route path='/login' component={LoginUser}/>
     <Route path='/listUser' component={ListUser}/>
     <Route path='/addUser' component={FormAddUser}/>
+    <Route exact path='/administrar' component={FormAdmin}/>
+    <Route exact path='/administrarAdd' component={FormAdminAdd}/>
+    
     
     </Router>
   );
