@@ -9,6 +9,7 @@ import {mostrarProductos,mostrarProducto_category} from "../../actions/products.
 export default function Catalogue() {
    var cat=window.location.href
 const productsl = useSelector(state=>state.products);
+console.log(products1)
  let products = productsl.products;
  let sinStock = products.filter(el => el.stock===0)
  let conStock= products.filter(el=> el.stock > 0)
