@@ -90,34 +90,98 @@ server.get('/:idUser/cart', (req, res) => {
 })
 //ruta que agrega un item al carrito
 server.post('/:idUser/cart', (req, res) => {
-    const { idUser } = req.params;
-    const { estado, productId, cantidad, price } = req.body
-    console.log(req.body);
+    const {idUser} = req.params;
+    const {estado,productId,cantidad,price}=req.body
 
-    Order.findOrCreate({
-        where: {
-            userId: idUser
-        },
-        defaults: {
-            estado: estado,
-            userId: idUser
-        }
-    }).then(respuesta => {
+    Product.findOne({
+        where:{id:productId}
+    }).then(product=>{
+        let stockUpdate=product.stock-cantidad
+        Product.update(
+            {stock:stockUpdate},{where:{id:productId}}
+        )
+    })
+
+     Order.findOrCreate({
+       where:{userId:idUser},
+       defaults: {estado:estado,userId:idUser}
+    }).then(respuesta=>{
+
         Order_line.create({
-            orderId: respuesta[0].id,
-            productId: productId,
-            cantidad: cantidad,
+            orderId:respuesta[0].id,
+            productId:productId,
+            cantidad:cantidad,
             price: price
         })
-        .then(order => {
-            return res.status(200).send(order);
-        })
-    }).catch(err => {
-        console.log('estos es un error ' + err);
-        return res.send('estos es un error ' + err);
+
+        
+
+        return res.status(200).send(respuesta);
+    }).catch(err=>{
+        return res.send(err);
     })
+
+
 });
 
+//ruta para modificar las cantidades en el carrito
+server.put('/:idUser/cart',async(req,res)=>{
+    const {idUser} = req.params;
+    const {productId,cantidad} =req.body;
+
+try{
+
+    //buscamos la orden con el estado carrito del usuario
+    const cartUser= await Order.findOne({
+        where:{userId:idUser,estado:'carrito'},
+    })
+    //buscamos la orderLine que esta linkeada con el producto
+    const orderLine= await Order_line.findOne({
+        where:{productId:productId}
+    })
+
+    //buscamos el producto que esta linkeado con la orderLine
+    const product= await Product.findOne(
+        {
+            where:{id:productId}
+        }
+    )
+    if(cantidad>product.stock){
+        return res.send('La cantidad sobrepasa al stock');
+    }
+    
+    let cantidadActualizada = 0;
+    if (orderLine.cantidad > cantidad || cantidad === 0) {
+
+        cantidadActualizada = orderLine.cantidad - cantidad;
+        product.stock = product.stock + cantidadActualizada;
+
+    } else if (cantidad > orderLine.cantidad) {
+
+        cantidadActualizada = cantidad - orderLine.cantidad;
+        product.stock = product.stock - cantidadActualizada;
+    }
+
+    orderLine.cantidad=cantidad;
+
+    await product.save();
+    await orderLine.save();
+    await cartUser.save();
+
+    if(cantidad === 0){
+        Order_line.destroy({
+            where:{id:orderLine.id}
+        })
+        return res.send('item eliminado del carrito');
+    }
+
+    res.send(orderLine);
+
+}catch(err){
+    return res.send(err)
+}
+
+});
 server.delete('/:idUser/cart', (req, res) => {
     const { idUser } = req.params;
 
@@ -135,7 +199,6 @@ server.delete('/:idUser/cart', (req, res) => {
 
 });
 
-//PUT /users/:idUser/cart
 
 
 //Ruta para eliminar un usuario
