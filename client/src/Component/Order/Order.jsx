@@ -1,13 +1,14 @@
 import React,{useEffect} from 'react';
-import {Link} from 'react-router-dom'
 import {Container,Card,Button,Navbar,Nav} from 'react-bootstrap';
-import ItemCart from './ItemCart.jsx';
-import styles from './Cart.module.css';
+// import ItemCart from './ItemCart.jsx';
+import OrderLine from './OrderLine.jsx';
+import styles from './Order.module.css';
+// 
 import {agregarProductoCarrito,vaciarCarrito} from "../../actions/cart";
 import { useDispatch, useSelector, useStore } from 'react-redux';
 
-export default function Cart(){
-    console.log("COMPONENTE CARRITO");
+export default function Order(){
+    console.log("COMPONENTE ORDEN");
 const dispatch = useDispatch();
 //const products = useSelector(store=>store.productsCart)
 //let productosCarrito = products.productos
@@ -16,22 +17,22 @@ if(!localStorage.carritoLocal){
     localStorage.setItem("carritoLocal",JSON.stringify([]))
 }
 var prodGuardados = JSON.parse(localStorage.getItem("carritoLocal"))
+console.log("PRODUCTOS GUARDADOS = ", prodGuardados);
+// const vaciar=()=>{
+//     dispatch(vaciarCarrito())
+//     localStorage.setItem("carritoLocal",JSON.stringify([]))
+// }
 
-const vaciar=()=>{
-    dispatch(vaciarCarrito())
-    localStorage.setItem("carritoLocal",JSON.stringify([]))
-}
-
-    return(
+    return (
         <Container className={styles.container}>
             
             <Container className={styles.list}>
                 <Navbar className={styles.heaedr}>
                     <Navbar.Collapse className="justify-content-start">
-                        <Navbar.Brand> Lista de productos </Navbar.Brand>
+                        <Navbar.Brand> ORDER ! </Navbar.Brand>
                     </Navbar.Collapse>
                     <Nav className="mr-auto">
-                    <Button  onClick={vaciar} variant="outline-danger">VACIAR CARRITO</Button>
+                    {/* <Button  onClick={vaciar} variant="outline-danger">VACIAR CARRITO</Button> */}
                     </Nav>
                 </Navbar>
                 <Container className={styles.lista}>
@@ -42,7 +43,7 @@ const vaciar=()=>{
                    prodGuardados.map(producto=>{
                         return(
                             <div>
-                                <ItemCart producto={producto}/>
+                                <OrderLine producto={producto}/>
                                 <hr class="clearfix w-100"/>
                             </div>
                         )
@@ -51,11 +52,8 @@ const vaciar=()=>{
                     <div></div>
                 }
                 </Container>
-           
-            </Container>
 
-            <Container className={styles.totales}>
-
+                <Container className={styles.lista}>
                 <Navbar className={styles.heaedr}>
                         <Navbar.Collapse className="justify-content-start">
                             <Navbar.Brand> Resumen </Navbar.Brand>
@@ -82,14 +80,18 @@ const vaciar=()=>{
                     </p>
                     </div>
                     
-                    <Card.Footer className={styles.boton}>
+                    {/* <Card.Footer className={styles.boton}>
                         <Button className={styles.botonCancelar+' '+styles.button}>Cancelar</Button>
-                        <Link to={`/order`}>
                         <Button className={styles.botonAceptar+' '+styles.button}>Finalizar Compra</Button>
-                        </Link>
-                    </Card.Footer>
+                    </Card.Footer> */}
                     
                 </Card>
+                </Container>
+            </Container>
+
+            <Container className={styles.totales}>
+
+               
             </Container>
          
 
@@ -97,3 +99,48 @@ const vaciar=()=>{
     )
 
 } 
+
+
+
+// //COMPONENTE ORDER
+// export class Order extends Component {
+//     constructor(props){
+//       super(props)
+//       this.state = {
+//         products:[]
+//       }
+//     }
+
+
+
+//     //TRAE EL CARRITO DE UN USUARIO.. LO PRECARGA Y LO DEJA EN EL STORE DE REDUX
+//   componentDidMount(){
+//     if (this.props.user.id != 0){
+//       this.props.getProductsCart(this.props.user.id);
+//     }
+//     this.props.setRedirect(true)
+//   }
+
+//   componentWillUnmount(){
+//     this.props.setRedirectOff()
+//   }
+
+
+//     //FUNCION QUE CALCULA EL TOTAL DE LA COMPRA
+//   calculoTotal (products) {
+//     var totalDeOrden = 0;
+//     if (this.props.user.id !=0){
+//       products.map( e => {
+//         totalDeOrden = totalDeOrden + (e.order_line.price * e.order_line.cantidad)
+//       })
+//       return totalDeOrden;
+//     } else {
+//       products.map( e =>{
+//         totalDeOrden = totalDeOrden + (Number(e.price) * Number(e.cantidad));
+//       })
+//       return totalDeOrden;
+//     }
+//   }
+
+//     /*TOTAL DEL COSTO DE UN PRODUCTO */
+//   <h5> Total $ {el.cantidad*Number(el.price)}</h5>

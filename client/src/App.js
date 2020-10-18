@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 import ListUser from './Component/User/ListUser'
 import FormAddUser from './Component/User/FormAddUser'
 import  DashboardAdmin  from './Component/Dashboard/DashboardAdmin';
+import Order from './Component/Order/Order.jsx';
 
 import NavBar from './Component/NavBar/navbar.jsx';
 
@@ -22,6 +23,7 @@ function App() {
   
     <Router >
     <Route path='/' component={NavBar}/>
+    <Route exact path='/order' component={Order}/>
     <Route exact path='/cart' component={Cart}/>
     <Route exact path='/admin' component={DashboardAdmin}/>
     <Route exact path={['/products','/products/category/:id']} component={Catalogue} />
