@@ -1,42 +1,25 @@
 import React,{useEffect} from 'react';
-import {Link} from 'react-router-dom'
 import {Container,Card,Button,Navbar,Nav} from 'react-bootstrap';
-import ItemCart from './ItemCart.jsx';
-import styles from './Cart.module.css';
-import {agregarProductoCarrito,vaciarCarrito} from "../../actions/cart";
+import OrderLine from './OrderLine.jsx';
+import styles from './Order.module.css';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 
-export default function Cart(){
-    console.log("COMPONENTE CARRITO");
+export default function Order(){
+    console.log("COMPONENTE ORDEN");
 const dispatch = useDispatch();
-<<<<<<< HEAD
-// const products = useSelector(store=>store.productsCart)
-// let productosCarrito = products.productos
-=======
-//const products = useSelector(store=>store.productsCart)
-//let productosCarrito = products.productos
->>>>>>> 84c95f5f7152adeab3a60a7c8efd22ebc85b561a
-//obtengo los productos de localStorage
-if(!localStorage.carritoLocal){
-    localStorage.setItem("carritoLocal",JSON.stringify([]))
-}
+
 var prodGuardados = JSON.parse(localStorage.getItem("carritoLocal"))
+console.log("PRODUCTOS GUARDADOS = ", prodGuardados);
 
-const vaciar=()=>{
-    dispatch(vaciarCarrito())
-    localStorage.setItem("carritoLocal",JSON.stringify([]))
-}
 
-    return(
+    return (
         <Container className={styles.container}>
-            
             <Container className={styles.list}>
                 <Navbar className={styles.heaedr}>
                     <Navbar.Collapse className="justify-content-start">
-                        <Navbar.Brand> Lista de productos </Navbar.Brand>
+                        <Navbar.Brand> ORDER ! </Navbar.Brand>
                     </Navbar.Collapse>
                     <Nav className="mr-auto">
-                    <Button  onClick={vaciar} variant="outline-danger">VACIAR CARRITO</Button>
                     </Nav>
                 </Navbar>
                 <Container className={styles.lista}>
@@ -47,7 +30,7 @@ const vaciar=()=>{
                    prodGuardados.map(producto=>{
                         return(
                             <div>
-                                <ItemCart producto={producto}/>
+                                <OrderLine producto={producto}/>
                                 <hr class="clearfix w-100"/>
                             </div>
                         )
@@ -56,11 +39,8 @@ const vaciar=()=>{
                     <div></div>
                 }
                 </Container>
-           
-            </Container>
 
-            <Container className={styles.totales}>
-
+                <Container className={styles.lista}>
                 <Navbar className={styles.heaedr}>
                         <Navbar.Collapse className="justify-content-start">
                             <Navbar.Brand> Resumen </Navbar.Brand>
@@ -85,16 +65,14 @@ const vaciar=()=>{
                             0
                         }
                     </p>
-                    </div>
-                    
-                    <Card.Footer className={styles.boton}>
-                        <Button className={styles.botonCancelar+' '+styles.button}>Cancelar</Button>
-                        <Link to={`/order`}>
-                        <Button className={styles.botonAceptar+' '+styles.button}>Finalizar Compra</Button>
-                        </Link>
-                    </Card.Footer>
-                    
+                    </div> 
                 </Card>
+                </Container>
+            </Container>
+
+            <Container className={styles.totales}>
+
+               
             </Container>
          
 
@@ -102,3 +80,5 @@ const vaciar=()=>{
     )
 
 } 
+
+
