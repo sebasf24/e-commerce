@@ -1,0 +1,21 @@
+.container {
+    border:none;
+    border-radius: 0;
+    padding: 10px;
+    height: 120px;
+    display: inline;
+    text-align: left;
+  }
+
+  .descrip { 
+    margin-left: 20px;
+    grid-area: descrip; 
+    overflow: hidden;
+  }
+
+  .cantidad { 
+    display: inline-block;
+    text-align: right;
+    grid-area: cantidad; 
+  }
+ 

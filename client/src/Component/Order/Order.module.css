@@ -1,0 +1,61 @@
+.container {
+    margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      "header header"
+      "list totales";
+  }
+  .heaedr{
+    grid-area: header;
+    background-color: white;
+    margin-bottom: 2vh;
+    box-shadow: 
+    0 2px 2px 0 rgba(0,0,0,.14), 
+    0 3px 1px -2px rgba(0,0,0,.12), 
+    0 1px 5px 0 rgba(0,0,0,.2);
+  }
+  .list { 
+    grid-area: list; 
+  }
+
+  .lista{ 
+    background-color: white;
+    grid-area: list; 
+    box-shadow: 
+    0 2px 2px 0 rgba(0,0,0,.14), 
+    0 3px 1px -2px rgba(0,0,0,.12), 
+    0 1px 5px 0 rgba(0,0,0,.2);
+  }
+  .totales { 
+    align-items: flex-start;
+    grid-area: totales; 
+  }
+
+  .total {
+    padding: 10px;
+    width: 100%;
+    height: 200px;
+    grid-template-areas:
+      "items"
+      "precioFinal"
+      "boton";
+      box-shadow: 
+      0 2px 2px 0 rgba(0,0,0,.14), 
+      0 3px 1px -2px rgba(0,0,0,.12), 
+      0 1px 5px 0 rgba(0,0,0,.2);
+  }
+  .items { 
+    display: flex;
+    align-items: baseline;
+    justify-content: space-around;
+    grid-area: items; 
+  }
+
+  .precioFinal { 
+    display: flex;
+    align-items: baseline;
+    justify-content: space-around;
+    grid-area: precioFinal; 
+  }
