@@ -1,26 +1,40 @@
-import React from 'react';
-import { Grid, makeStyles } from '@material-ui/core';
-import NavbarAdmin from './NavbarAdmin'
+import React, {useState} from "react";
+import { Container, Tab, Tabs, Card } from "react-bootstrap";
+import HomeCategories from '../FormCategory/HomeCategories'
+import FormularioAdmin from '../formProductAdmin/formProductAdmin'
+import HomeUser from '../User/HomeUser'
+import OrderAdmin from '../Order/OrderAdmin'
 
 
+export default function DashboardAdmin(){
 
-const useStyles = makeStyles(() => ({
-    root: {
-        flexGrow: 1
-    },
+    const [key, setKey] = useState('home');
 
-}));
-
-export default function DashboardAdmin() {
-    const classes = useStyles();
     return (
-        <div className={classes.root}>
-            <Grid container spacing={1}>
-                <Grid item xs={12}><NavbarAdmin /></Grid>
-                <br /> <br />
+        <Container fluid>
+             <Tabs
+        id="controlled-tab-example"
+        activeKey={key}
+        onSelect={(k) => setKey(k)}
+      >
+        <Tab eventKey="products" title="Products" >
+          <FormularioAdmin/>
+        </Tab>
+        <Tab eventKey="categories" title="Categories">
+          <HomeCategories />
+        </Tab>
+        <Tab eventKey="user" title="Users">
+          <HomeUser />
+        </Tab>
+        <Tab eventKey="orders" title="Orders">
+          <OrderAdmin />
+        </Tab>
+      </Tabs>
 
-            </Grid>
+        </Container>
+     
+    );
+  }
+  
 
-        </div>
-    )
-}
+

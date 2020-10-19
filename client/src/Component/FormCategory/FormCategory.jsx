@@ -48,7 +48,7 @@ export default function FormCategory() {
             <Container>
                 <br />
             <Card className={style.card}>
-            <Link className={style.botonlink} to={`/listCategory`}>
+            <Link className={style.botonlink} to={`/admin`}>
                         <BiArrowBack/>
                     </Link>
 

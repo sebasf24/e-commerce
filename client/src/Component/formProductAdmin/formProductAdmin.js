@@ -51,7 +51,9 @@ const FormProductAdmin = () => {
             cancelButtonColor: '#d33',
             confirmButtonText: 'Si, eliminar'
         }).then((result) => {
-            if (result.isConfirmed) {
+            
+            if (result.value) {
+                
                 dispatch(eliminarProducto(id))
                 Swal.fire(
                     'Eliminado!',
@@ -72,7 +74,7 @@ const FormProductAdmin = () => {
                 <td>{product.description}</td>
                 <td>{product.price}</td>
                 <td>{product.stock}</td>
-                <td><img className='w-100' src={Buffer.from(product.img.data, "base64").toString()} /></td>
+                <td><img width={100} height={350} className='w-100' src={Buffer.from(product.img.data, "base64").toString()} /></td>
                 <td>
                     <div style={{ width: "110px" }}>
                         <Button className='btn btn-warning' onClick={() => clickEdit(product)}><FiEdit /></Button>

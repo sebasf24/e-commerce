@@ -78,11 +78,11 @@ const FormProductAdd = () => {
             title: 'Producto agregado con exito',
         })
         e.preventDefault();
-        //dispatch(agregarProducto(product))
+        
         axios.post(`http://localhost:3000/products/`, product,{
          headers:{"Content-type":"application/json; charset=UTF-8"}}
          ).then(respuesta=>{
-             console.log(respuesta.data.id);
+             
              let categoriesCheck = []
              for (let i = 0; i < checkboxes.length; i++) {
                  if (checkboxes[i].add === true) {
@@ -103,6 +103,15 @@ const FormProductAdd = () => {
             stock: '',
             img: ''
         });
+        setCheckboxes([]);
+        
+        const categoryTypes = categories.map(c => ({
+            name: c.name,
+            id: c.id,
+            add: false
+        }));
+
+        setCheckboxes(categoryTypes);
     }
 
 
@@ -116,7 +125,7 @@ const FormProductAdd = () => {
 
     return (
         <Container id='container' className='container-fluid col-6 mt-4 bg-white p-3'>
-            <Link to={`/administrar`}><Button className='mr-3' variant="primary" type="button" >Volver atras</Button></Link>
+            <Link to={`/admin`}><Button className='mr-3' variant="primary" type="button" >Volver atras</Button></Link>
             <Form id='formProduct' name="add" onSubmit={envioformulario} >
 
                 <Form.Label id='formTitle'>Agregar Producto</Form.Label><br />

@@ -6,7 +6,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { editarProducto } from "../../actions/products.js";
 import { listCategory } from '../../actions/category';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
+
 
 const FormProductEdit = (productEdit) => {
     // extrae los valores
@@ -86,13 +87,7 @@ const FormProductEdit = (productEdit) => {
 
     const envioformulario = (e) => {
         e.preventDefault();
-        // for (let i = 0; i < checkboxes.length; i++) {
-        //     if (checkboxes[i].add === true) {
-        //         axios.post(`http://localhost:3000/products/${product.id}/category/${checkboxes[i].id}`, product, {
-        //             headers: { "Content-type": "application/json; charset=UTF-8" }
-        //         })
-        //     }
-        // }
+       
     }
 
     const redireccionarEdicion = product => {
@@ -101,7 +96,8 @@ const FormProductEdit = (productEdit) => {
 
     return (
         <Container id='container' className='container-fluid col-6 mt-4 bg-white p-3'>
-            <Form id='formProduct' name="editar" onSubmit={envioformulario} >
+            <Link to={`/administrar`}><Button className='mr-3' variant="primary" type="button" >Volver atras</Button></Link>
+            <Form id='formProduct' name="editar" >
 
                 <Form.Label id='formTitle'>Editar Producto</Form.Label>
 
@@ -182,7 +178,7 @@ const FormProductEdit = (productEdit) => {
                             cancelButtonColor: '#d33',
                             confirmButtonText: 'Si, editar'
                         }).then((result) => {
-                            if (result.isConfirmed) {
+                            if (result.value) {
                                 dispatch(editarProducto(product))
                                 let categoriesCheck=[]
                                 for (let i = 0; i < checkboxes.length; i++) {
