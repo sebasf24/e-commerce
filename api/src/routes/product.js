@@ -22,23 +22,32 @@ server.get("/:id", (req,res)=>{
 })
 
 //agrega categoria al producto
-server.post('/:idProducto/category/:idCategoria',(req,res) => {
+server.post('/:idProducto/category/',(req,res) => {
 	 
-	const  {idProducto, idCategoria} = req.params;
+	const  {idProducto} = req.params;
+	const categoriesCheck = req.body[1];
+	console.log('categorias:',categoriesCheck);
 
-	 if(!idProducto || !idCategoria){
+	 if(!idProducto ){
 	   return res.status(400).send("Faltan parametros !!!")
 	} 
-	Categoryproduct.create({
-		categoryId:idCategoria,
-		productId:idProducto
-	}) 	
-   .then(algo=>{
-	res.send(algo)
-   })
-   .catch(err=>{
-	console.log("no anda")   
-	res.send(err)})
+	let categoriesProductCreate=[];
+	for(let i=0; i<categoriesCheck.length;i++){
+		objCategoriesProduct={
+			categoryId:categoriesCheck[i],
+			productId:idProducto
+		}
+		categoriesProductCreate.push(objCategoriesProduct);
+	}
+
+	Categoryproduct.bulkCreate(
+		categoriesProductCreate
+	).then(algo=>{
+		res.send(algo);
+	}).catch(err=>{
+		console.log("no anda")   
+		res.send(err)})
+	
 }) 
 
 //quitar categoria al producto
@@ -77,7 +86,7 @@ server.delete('/:idProducto/category/:idCategoria', (req, res)=>{
 		 img:img
 	 })
 	 .then((prod)=>{
-		 res.status(201).json(req.body)
+		 res.send(prod);
 	 })
 }) 
 

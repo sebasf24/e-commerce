@@ -33,7 +33,7 @@ export default function NavBar (){
         cookies.remove('typeUser', {path:'/'})
         window.location.href='./products';
     }
-    console.log('username:'+ cookies.get('username'))
+    //console.log('username:'+ cookies.get('username'))
 
     
  return (
