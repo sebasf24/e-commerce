@@ -9,13 +9,8 @@ import { useDispatch, useSelector, useStore } from 'react-redux';
 export default function Cart(){
     console.log("COMPONENTE CARRITO");
 const dispatch = useDispatch();
-<<<<<<< HEAD
-// const products = useSelector(store=>store.productsCart)
-// let productosCarrito = products.productos
-=======
 //const products = useSelector(store=>store.productsCart)
 //let productosCarrito = products.productos
->>>>>>> 84c95f5f7152adeab3a60a7c8efd22ebc85b561a
 //obtengo los productos de localStorage
 if(!localStorage.carritoLocal){
     localStorage.setItem("carritoLocal",JSON.stringify([]))

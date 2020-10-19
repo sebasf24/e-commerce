@@ -11,8 +11,7 @@ import { useSelector } from 'react-redux';
 import ListUser from './Component/User/ListUser'
 import FormAddUser from './Component/User/FormAddUser'
 import  DashboardAdmin  from './Component/Dashboard/DashboardAdmin';
-import Home from './Component/home/home.jsx'
-import  DashboardAdmin  from './Component/Dashboard/DashboardAdmin'; 
+import Home from './Component/home/home.jsx' 
 import Order from './Component/Order/Order.jsx';
 import FormAdmin from './Component/formProductAdmin/formProductAdmin';
 import FormAdminAdd from './Component/formProductAdmin/formProductAdd';
@@ -32,7 +31,6 @@ function App() {
       <Route exact path='/' render={Home}/>
       <Route component={ NavBar } />
     </Switch>
-    <Route path='/' component={NavBar}/>
     <Route exact path='/order' component={Order}/>
     <Route exact path='/cart' component={Cart}/>
     <Route exact path='/admin' component={DashboardAdmin}/>

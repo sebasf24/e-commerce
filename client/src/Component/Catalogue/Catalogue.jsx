@@ -9,13 +9,13 @@ import {mostrarProductos,mostrarProducto_category} from "../../actions/products.
 export default function Catalogue() {
    var cat=window.location.href
 const productsl = useSelector(state=>state.products);
-console.log(products1)
+
  let products = productsl.products;
- let sinStock = products.filter(el => el.stock===0)
- let conStock= products.filter(el=> el.stock > 0)
- let productos = conStock.concat(sinStock)
- if(productos === 'No hay publicaciones que coincidan con tu búsqueda.'){
-     productos = [];
+//  let sinStock = products.filter(el => el.stock===0)
+//  let conStock= products.filter(el=> el.stock > 0)
+//  let productos = conStock.concat(sinStock)
+ if(products === 'No hay publicaciones que coincidan con tu búsqueda.'){
+     products = [];
  }
  const dispatch=useDispatch();
   useEffect(()=>{
@@ -30,8 +30,8 @@ console.log(products1)
 
             <MenuCategories className={style.menuCategories}/>
             <div className={style.productos}>
-                { productos ? 
-                productos.map(product => {
+                { products ? 
+                products.map(product => {
                     return (<ProductCard Product={product} />)
                 })
                 :
