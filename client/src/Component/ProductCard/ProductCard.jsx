@@ -12,15 +12,37 @@ export default function ProductCard({ Product }) {
     let base64ToString;
     (Product.img) && (base64ToString = Buffer.from(Product.img.data, "base64").toString())
 
-    const dispatch=useDispatch()
-    const sumarAlCarrito = ()=>{
-        if(!localStorage.carritoLocal){
-            localStorage.setItem("carritoLocal",JSON.stringify([]))
-        }
 
-      
-     
-        console.log("Product", Product);
+
+const dispatch=useDispatch()
+
+    let prodStock = JSON.parse(localStorage.stock)[Product.id]
+    
+const sumarAlCarrito = ()=>{
+ 
+// si el producto no existe lo agrega 
+    if(!prodStock){
+            localStorage.setItem("stock",JSON.stringify(
+                Object.assign(JSON.parse(localStorage.stock),
+                {[Product.id]:{ cantidad:1,
+                                stock:Product.stock-1,
+                                precio:Product.price 
+                            }
+                            })))                  
+        }
+//si el producto existe suma la cantidad,resta el stock y modifica el precio total
+
+        if(prodStock && prodStock.stock>0){
+                localStorage.setItem("stock",JSON.stringify(
+                    Object.assign(JSON.parse(localStorage.stock),
+                    {[Product.id]:{ cantidad: ++prodStock.cantidad,
+                                    stock:prodStock.stock-1,
+                                    precio: Product.price * prodStock.cantidad
+                                }
+                                })))   
+        }    
+
+       // console.log("Product", Product);
         // existe = no
         // Loop recorriendo ls 
         //     pregunto si id = Producto id
@@ -31,31 +53,24 @@ export default function ProductCard({ Product }) {
         // else
         //      lo ignoro
         var ls = JSON.parse(localStorage.getItem("carritoLocal"));
-        console.log("ls=",ls);
         var existe = false;
-        console.log("ls.length=" + ls.length);
         for (let i = 0; i < ls.length; i++) {
-            console.log( "i=" + i + " || ", ls[i].id , " ||", Product.id );
             if(ls[i].id == Product.id)
                 existe = true;
         } 
         if(existe == false)
             {
-            console.log("id != P.id lo agrego") ;
-            localStorage.setItem("carritoLocal",JSON.stringify(
-            JSON.parse(localStorage.getItem("carritoLocal"))            
-            .concat(Product)
-            ))
+                localStorage.setItem("carritoLocal",JSON.stringify(
+                JSON.parse(localStorage.getItem("carritoLocal"))            
+                .concat(Product)
+                ))
             }
-        else
-            {
-            console.log("id == P.id lo ignoro") ;
-            }
-        console.log("ls=", localStorage.getItem("carritoLocal"));
+
         dispatch(agregarProductoCarrito(Product))
         
     }
-  
+
+     
     let botones=
             <div className={styles.botonlink}>
                 <Link to={`/products/${Product.id}`}>
@@ -71,7 +86,7 @@ export default function ProductCard({ Product }) {
 
         let cartel = <div className={styles.sinstock}><h4>Sin Stock</h4></div>;
     
-
+        
     return (
         
             <Card className={styles.card}>
