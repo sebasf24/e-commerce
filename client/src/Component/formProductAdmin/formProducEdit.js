@@ -21,6 +21,7 @@ const FormProductEdit = (productEdit) => {
     const history = useHistory();
 
     let { id, name, description, price, stock, img } = productEdit.product;
+    console.log(productEdit.product);
     //pasa la imagen a base 64 desde un buffer
     let base64ToString;
     (img) && (base64ToString = Buffer.from(img.data, "base64").toString())
@@ -183,20 +184,23 @@ const FormProductEdit = (productEdit) => {
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 dispatch(editarProducto(product))
+                                let categoriesCheck=[]
                                 for (let i = 0; i < checkboxes.length; i++) {
                                     if (checkboxes[i].add === true) {
-                                        axios.post(`http://localhost:3000/products/${product.id}/category/${checkboxes[i].id}`, product, {
-                                            headers: { "Content-type": "application/json; charset=UTF-8" }
-                                        })
+                                        categoriesCheck.push(checkboxes[i].id);
                                     }
                                 }
+                                axios.post(`http://localhost:3000/products/${product.id}/category/`, [product,categoriesCheck], {
+                                            headers: { "Content-type": "application/json; charset=UTF-8" }
+                                        })
+
                                 Swal.fire({
                                     icon: 'success',
                                     title: 'Producto editado exitosamente',
                                     showConfirmButton: false,
                                     timer: 1500
                                 })
-                                setTimeout(function () {  window.location.pathname = '/administrar'; }, 1000);
+                                setTimeout(function () {  window.location.pathname = '/administrar'; }, 0);
                             }
                         })
 

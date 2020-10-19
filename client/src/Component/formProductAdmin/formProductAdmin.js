@@ -22,7 +22,7 @@ const FormProductAdmin = () => {
         return () => {
 
         }
-    })
+    },[FormProductAdmin])
 
     const [click, setclick] = useState({
         clicked: ''
