@@ -69,6 +69,9 @@ const eliminarItems = ()=>{
 }
 
     (producto.img) && (base64ToString = Buffer.from(producto.img.data, "base64").toString())
+
+   
+
     return(
         
             <Card className={styles.container}>
@@ -80,7 +83,7 @@ const eliminarItems = ()=>{
                     <Card.Title>{ producto.name}</Card.Title>
                 </Link>    
                     <Card.Subtitle>{ producto.price }</Card.Subtitle>
-                    <Card.Text>{producto.description}</Card.Text>
+                   
                 
                 </div>
 

@@ -84,7 +84,12 @@ const sumarAlCarrito = ()=>{
                 </Link>
             </div>;
 
-        let cartel = <div className={styles.sinstock}><h4>Sin Stock</h4></div>;
+        let cartel = <div className={styles.sinstock}>
+                            <Link to={`/products/${Product.id}`}>
+                                <Button variant="primary" className={styles.boton}>Ver</Button>
+                            </Link>
+                            <h4>Sin Stock</h4>
+                    </div>;
     
         
     return (

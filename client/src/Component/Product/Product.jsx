@@ -108,12 +108,26 @@ export default function Product(props) {
         dispatch(agregarProductoCarrito(Product))
         
     }
+        
+    let botones = <Form >
+    <Form.Label>Cantidad</Form.Label>
+    <Form.Control placeholder="1" min={1} max={stock} className={styles.cantidad} type="number"/>
+    <Button onClick={sumarAlCarrito} className={styles.boton +' '+ styles.boton1} 
+       ><BiCart/> AGREGAR AL CARRITO</Button>
+    <Button className={styles.boton +' '+ styles.boton2} 
+        >COMPRAR AHORA</Button>
+    </Form>
+
+    let cartel = <div className={styles.sinstock}>
+    <h4>Sin Stock</h4>
+    <p>Lo sentimos, no disponemos de este articulo por el momento. Pronto lo tendremos de vuelta!</p>
+    </div>
 
         
     return (
         <Container className={styles.container}>
             <Card className={styles.card}>
-                    <Link className={styles.botonlink} to={`/products/`}>
+                    <Link className={styles.botonlink} to={`/products`}>
                         <BiArrowBack/>
                     </Link>
                     <div className={styles.imagen}>
@@ -141,28 +155,8 @@ export default function Product(props) {
 
                     <Card.Footer className={styles.botones}>
                                  
-                        <Form >
-                            <Form.Label>Cantidad</Form.Label>
-                            <Form.Control 
-                                onChange={cambiarCantidad}
-                                value={cantidad}
-                                placeholder="1" min={1} max={stock} 
-                                className={styles.cantidad} 
-                                type="number"/>
-                            <Button onClick={sumarAlCarrito} className={styles.boton +' '+ styles.boton1} 
-                               ><BiCart/> AGREGAR AL CARRITO</Button>
-                            <Link to={"/cart"}>
-                                <Button
-                                onClick={()=>{
-                                    if(prodStock && prodStock.stock==0){
-                                        return
-                                    }
-                                    sumarAlCarrito()}
-                                }
-                                className={styles.boton +' '+ styles.boton2}>COMPRAR AHORA</Button>
-                            </Link>
-                        </Form>
                         
+                        {stock==0 ? cartel : botones}
                     </Card.Footer>
                   
             </Card>
