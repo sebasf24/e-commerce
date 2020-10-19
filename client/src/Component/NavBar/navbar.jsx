@@ -4,7 +4,9 @@ import Logo from './technav1.png';
 import { Nav } from 'react-bootstrap';
 import styles from './navbar.module.css';
 import SearchBar from '../SearchBar/SearchBar.js';
-import {Avatar, makeStyles} from '@material-ui/core';
+import {Avatar, Button, makeStyles} from '@material-ui/core';
+import { ImPodcast } from 'react-icons/im';
+import Cookies from 'universal-cookie'
 
 const useStyles = makeStyles((theme) => ({
     small: {
@@ -12,9 +14,25 @@ const useStyles = makeStyles((theme) => ({
       height: theme.spacing(3),
       background:theme.palette.primary.main
     },
+    small2: {
+        width: theme.spacing(3),
+        height: theme.spacing(3),
+        background:theme.palette.secondary.light
+      },
   }));
+const cookies=new Cookies();
 export default function NavBar (){
+
     const classes= useStyles();
+
+    const cerrarSesion=()=>{
+        cookies.remove('id', {path:"/"});
+        cookies.remove('username', {path:"/"});
+        window.location.href='./products';
+    }
+    console.log('username:'+ cookies.get('username'))
+
+    
  return (
      <Nav className={`navbar navbar-dark bg-dark ${styles.nav}`}>
        
@@ -64,6 +82,7 @@ export default function NavBar (){
             </Link>
         </Nav.Item>
         <Nav.Item><Nav.Link href='/login'><Avatar className={classes.small}  /></Nav.Link></Nav.Item>
+        <Nav.Item><Button onClick={()=>{cerrarSesion()}}><Avatar className={classes.small2}  /></Button></Nav.Item>
         </ul>
 
      </Nav>

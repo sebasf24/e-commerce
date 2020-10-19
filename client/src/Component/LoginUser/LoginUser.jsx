@@ -1,13 +1,16 @@
-import React, {useState} from 'react';
-import {useDispatch} from 'react-redux'
+import React, {useState, useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux'
 import Avatar from '@material-ui/core/Avatar';
 import {Button, CssBaseline,TextField, FormControlLabel,Checkbox,Grid} from '@material-ui/core';
 import { makeStyles, Typography, Container,Box } from '@material-ui/core';
 import style from '../User/FormAddUser.module.css';
 import {Link} from 'react-router-dom';
-// import {loginUser} from '../../actions/user';
 import md5 from 'md5';
+import Cookies from 'universal-cookie';
+import axios from 'axios';
 
+
+ 
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -28,7 +31,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-//Logueo de usuario
 export default function Loginuser(onLogin) {
 
   const classes = useStyles();
@@ -36,23 +38,40 @@ export default function Loginuser(onLogin) {
     username: '',
     password:''
   })
-
+  const cookies = new Cookies();
+  const userLogged=useSelector(store=>store.user)
+  const userlog={userLogged}
+ 
 const handlerOnchange=(e)=>{
   setLogin({
     ...login,
     [e.target.name]: e.target.value
   })
 }
+ const Session=(e)=>{
+  e.preventDefault();
+  
+    axios.get(`http://localhost:3000/user/login?username=${login.username}&password=${login.password}`)
+   .then(response=>{
+     console.log(response)
+     return response.data;
+   })
+   .then(response=>{
+     console.log(response.id)
+     if(response){
+       var user=response;
+       cookies.set('id',user.id, {path:"/"});
+       cookies.set('username',user.unsername, {path:"/"});
+      alert(`Bienvenid ${user.username}`) ;
+      window.location.href='./products'
+     }
+   })
+   .catch(error=>{
+    console.log(error);
+})
+ }
 
-const dispatch=useDispatch();
 
-  const handlerSubmit=(e)=>{
-      e.preventDefault();
-
-      // const user=dispatch(loginUser(login.username, md5(login.password)))
-      // console.log(user)
-
-  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -60,7 +79,7 @@ const dispatch=useDispatch();
       <div className={classes.paper}>
         <Avatar className={classes.avatar}/>
         <Typography component="h1" variant="h5">Login</Typography>
-        <form className={classes.form} noValidate onSubmit={(e)=>{handlerSubmit(e)}}>
+        <form className={classes.form} noValidate onSubmit={(e)=>Session(e)}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -94,7 +113,8 @@ const dispatch=useDispatch();
             fullWidth
             variant="contained"
             color="primary"
-            className={style.boton}>
+            className={style.boton}
+          >
             Sign In
           </Button>
           <br/><br/>        
