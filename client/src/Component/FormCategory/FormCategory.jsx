@@ -2,20 +2,21 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Form, Button, Col, Card } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import { addCategory } from '../../actions/category';
+import { addCategory, listCategory } from '../../actions/category';
 import style from './FormCategory.module.css';
 import { BiArrowBack } from "react-icons/bi";
 import {Link} from 'react-router-dom'
 
 
+
 export default function FormCategory() {
 
     const dispatch = useDispatch();
-    const initialFormData = Object.freeze({
+  
+    const [formData, updateFormData] = useState({
         name: '',
         description: ''
     });
-    const [formData, updateFormData] = useState(initialFormData);
 
     const handleChange = (e) => {
         updateFormData({
@@ -25,19 +26,18 @@ export default function FormCategory() {
 
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
 
-        var newDate = {
-            name: formData.name,
-            description: formData.description
-        }
-        dispatch(addCategory(newDate))
-
-        limpiarFormulario()
-        updateFormData(initialFormData)
-        console.log(newDate)
-    }
+    //     var newDate = {
+    //         name: formData.name,
+    //         description: formData.description
+    //     }
+    //     dispatch(addCategory(newDate))
+    //     limpiarFormulario()
+    //     updateFormData(initialFormData)
+    //     dispatch(listCategory())
+    // }
 
     function limpiarFormulario() {
         document.getElementById("form").reset();
@@ -48,11 +48,11 @@ export default function FormCategory() {
             <Container>
                 <br />
             <Card className={style.card}>
-            <Link className={style.botonlink} to={`/listCategory`}>
+            <Link className={style.botonlink} to={`./admin`}>
                         <BiArrowBack/>
                     </Link>
 
-                <Form id="form" onSubmit={(e) => handleSubmit(e)} className="card-boy">
+                <Form id="form"  className="card-boy">
                     <Form.Label className={style.h3}><h3>Ingresar Nueva Categoria</h3></Form.Label>
                     <br /><br /><br />
                     <Form.Row>
@@ -82,7 +82,12 @@ export default function FormCategory() {
                     </Form.Row>
                     <br />
 
-                    <Button className={style.button} type="submit" >Agregar</Button>
+                    <Button type="submit" className={style.button} onClick={() => {
+                           dispatch(addCategory(formData))
+                           limpiarFormulario()
+                           updateFormData('')
+                           dispatch(listCategory())
+                    }} >Agregar</Button>
                 </Form>
                 </Card>
             </Container>

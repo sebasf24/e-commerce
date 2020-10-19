@@ -6,12 +6,13 @@ import styles from './navbar.module.css';
 import SearchBar from '../SearchBar/SearchBar.js';
 import {Avatar, Button, makeStyles} from '@material-ui/core';
 import { ImPodcast } from 'react-icons/im';
+import { RiLogoutCircleRLine } from 'react-icons/ri';
 import Cookies from 'universal-cookie'
 
 const useStyles = makeStyles((theme) => ({
     small: {
-      width: theme.spacing(3),
-      height: theme.spacing(3),
+      width: theme.spacing(4),
+      height: theme.spacing(4),
       background:theme.palette.primary.main
     },
     small2: {
@@ -22,12 +23,14 @@ const useStyles = makeStyles((theme) => ({
   }));
 const cookies=new Cookies();
 export default function NavBar (){
+    const userlogged=cookies.get('typeUser')
 
     const classes= useStyles();
 
     const cerrarSesion=()=>{
         cookies.remove('id', {path:"/"});
         cookies.remove('username', {path:"/"});
+        cookies.remove('typeUser', {path:'/'})
         window.location.href='./products';
     }
     console.log('username:'+ cookies.get('username'))
@@ -46,11 +49,11 @@ export default function NavBar (){
         </Nav.Item>
 
         <Nav.Item>
-            <Nav.Link href="#">
+           {  userlogged==='Admin'? <Nav.Link href="#">
                 <Link to={'/admin'}>
                  Admin
                 </Link>
-            </Nav.Link>
+            </Nav.Link> : <div></div>}
         </Nav.Item>
         <Nav.Item>
             <Nav.Link href="#">
@@ -82,7 +85,8 @@ export default function NavBar (){
             </Link>
         </Nav.Item>
         <Nav.Item><Nav.Link href='/login'><Avatar className={classes.small}  /></Nav.Link></Nav.Item>
-        <Nav.Item><Button onClick={()=>{cerrarSesion()}}><Avatar className={classes.small2}  /></Button></Nav.Item>
+        <Nav.Item><Button onClick={()=>{cerrarSesion()}}><Avatar className={classes.small}><RiLogoutCircleRLine/></Avatar></Button></Nav.Item>
+      
         </ul>
 
      </Nav>
