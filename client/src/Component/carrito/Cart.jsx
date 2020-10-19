@@ -106,9 +106,10 @@ const actualizarPrecio=()=>{
                         <Card.Subtitle>TOTAL</Card.Subtitle>
                        
                         <Card.Subtitle>{
+                            
                             prodGuardados
                             ?
-                            products.total
+                           products.total
                             :
                             0
                         }</Card.Subtitle> 
