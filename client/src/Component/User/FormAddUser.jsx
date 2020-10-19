@@ -3,11 +3,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import clsx from 'clsx';
 import { Card, Button, Row, Col, Form } from 'react-bootstrap';
 import { makeStyles, Container, OutlinedInput, Typography, InputAdornment, IconButton, FormControl, FormHelperText, Grid } from '@material-ui/core';
-import { TextField, InputLabel, Avatar, MenuItem, Select } from '@material-ui/core';
+import { TextField, InputLabel, Avatar, MenuItem, Select} from '@material-ui/core';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 import style from './FormAddUser.module.css';
 import { useDispatch } from 'react-redux';
-import { addUser } from '../../actions/user';
+import { addUser, listUser } from '../../actions/user';
+import { BiArrowBack } from "react-icons/bi";
+import Cookies from 'universal-cookie'
+
 
 
 
@@ -34,10 +37,15 @@ function limpiarFormulario() {
 }
 //Funcion para crear un nueva cuenta de usuario
 export default function FormAddUser(message) {
+    const cookies=new Cookies();
+    const userlogged=cookies.get('typeUser')
+    console.log(userlogged)
 
     const classes = useStyles();
     const dispach = useDispatch();
     const [user, setUser] = useState('');
+    const [click, setClick]=useState(false);
+
     const [shownPass, setShownpass] = useState(false);
     const switchwShow = () => setShownpass(!shownPass);
 
@@ -47,22 +55,17 @@ export default function FormAddUser(message) {
             ...user,
             [e.target.name]: e.target.value
         })
+   
 
     }
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(user)
-        dispach(addUser(user))
-        limpiarFormulario();
-        setUser('');
-    }
-
     return (
 
         <Container component="main" maxWidth="lg">
             <Card className={style.Card}>
-                <form id="form" className={classes.root} noValidate autoComplete="on" onSubmit={(e) => handleSubmit(e)}>
+          
+             
+                <form id="form" className={classes.root} noValidate autoComplete="on">
+                     
                     <br />
                     <Typography component="h1" variant="h5">Registrar Usuario:</Typography>
                     <Col>
@@ -81,7 +84,7 @@ export default function FormAddUser(message) {
                                 label="Last Name"
                                 type="text"
                                 variant="outlined"
-
+            
                                 onChange={onChange} />
                         </Row>
                         <Row>
@@ -135,7 +138,9 @@ export default function FormAddUser(message) {
 
                         </Row>
                         <Row>
-                            <FormControl variant="outlined" className={clsx(classes.margin, classes.textField)}>
+                            {/* {mostarTipos()  
+                            } */}{
+                                 userlogged==='Admin'? <FormControl variant="outlined" className={clsx(classes.margin, classes.textField)}>
                                 <InputLabel >Type User</InputLabel>
                                 <Select
                                     labelId="demo-simple-select-outlined-label"
@@ -145,12 +150,15 @@ export default function FormAddUser(message) {
                                     label="Type User"
                                 >
                                     <MenuItem value="">
-                                        <em>None</em>
+                                        <em></em>
                                     </MenuItem>
                                     <MenuItem value='Admin'>Admin</MenuItem>
-                                    <MenuItem value='User'>user</MenuItem>
+                                    <MenuItem value='cliente'>cliente</MenuItem>
                                 </Select>
-                            </FormControl>
+                            </FormControl>: <div></div>
+
+                            }
+                        
 
                         </Row>
                     </Col>
@@ -161,7 +169,13 @@ export default function FormAddUser(message) {
                         </Grid>
 
                     </Col>
-                    <Button className={style.boton} type="submit" >Agregar</Button>
+                    <Button className={style.boton} type="submit" 
+                    onClick={()=>{    
+                        dispach(addUser(user))
+                        limpiarFormulario();
+                        setUser('')
+                        dispach(listUser());}}
+                     >Agregar</Button>
                 </form>
 
             </Card>

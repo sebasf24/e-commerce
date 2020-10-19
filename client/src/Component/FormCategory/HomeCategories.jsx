@@ -1,4 +1,4 @@
-import React from 'react';
+import React , {useEffect}from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Form,Col, Row, Button } from 'react-bootstrap';
 import {Link} from 'react-router-dom';
@@ -6,6 +6,7 @@ import ListCategory from './ListCategory';
 import style from './FormCategory.module.css';
 
 export default function homeCategory(){
+ 
 
     return (
         <Container>
