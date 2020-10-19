@@ -11,7 +11,7 @@ import { useHistory, Link } from 'react-router-dom';
 
 const FormProductEdit = (productEdit) => {
     // extrae los valores
-    console.log(productEdit)
+    //console.log(productEdit)
     const dispatch = useDispatch();
     const categ = useSelector(store => store.category);
     const categories = categ.category;
@@ -22,7 +22,7 @@ const FormProductEdit = (productEdit) => {
     const history = useHistory();
 
     let { id, name, description, price, stock, img } = productEdit.product;
-    console.log(productEdit.product);
+    //console.log(productEdit.product);
     //pasa la imagen a base 64 desde un buffer
     let base64ToString;
     (img) && (base64ToString = Buffer.from(img.data, "base64").toString())
@@ -97,7 +97,7 @@ const FormProductEdit = (productEdit) => {
     return (
         <Container id='container' className='container-fluid col-6 mt-4 bg-white p-3'>
             <Link to={`/administrar`}><Button className='mr-3' variant="primary" type="button" >Volver atras</Button></Link>
-            <Form id='formProduct' name="editar" >
+            <Form id='formProduct' name="editar" onSubmit={envioformulario} >
 
                 <Form.Label id='formTitle'>Editar Producto</Form.Label>
 
