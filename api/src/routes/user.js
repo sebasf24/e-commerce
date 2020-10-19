@@ -116,30 +116,37 @@ server.get('/login', (req, res, next) => {
 //ruta que agrega un item al carrito
 server.post('/:idUser/cart', (req, res) => {
     const {idUser} = req.params;
-    const {estado,productId,cantidad,price}=req.body
-
-    Product.findOne({
-        where:{id:productId}
+    const estado=req.body[0]
+   // productId,cantidad,price
+    const producto=req.body[1]
+    console.log(producto)
+   /*  Product.findOne({
+        where:{id:producto.productId}
     }).then(product=>{
-        let stockUpdate=product.stock-cantidad
+        //let stockUpdate=product.stock-cantidad
         Product.update(
-            {stock:stockUpdate},{where:{id:productId}}
+            {stock:producto.cantidad},{where:{id:producto.productId}}
         )
-    })
+    }) */
 
      Order.findOrCreate({
        where:{userId:idUser},
        defaults: {estado:estado,userId:idUser}
     }).then(respuesta=>{
-
-        Order_line.create({
-            orderId:respuesta[0].id,
-            productId:productId,
-            cantidad:cantidad,
-            price: price
-        })
-
-        
+        var objOrder_line=[]
+        for(let i=0 ; i<producto.length;i++){
+          var {productId,cantidad,price}=producto[i]
+            objOrder_line.push({
+                orderId:respuesta[0].id,
+                productId:productId,
+                cantidad:cantidad,
+                price:price
+            })
+        console.log(objOrder_line)
+        }
+        Order_line.bulkCreate(
+            objOrder_line
+        )
 
         return res.status(200).send(respuesta);
     }).catch(err=>{

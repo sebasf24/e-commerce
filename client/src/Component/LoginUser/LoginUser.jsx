@@ -61,7 +61,7 @@ const handlerOnchange=(e)=>{
      if(response){
        var user=response;
        cookies.set('id',user.id, {path:"/"});
-       cookies.set('username',user.unsername, {path:"/"});
+       cookies.set('username',user.username, {path:"/"});
       alert(`Bienvenid ${user.username}`) ;
       window.location.href='./products'
      }

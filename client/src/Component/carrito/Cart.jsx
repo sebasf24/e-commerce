@@ -3,10 +3,13 @@ import {Container,Card,Button,Navbar,Nav} from 'react-bootstrap';
 import ItemCart from './ItemCart.jsx';
 import styles from './Cart.module.css';
 import {Link} from 'react-router-dom';
-import {agregarProductoCarrito,vaciarCarrito,quitarProdCarrito,modificarStock,mostraTotal} from "../../actions/cart";
+import {vaciarCarrito,quitarProdCarrito,modificarStock,mostraTotal} from "../../actions/cart";
 import { useDispatch, useSelector, useStore } from 'react-redux';
+import Cookies from 'universal-cookie'
+import {agregarProductoCarritoUser} from "../../actions/cartUser";
 
 export default function Cart(){
+const cookies=new Cookies();
 const dispatch = useDispatch();
 const products = useSelector(store=>store.productsCart)
 
@@ -17,6 +20,7 @@ let prodStock = JSON.parse(localStorage.stock)
 
 useEffect(()=>{ 
     actualizarPrecio()
+    agregarPordUsuario()
 },[])
 
 const vaciar=()=>{
@@ -49,6 +53,31 @@ const actualizarPrecio=()=>{
     dispatch(mostraTotal(suma))
 
 }
+
+//SI EL USUARIO SE LOGUEA CON CARRITO CREADO
+const agregarPordUsuario = ()=>{
+    if(cookies.get('username')){
+        var productos_line=[]
+
+        for(var prod in prodStock){
+          var {cantidad,precio}=prodStock[prod]
+          productos_line.push({
+                productId:parseInt(prod),
+                cantidad:cantidad,
+                price:precio
+            })
+        }
+        const idUser=cookies.get('id')
+        var agregaProducto=[]
+        agregaProducto.push("carrito")
+        agregaProducto.push(productos_line)
+        console.log(agregaProducto)
+        agregarProductoCarritoUser(idUser,agregaProducto)
+
+    }else{return}
+} 
+   
+//SI EL USUARIO SE LOGUEAN SIN CARRITO CREADO 
 
     return(
         <Container className={styles.container}>
