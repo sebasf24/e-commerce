@@ -3,11 +3,14 @@ import thunk from 'redux-thunk';
 import productsReducer from '../reducers/productReducer.js';
 import categoryReducer from '../reducers/categoryReducer.js';
 import userReducer from '../reducers/userReducer';
+import orderReducer from '../reducers/ordesReducer'
+import ordesReducer from '../reducers/ordesReducer';
 
 const rootReducer =combineReducers({
     products: productsReducer,
     category: categoryReducer,
-    user: userReducer
+    user: userReducer,
+    order: ordesReducer
 })
 
 const store = createStore(

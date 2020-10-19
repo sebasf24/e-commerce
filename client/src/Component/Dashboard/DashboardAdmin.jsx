@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { Container, Tab, Tabs, Card } from "react-bootstrap";
+import { Container, Tab, Tabs } from "react-bootstrap";
 import HomeCategories from '../FormCategory/HomeCategories'
 import FormularioAdmin from '../formProductAdmin/formProductAdmin'
 import HomeUser from '../User/HomeUser'
