@@ -14,10 +14,16 @@ const useStyles = makeStyles((theme) => ({
       width: theme.spacing(4),
       height: theme.spacing(4),
       background:theme.palette.primary.main
-    }
+    },
+    small2: {
+        width: theme.spacing(3),
+        height: theme.spacing(3),
+        background:theme.palette.secondary.light
+      },
   }));
 const cookies=new Cookies();
 export default function NavBar (){
+    const userlogged=cookies.get('typeUser')
 
     const classes= useStyles();
 
@@ -36,18 +42,18 @@ export default function NavBar (){
         <ul className="nav navbar pull-xs-left">
         <Nav.Item className={styles.logotech}>
             <Nav.Link href='#'>
-              <Link to={'/products'}>
+              <Link to={'/'}>
                 <img className={styles.logotech} src={Logo} width="90" height="40" alt="" />
               </Link>  
             </Nav.Link>
         </Nav.Item>
 
         <Nav.Item>
-            <Nav.Link href="#">
+           {  userlogged==='Admin'? <Nav.Link href="#">
                 <Link to={'/admin'}>
                  Admin
                 </Link>
-            </Nav.Link>
+            </Nav.Link> : <div></div>}
         </Nav.Item>
         <Nav.Item>
             <Nav.Link href="#">
@@ -57,7 +63,8 @@ export default function NavBar (){
             </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-            <Nav.Link href='#'>Home</Nav.Link>
+            <Nav.Link href='#'>
+                <Link to="/">Home</Link></Nav.Link>
         </Nav.Item>
         <Nav.Item>
             <Nav.Link href='#'>Sobre Nosotros</Nav.Link>
@@ -79,6 +86,7 @@ export default function NavBar (){
         </Nav.Item>
         <Nav.Item><Nav.Link href='/login'><Avatar className={classes.small}  /></Nav.Link></Nav.Item>
         <Nav.Item><Button onClick={()=>{cerrarSesion()}}><Avatar className={classes.small}><RiLogoutCircleRLine/></Avatar></Button></Nav.Item>
+      
         </ul>
 
      </Nav>

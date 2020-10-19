@@ -8,10 +8,13 @@ import {Link} from 'react-router-dom';
 import {loginUser} from '../../actions/user';
 import { useLocation } from 'react-router-dom'; //permitira al usuario mantener la sesion despues de loguearse
 import { RiCreativeCommonsZeroLine } from 'react-icons/ri';
-import md5 from 'md5';
 import Cookies from 'universal-cookie';
 import axios from 'axios';
 // import useUser from './useUser';
+
+import md5 from 'md5';
+
+
 
  
 const useStyles = makeStyles((theme) => ({
@@ -55,6 +58,7 @@ const handlerOnchange=(e)=>{
  const Session=(e)=>{
   e.preventDefault();
    console.log(login)
+  
     axios.get(`http://localhost:3000/user/login?username=${login.username}&password=${login.password}`)
    .then(response=>{
      console.log(response)
@@ -68,6 +72,8 @@ const handlerOnchange=(e)=>{
        cookies.set('username',user.username, {path:"/"});
        cookies.set('typeUser', user.typeUser, {path:"/"});
       alert(`${user.username} logged`) ;
+       cookies.set('username',user.unsername, {path:"/"});
+      alert(`Bienvenid ${user.username}`) ;
       window.location.href='./products'
      }
    })

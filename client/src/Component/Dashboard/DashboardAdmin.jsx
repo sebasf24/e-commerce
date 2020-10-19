@@ -3,7 +3,7 @@ import { Container, Tab, Tabs } from "react-bootstrap";
 import HomeCategories from '../FormCategory/HomeCategories'
 import FormularioAdmin from '../formProductAdmin/formProductAdmin'
 import HomeUser from '../User/HomeUser'
-import OrdersAdmin from '../Order/OdersAdmin'
+import OrderAdmin from '../Order/OrderAdmin'
 
 
 export default function DashboardAdmin(){
@@ -19,6 +19,7 @@ export default function DashboardAdmin(){
       >
         <Tab eventKey="products" title="Products">
           {/* <FormularioAdmin /> */}
+          {/* <FormularioAdmin/> */}
         </Tab>
         <Tab eventKey="categories" title="Categories">
           <HomeCategories />
@@ -27,7 +28,7 @@ export default function DashboardAdmin(){
           <HomeUser />
         </Tab>
         <Tab eventKey="orders" title="Orders">
-          <OrdersAdmin />
+          <OrderAdmin />
         </Tab>
       </Tabs>
 

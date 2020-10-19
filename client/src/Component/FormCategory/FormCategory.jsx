@@ -12,11 +12,11 @@ import {Link} from 'react-router-dom'
 export default function FormCategory() {
 
     const dispatch = useDispatch();
-    const initialFormData = Object.freeze({
+  
+    const [formData, updateFormData] = useState({
         name: '',
         description: ''
     });
-    const [formData, updateFormData] = useState(initialFormData);
 
     const handleChange = (e) => {
         updateFormData({
@@ -48,7 +48,7 @@ export default function FormCategory() {
             <Container>
                 <br />
             <Card className={style.card}>
-            <Link className={style.botonlink} to={`/admin`}>
+            <Link className={style.botonlink} to={`./admin`}>
                         <BiArrowBack/>
                     </Link>
 
@@ -85,7 +85,7 @@ export default function FormCategory() {
                     <Button type="submit" className={style.button} onClick={() => {
                            dispatch(addCategory(formData))
                            limpiarFormulario()
-                           updateFormData(initialFormData)
+                           updateFormData('')
                            dispatch(listCategory())
                     }} >Agregar</Button>
                 </Form>
