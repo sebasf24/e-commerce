@@ -5,7 +5,7 @@ import { FiEdit } from "react-icons/fi";
 import {RiDeleteBin6Line}  from "react-icons/ri";
 import styles from './tablaOrdenes.module.css';
 
-var ordenes=[
+/* var ordenes=[
     {   
         id:1,
         user: "usuario 1",
@@ -35,7 +35,7 @@ var ordenes=[
         updatedAt: "2020-10-16T15:30:50.688Z"
     }
 
-]
+] */
 
 export default function OrderAdmin() {
 
