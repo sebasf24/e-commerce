@@ -25,7 +25,9 @@ export default function MenuCategories() {
                 <hr class="clearfix w-100"/>
                     <Nav.Link href='/products'
                     className={styles.text}>Todos</Nav.Link>
-                {
+                {   
+                    categories 
+                    ?
                     categories.map(cat=>{
                         return(
                           
@@ -37,6 +39,8 @@ export default function MenuCategories() {
                            
                         )
                     })
+                    :
+                    <div></div>
                 }
                
             </Nav>

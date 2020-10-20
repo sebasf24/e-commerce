@@ -16,5 +16,4 @@
     display: flex;
     grid-area: productos;
     flex-wrap: wrap;
-    justify-content: space-between; 
     }
