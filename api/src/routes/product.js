@@ -1,5 +1,6 @@
 const server = require('express').Router();
 const { Product , Category, Categoryproduct } = require('../db.js');
+const Reviews = require('../models/Reviews.js');
 
 server.get('/', (req, res, next) => {
 	Product.findAll()
@@ -158,6 +159,16 @@ server.get("/category/:id", (req, res) => {
 		res.status(200).json(productId);
 		})
 
+})
+
+
+//Trae todas las review de un producto
+server.get("/:id/review/", (req,res)=>{
+	let prodId= req.params.id
+	Review.findAll({where:{productId: prodId}})
+	.then(reviews=>{
+			res.send(reviews)
+	})
 })
 
 

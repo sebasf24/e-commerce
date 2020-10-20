@@ -52,7 +52,7 @@ const FormProductAdmin = () => {
             confirmButtonText: 'Si, eliminar'
         }).then((result) => {
             
-            if (result.value) {
+            if (result.isconfirmed) {
                 
                 dispatch(eliminarProducto(id))
                 Swal.fire(
