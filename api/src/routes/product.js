@@ -1,10 +1,5 @@
 const server = require('express').Router();
-<<<<<<< HEAD
-const { Product , Category, Categoryproduct } = require('../db.js');
-const Reviews = require('../models/Reviews.js');
-=======
 const { Product, Category, Categoryproduct, Review } = require('../db.js');
->>>>>>> 10d97c4326dabd92c9f8b7607d2ac0c8c81a56aa
 
 server.get('/', (req, res, next) => {
 	Product.findAll()
