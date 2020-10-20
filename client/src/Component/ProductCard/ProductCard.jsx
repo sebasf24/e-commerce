@@ -15,6 +15,7 @@ export default function ProductCard({ Product }) {
 const dispatch=useDispatch()
 
  let prodStock = JSON.parse(localStorage.stock)[Product.id] 
+ 
     
 const sumarAlCarrito = ()=>{
  

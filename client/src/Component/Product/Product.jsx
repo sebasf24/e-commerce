@@ -35,14 +35,16 @@ export default function Product(props) {
     //store carrito    
 
     const cambiarCantidad=(e)=>{
-
+        
         if( !prodStock && e.target.value>stock){
             alert("no hay estock suficiente")
+            setCantidad(stock)
             return
         }
 
         if( prodStock && e.target.value>prodStock.cantidad){
             alert("no hay estock suficiente")
+            setCantidad(prodStock.stock)
             return
         }
         setCantidad(e.target.value)
@@ -110,8 +112,8 @@ export default function Product(props) {
     }
         
     let botones = <Form >
-    <Form.Label>Cantidad</Form.Label>
-    <Form.Control onChange={cambiarCantidad} placeholder="1" min={1} max={stock} className={styles.cantidad} type="number"/>
+    <Form.Label id="cantidad">Cantidad</Form.Label>
+    <Form.Control value={cantidad} onChange={cambiarCantidad} placeholder="1" min={1} max={stock} className={styles.cantidad} type="number"/>
     <Button onClick={sumarAlCarrito} className={styles.boton +' '+ styles.boton1} 
        ><BiCart/> AGREGAR AL CARRITO</Button>
     <Button className={styles.boton +' '+ styles.boton2} 
