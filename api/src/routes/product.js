@@ -1,5 +1,5 @@
 const server = require('express').Router();
-const { Product , Category, Categoryproduct } = require('../db.js');
+const { Product , Category, Categoryproduct, Review } = require('../db.js');
 
 server.get('/', (req, res, next) => {
 	Product.findAll()
@@ -160,5 +160,22 @@ server.get("/category/:id", (req, res) => {
 
 })
 
+// Crear ruta para crear/agregar Review
+
+server.post("/:id/review", (req, res) => {
+
+	const {calificacion, descripcion, userId} = req.body;
+		let productId = req.params.id
+		Review.create({
+			calificacion: calificacion,
+			descripcion : descripcion,
+			userId: userId,
+			productId: productId
+		})
+		.then (function(Review){
+			res.json(Review);
+		})
+	})
+	
 
 module.exports = server;
