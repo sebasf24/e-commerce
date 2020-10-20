@@ -19,7 +19,9 @@ import Review from './Component/Review/Review.jsx';
 
 
 import NavBar from './Component/NavBar/navbar.jsx';
-
+!localStorage.stocarritoLocalck && localStorage.setItem("carritoLocal",JSON.stringify([]))
+!localStorage.stock && localStorage.setItem("stock",JSON.stringify({}))
+!localStorage.total && localStorage.setItem("total",JSON.stringify(0))
 
 function App() {  
   const productsl = useSelector(state=>state.products);

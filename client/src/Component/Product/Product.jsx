@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React,{useEffect,useState} from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import {mostrarProducto_id} from "../../actions/products.js";
@@ -10,41 +10,110 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Card, Image, Col, Row, Container, Button,Form } from 'react-bootstrap';
 
 export default function Product(props) {
-    const dispatch=useDispatch();
-
-    const id = props.match.params.id;
-//store products
+    const [cantidad, setCantidad] = useState(1)
+    const productoCarrito = useSelector(state=>state.productsCart);
     const productS = useSelector(state=>state.products);
-
     const {selectedProduct}=productS;
     const { name, description, price, stock, img }=selectedProduct;
+    const id = props.match.params.id;
+
+    let prodStock = JSON.parse(localStorage.stock)[id]
+
+    const dispatch=useDispatch();
+//store products
+
 
     let base64ToString;
     (img) && (base64ToString = Buffer.from(img.data, "base64").toString())
 
     useEffect(()=>{
+        setCantidad(1)
         dispatch(mostrarProducto_id(id))
         return ()=>{}},[])
 
+
     //store carrito    
-    const productoCarrito = useSelector(state=>state.productsCart);
-    console.log(productoCarrito)
-    const sumarAlCarrito = ()=>{
-        if(!localStorage.carritoLocal){
-            localStorage.setItem("carritoLocal",JSON.stringify([]))
+
+    const cambiarCantidad=(e)=>{
+        
+        if( !prodStock && e.target.value>stock){
+            alert("no hay estock suficiente")
+            setCantidad(stock)
+            return
         }
-        localStorage.setItem("carritoLocal",JSON.stringify(
+
+        if( prodStock && e.target.value>prodStock.cantidad){
+            alert("no hay estock suficiente")
+            setCantidad(prodStock.stock)
+            return
+        }
+        setCantidad(e.target.value)
+    }
             
-            JSON.parse(localStorage.getItem("carritoLocal"))
+    const sumarAlCarrito = ()=>{
+       
+// si el producto no existe lo agrega 
+     if(!prodStock){
+        if(cantidad>stock){
+            alert("no hay stock suficiente")
+            return
+        }
+            localStorage.setItem("stock",JSON.stringify(
+                Object.assign(JSON.parse(localStorage.stock),
+                    {[id]:{ cantidad: cantidad,
+                            stock:selectedProduct.stock-cantidad,
+                            precio:selectedProduct.price*cantidad 
+                            }
+                            })))                  
+        } 
+//si el producto existe, suma la cantidad,resta el stock y modifica el precio total
+
+        if(prodStock && prodStock.stock>=0){
+            if(cantidad>prodStock.stock){
+                alert("no hay stock suficiente")
+                return
+            }
+                localStorage.setItem("stock",JSON.stringify(
+                    Object.assign(JSON.parse(localStorage.stock),
+                    {[id]:{ cantidad: ++prodStock.cantidad,
+                            stock:selectedProduct.stock-prodStock.cantidad,
+                            precio: selectedProduct.price *prodStock.cantidad
+                                }
+                                })))   
+        }    
+
+       // console.log("Product", Product);
+        // existe = no
+        // Loop recorriendo ls 
+        //     pregunto si id = Producto id
+        //      existe = si
+        // End Loop
+        // if existe == no
+        //      lo agrego
+        // else
+        //      lo ignoro
+        var ls = JSON.parse(localStorage.getItem("carritoLocal"));
+        var existe = false;
+        for (let i = 0; i < ls.length; i++) {
+            if(ls[i].id == selectedProduct.id)
+                existe = true;
+        } 
+        if(existe == false)
+        
+            {   
+                localStorage.setItem("carritoLocal",JSON.stringify(
+                JSON.parse(localStorage.getItem("carritoLocal"))            
                 .concat(selectedProduct)
-            ))
-        dispatch(agregarProductoCarrito(selectedProduct))
+                ))
+            }
+
+        dispatch(agregarProductoCarrito(Product))
         
     }
         
     let botones = <Form >
-    <Form.Label>Cantidad</Form.Label>
-    <Form.Control placeholder="1" min={1} max={stock} className={styles.cantidad} type="number"/>
+    <Form.Label id="cantidad">Cantidad</Form.Label>
+    <Form.Control value={cantidad} onChange={cambiarCantidad} placeholder="1" min={1} max={stock} className={styles.cantidad} type="number"/>
     <Button onClick={sumarAlCarrito} className={styles.boton +' '+ styles.boton1} 
        ><BiCart/> AGREGAR AL CARRITO</Button>
     <Button className={styles.boton +' '+ styles.boton2} 
@@ -56,6 +125,7 @@ export default function Product(props) {
     <p>Lo sentimos, no disponemos de este articulo por el momento. Pronto lo tendremos de vuelta!</p>
     </div>
 
+        
     return (
         <Container className={styles.container}>
             <Card className={styles.card}>
@@ -73,7 +143,7 @@ export default function Product(props) {
 
                     </Card.Title>
 
-                    <Card.Subtitle className={styles.stock}>{stock} disponibles
+                    <Card.Subtitle className={styles.stock}>{prodStock ? prodStock.stock : stock} disponibles
                         <hr class="clearfix w-100"/>
                     </Card.Subtitle>
                     <Card.Text className={styles.descrip}>

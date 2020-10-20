@@ -22,10 +22,12 @@ module.exports = (sequelize) => {
       allowNull: false
     },
     productId:{
-      type:DataTypes.INTEGER
+      type:DataTypes.INTEGER,
+      allowNull:false
     },
     orderId:{
-      type:DataTypes.INTEGER
+      type:DataTypes.INTEGER,
+      allowNull:false
     }
 
   });
