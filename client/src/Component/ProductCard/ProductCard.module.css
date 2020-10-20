@@ -20,7 +20,7 @@
                 0 1px 5px 0 rgba(0,0,0,.2);
 
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto auto auto;
+    grid-template-rows: 1fr 3fr .7fr .8fr .8fr;
     grid-template-areas:
                   "title"
                   "img"
@@ -42,6 +42,13 @@
     width: auto; 
     height: auto;
     }
+  .imgGris{
+    filter: grayscale(1);
+    max-width:200px; 
+    max-height:160px; 
+    width: auto; 
+    height: auto;
+  }
 
   .imagen{
   grid-area: img; 
@@ -109,5 +116,7 @@
   font-family: 'Titillium Web';
     font-size: 25px;
     grid-area: botonlink;
+    display: grid;
+    align-items: flex-end;
 }
    
