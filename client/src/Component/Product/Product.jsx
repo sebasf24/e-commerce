@@ -111,7 +111,7 @@ export default function Product(props) {
         
     let botones = <Form >
     <Form.Label>Cantidad</Form.Label>
-    <Form.Control placeholder="1" min={1} max={stock} className={styles.cantidad} type="number"/>
+    <Form.Control onChange={cambiarCantidad} placeholder="1" min={1} max={stock} className={styles.cantidad} type="number"/>
     <Button onClick={sumarAlCarrito} className={styles.boton +' '+ styles.boton1} 
        ><BiCart/> AGREGAR AL CARRITO</Button>
     <Button className={styles.boton +' '+ styles.boton2} 

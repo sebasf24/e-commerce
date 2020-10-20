@@ -230,7 +230,30 @@ server.delete('/:idUser/cart', (req, res) => {
     })
 
 });
-
+//Loggin de usuario
+server.get('/login', (req, res, next) => {
+        const username = req.query.username
+        const password = req.query.password
+        console.log(username, password)
+    
+        if (username && password) {
+            User.findOne({
+                where: {
+                    username: username,
+                    password: password
+                }
+            })
+                .then(user =>
+                    res.send(user)
+                )
+                .catch((err) => {
+                    res.status(404).send('Usuario Invalido')
+                })
+    
+        } else {
+            res.send('Usuario Invalido')
+        }
+ })
 
 
 //Ruta para eliminar un usuario

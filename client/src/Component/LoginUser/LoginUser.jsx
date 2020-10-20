@@ -5,9 +5,15 @@ import {Button, CssBaseline,TextField, FormControlLabel,Checkbox,Grid} from '@ma
 import { makeStyles, Typography, Container,Box } from '@material-ui/core';
 import style from '../User/FormAddUser.module.css';
 import {Link} from 'react-router-dom';
-import md5 from 'md5';
+import {loginUser} from '../../actions/user';
+import { useLocation } from 'react-router-dom'; //permitira al usuario mantener la sesion despues de loguearse
+import { RiCreativeCommonsZeroLine } from 'react-icons/ri';
 import Cookies from 'universal-cookie';
 import axios from 'axios';
+// import useUser from './useUser';
+
+import md5 from 'md5';
+
 
 
  
@@ -42,6 +48,7 @@ export default function Loginuser(onLogin) {
   const userLogged=useSelector(store=>store.user)
   const userlog={userLogged}
  
+
 const handlerOnchange=(e)=>{
   setLogin({
     ...login,
@@ -50,6 +57,7 @@ const handlerOnchange=(e)=>{
 }
  const Session=(e)=>{
   e.preventDefault();
+   console.log(login)
   
     axios.get(`http://localhost:3000/user/login?username=${login.username}&password=${login.password}`)
    .then(response=>{
@@ -62,6 +70,9 @@ const handlerOnchange=(e)=>{
        var user=response;
        cookies.set('id',user.id, {path:"/"});
        cookies.set('username',user.username, {path:"/"});
+       cookies.set('typeUser', user.typeUser, {path:"/"});
+      alert(`${user.username} logged`) ;
+       cookies.set('username',user.unsername, {path:"/"});
       alert(`Bienvenid ${user.username}`) ;
       window.location.href='./products'
      }

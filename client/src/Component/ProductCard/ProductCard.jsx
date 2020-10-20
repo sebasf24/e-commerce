@@ -12,11 +12,9 @@ export default function ProductCard({ Product }) {
     let base64ToString;
     (Product.img) && (base64ToString = Buffer.from(Product.img.data, "base64").toString())
 
-
-
 const dispatch=useDispatch()
 
-    let prodStock = JSON.parse(localStorage.stock)[Product.id]
+ let prodStock = JSON.parse(localStorage.stock)[Product.id] 
     
 const sumarAlCarrito = ()=>{
  

@@ -5,14 +5,14 @@ import categoryReducer from '../reducers/categoryReducer.js';
 import userReducer from '../reducers/userReducer';
 import cartReducer from '../reducers/cartReducer'
 import cartUserReducer from '../reducers/cartUserReducer.js'
-import Cookies from 'universal-cookie'
-const cookies=new Cookies();
+import ordesReducer from '../reducers/ordesReducer.js'
 
 const rootReducer =combineReducers({
     products: productsReducer,
     category: categoryReducer,
     user: userReducer,
-    productsCart:cookies.get('username')?cartUserReducer:cartReducer
+    order: ordesReducer,
+    productsCart:cartReducer
 })
 
 const store = createStore(

@@ -8,6 +8,7 @@ export const DELETE_USER='DELETE_USER';
 export const EDIT_USER= 'EDIT_USER'
 
 export function addUser(user){
+   
     return function(dispatch){
         console.log(user)
         const newUser={
@@ -18,7 +19,7 @@ export function addUser(user){
             username:user.username,
             password:user.password,
             image:user.image,
-            typeUser:user.typeUser    
+            typeUser:user.typeUser==='' ?  user.typeUser='cliente' : user.typeUser
         };
         return axios.post('http://localhost:3000/user', newUser)
         .then(us=>{

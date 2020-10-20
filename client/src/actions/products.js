@@ -90,6 +90,7 @@ export function eliminarProducto(id){
         return axios.delete(`http://localhost:3000/products/${id}`)
 
                 .then(json=>{
+                    console.log('ENTRAMOS AL REDUCER DE ELIMINAR');
                     dispatch({
                         type:ELIMINAR_PRODUCTOID,
                         producto:json
