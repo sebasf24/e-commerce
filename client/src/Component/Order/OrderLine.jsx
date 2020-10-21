@@ -12,11 +12,14 @@ export default function OrderLine ({producto}){
     return(
         
             <Card className={styles.container}>
+
                 <div className={styles.descrip}>
-                    <Card.Title>{ producto.name}</Card.Title>
-                    <Card.Subtitle>{ producto.price }</Card.Subtitle>
-                    <Card.Text>{producto.description}</Card.Text>
-                    <div className={styles.cantidad}>Cantidad 1</div>
+                <Link to={`/products/${producto.id}`}>   
+                    <Card.Title>Producto: { producto.name}</Card.Title>
+                </Link> 
+                    <Card.Subtitle>Precio: { producto.price }</Card.Subtitle>
+                    <Card.Text>Descripción del producto: {producto.description}</Card.Text>
+                 <div className={styles.cantidad}>Cantidad: </div>
                 </div>
                
             </Card>
