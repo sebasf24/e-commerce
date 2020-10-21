@@ -1,7 +1,7 @@
 import React,{useEffect,useState} from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector, useStore } from 'react-redux';
-import {mostrarProducto_id} from "../../actions/products.js";
+import {mostrarProducto_id,mostrarReviews} from "../../actions/products.js";
 import {agregarProductoCarrito} from '../../actions/cart.js';
 import Reviews from '../Review/ReviewContainer.jsx';
 
@@ -10,25 +10,15 @@ import { BiArrowBack,BiCart} from "react-icons/bi";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Card, Image, Col, Row, Container, Button,Form } from 'react-bootstrap';
 
+
 export default function Product(props) {
-    let ReviewsP=[
-        {
-            calificacion:4,
-            descripcion:'Buena calidad,mas de lo esperado'
-        },
-        {
-            calificacion:1,
-            descripcion:'Muy malo,no lo compren gente'
-        },
-        {
-            calificacion:5,
-            descripcion:'Excelente el producto,lo mejor del mercado'
-        }
-    ]
+
+    
     const [cantidad, setCantidad] = useState(1)
     const productoCarrito = useSelector(state=>state.productsCart);
     const productS = useSelector(state=>state.products);
     const {selectedProduct}=productS;
+    const reviewsP=productS.reviews
     const { name, description, price, stock, img }=selectedProduct;
     const id = props.match.params.id;
 
@@ -44,9 +34,10 @@ export default function Product(props) {
     useEffect(()=>{
         setCantidad(1)
         dispatch(mostrarProducto_id(id))
+        dispatch(mostrarReviews(id))
         return ()=>{}},[])
 
-
+        console.log('Reviews',productS);
     //store carrito    
 
     const cambiarCantidad=(e)=>{
@@ -179,7 +170,7 @@ export default function Product(props) {
             </Card>
         </Container>
         <p></p>
-        <Reviews Reviews={ReviewsP}></Reviews>
+        <Reviews Reviews={reviewsP}></Reviews>
         </div>
     )
 

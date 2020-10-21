@@ -6,6 +6,7 @@ import style from './Review.module.css';
 
 export default function ReviewContainer({ Reviews }) {
 
+    if(Reviews !== undefined){
     if (Reviews.length !== 0) {
         let reviewsRateSum = 0;
         for (let i = 0; i < Reviews.length; i++) {
@@ -46,5 +47,8 @@ export default function ReviewContainer({ Reviews }) {
     } else {
         return (<Container className={style.cardRContainer}>No hay Reviews de este producto</Container>)
     }
+}else {
+    return (<Container className={style.cardRContainer}>No hay Reviews de este producto</Container>)
+}
 
 }

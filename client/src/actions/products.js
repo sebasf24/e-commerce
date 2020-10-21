@@ -6,6 +6,7 @@ export const EDITAR_PRODUCTOID= "EDITAR_PRODUCTOID";
 export const ELIMINAR_PRODUCTOID= "MOSTRAR_PRODUCTOID";
 export const MOSTRAR_PRODUCTO_CATEGORY = "MOSTRAR_PRODUCTO_CATEGORY";
 export const BUSCAR_PRODUCTOIDS = "BUSCAR_PRODUCTOIDS";
+export const MOSTRAR_REVIEWS = "MOSTRAR_REVIEWS";
 
 //const fetch = require('node-fetch');
 
@@ -109,6 +110,23 @@ export function mostrarBusqueda(search){
                     dispatch({
                         type:BUSCAR_PRODUCTOIDS,
                         producto:json
+                    })
+                })
+                .catch(err=>{console.log(err)})
+
+    }
+}
+
+
+export function mostrarReviews(productId){
+    return function(dispatch){
+        return axios.get(`http://localhost:3000/products/${productId}/review`)
+
+                .then(json=>{   
+                    //console.log('jsonDe reviews',json);
+                    dispatch({
+                        type:MOSTRAR_REVIEWS,
+                        reviews:json
                     })
                 })
                 .catch(err=>{console.log(err)})
