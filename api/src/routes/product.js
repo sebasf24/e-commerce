@@ -203,4 +203,14 @@ server.delete('/:productId/review/:review', (req, res) => {
 		})
 })
 
+//Trae todas las review de un producto
+server.get("/:id/review/", (req,res)=>{
+	let prodId= req.params.id
+	Review.findAll({where:{productId: prodId}})
+	.then(reviews=>{
+			res.send(reviews)
+	})
+})
+
+
 module.exports = server;
