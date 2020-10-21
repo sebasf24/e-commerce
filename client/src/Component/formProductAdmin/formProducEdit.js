@@ -178,7 +178,7 @@ const FormProductEdit = (productEdit) => {
                             cancelButtonColor: '#d33',
                             confirmButtonText: 'Si, editar'
                         }).then((result) => {
-                            if (result.isconfirmed) {
+                            if (result.isConfirmed) {
                                 dispatch(editarProducto(product))
                                 let categoriesCheck=[]
                                 for (let i = 0; i < checkboxes.length; i++) {
