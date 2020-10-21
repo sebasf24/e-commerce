@@ -15,7 +15,6 @@ import Home from './Component/home/home.jsx'
 import Order from './Component/Order/Order.jsx';
 import FormAdmin from './Component/formProductAdmin/formProductAdmin';
 import FormAdminAdd from './Component/formProductAdmin/formProductAdd';
-import Review from './Component/Review/Review.jsx';
 
 
 import NavBar from './Component/NavBar/navbar.jsx';
@@ -47,7 +46,6 @@ function App() {
     <Route path='/addUser' component={FormAddUser}/>
     <Route exact path='/administrar' component={FormAdmin}/>
     <Route exact path='/administrarAdd' component={FormAdminAdd}/>
-    <Route exact path='/Review' component={Review}/>
     
     
     </Router>

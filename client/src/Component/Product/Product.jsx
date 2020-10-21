@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import {mostrarProducto_id} from "../../actions/products.js";
 import {agregarProductoCarrito} from '../../actions/cart.js';
+import Reviews from '../Review/ReviewContainer.jsx';
 
 import styles from './Product.module.css';
 import { BiArrowBack,BiCart} from "react-icons/bi";
@@ -10,6 +11,20 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Card, Image, Col, Row, Container, Button,Form } from 'react-bootstrap';
 
 export default function Product(props) {
+    let ReviewsP=[
+        {
+            calificacion:4,
+            descripcion:'Buena calidad,mas de lo esperado'
+        },
+        {
+            calificacion:1,
+            descripcion:'Muy malo,no lo compren gente'
+        },
+        {
+            calificacion:5,
+            descripcion:'Excelente el producto,lo mejor del mercado'
+        }
+    ]
     const [cantidad, setCantidad] = useState(1)
     const productoCarrito = useSelector(state=>state.productsCart);
     const productS = useSelector(state=>state.products);
@@ -126,7 +141,7 @@ export default function Product(props) {
     </div>
 
         
-    return (
+    return (<div>
         <Container className={styles.container}>
             <Card className={styles.card}>
                     <Link className={styles.botonlink} to={`/products`}>
@@ -163,6 +178,9 @@ export default function Product(props) {
                   
             </Card>
         </Container>
+        <p></p>
+        <Reviews Reviews={ReviewsP}></Reviews>
+        </div>
     )
 
 }
