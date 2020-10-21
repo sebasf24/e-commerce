@@ -1,0 +1,54 @@
+import React from 'react';
+import Review from './Review'
+import { Card, Container } from 'react-bootstrap';
+import { FaStar, FaRegStar } from "react-icons/fa";
+import style from './Review.module.css';
+
+export default function ReviewContainer({ Reviews }) {
+
+    if(Reviews !== undefined){
+    if (Reviews.length !== 0) {
+        let reviewsRateSum = 0;
+        for (let i = 0; i < Reviews.length; i++) {
+            reviewsRateSum += Reviews[i].calificacion;
+        }
+        let reviewsRateProm = (Math.ceil(reviewsRateSum / Reviews.length)) + '.0';
+
+        let fillStar = <FaStar className={style.Star} />;
+        let emptyStar = <FaRegStar className={style.Star} />;
+        let stars = [emptyStar, emptyStar, emptyStar, emptyStar, emptyStar];
+        for (let i = 0; i < reviewsRateProm; i++) {
+            stars[i] = fillStar;
+        }
+    
+
+        return (
+            <Container className={style.Container}>
+                <Card className={style.cardRContainer}>
+                    <Card.Title>Opiniones sobre el producto</Card.Title>
+                    <p className={style.pProm}>
+                        <Card.Subtitle className={style.rProm}>{reviewsRateProm}</Card.Subtitle>
+                        <div className={style.pStar}>
+                            <div className={style.rStars}> {stars}</div>
+                            <div className={style.cText}>Promedio entre {Reviews.length} opiniones</div>
+                        </div>
+                    </p>
+
+
+                    {
+                        Reviews.map(r => {
+                            return <Review Review={r}></Review>
+
+                        })
+                    }
+                </Card>
+            </Container>
+        )
+    } else {
+        return (<Container className={style.cardRContainer}>No hay Reviews de este producto</Container>)
+    }
+}else {
+    return (<Container className={style.cardRContainer}>No hay Reviews de este producto</Container>)
+}
+
+}
