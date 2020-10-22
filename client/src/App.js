@@ -15,9 +15,9 @@ import Home from './Component/home/home.jsx'
 import Order from './Component/Order/Order.jsx';
 import FormAdmin from './Component/formProductAdmin/formProductAdmin';
 import FormAdminAdd from './Component/formProductAdmin/formProductAdd';
-
-
 import NavBar from './Component/NavBar/navbar.jsx';
+import resetPassword from './Component/LoginUser/resetPassword';
+
 !localStorage.stocarritoLocalck && localStorage.setItem("carritoLocal",JSON.stringify([]))
 !localStorage.stock && localStorage.setItem("stock",JSON.stringify({}))
 !localStorage.total && localStorage.setItem("total",JSON.stringify(0))
@@ -46,6 +46,7 @@ function App() {
     <Route path='/addUser' component={FormAddUser}/>
     <Route exact path='/administrar' component={FormAdmin}/>
     <Route exact path='/administrarAdd' component={FormAdminAdd}/>
+    <Route exact path='/resetPass' component={resetPassword}/>
     
     
     </Router>

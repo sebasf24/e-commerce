@@ -25,23 +25,30 @@ server.get('/:id/orders', (req, res) => {
 
 //Ruta para creación de Usuario
 server.post('/', (req, res) => {
-    User.create({
-        name: req.body.name,
-        lastname: req.body.lastname,
-        dni: req.body.dni,
-        email: req.body.email,
-        username: req.body.username,
-        password: req.body.password,
-        image: req.body.image,
-        typeUser: req.body.typeUser,
+    User.findOne({
+        where:{
+            username: req.body.username
+        }
+    }).then((user)=>{
+        if(!user){
+            User.create({
+                name:req.body.name,
+                lastname:req.body.lastname,
+                dni:req.body.dni,
+                email:req.body.email,
+                username:req.body.username,
+                password:req.body.password,
+                image:req.body.image,
+                typeUser:req.body.typeUser
+            }).then(user=>{
+                console.log(user)
+                res.send('Usuario creado')
+            })
+    
+        }else res.send('usuario existente')
     })
-        .then((user) => {
-            res.send(user)
-        })
-        .catch(error => {
-            res.status(500).send("Error: " + error)
-        })
-
+    .catch(error => res.json(error));
+  
 })
 //Ruta para modificar Usuario
 server.put('/:id', (req, res) => {

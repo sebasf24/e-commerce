@@ -1,4 +1,6 @@
 .container {
+  
+    margin-top: auto;
     border:none;
     border-radius: 0;
     padding: 10px;
@@ -11,6 +13,7 @@
     margin-left: 20px;
     grid-area: descrip; 
     overflow: hidden;
+    line-height: 25px;
   }
 
   .cantidad { 

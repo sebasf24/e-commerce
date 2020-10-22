@@ -1,8 +1,9 @@
-import {MOSTRAR_PRODUCTOS,MOSTRAR_PRODUCTOID,AGREGAR_PRODUCTOID,EDITAR_PRODUCTOID,MOSTRAR_PRODUCTO_CATEGORY,ELIMINAR_PRODUCTOID,BUSCAR_PRODUCTOIDS} from "../actions/products.js";
+import {MOSTRAR_PRODUCTOS,MOSTRAR_PRODUCTOID,AGREGAR_PRODUCTOID,EDITAR_PRODUCTOID,MOSTRAR_PRODUCTO_CATEGORY,ELIMINAR_PRODUCTOID,BUSCAR_PRODUCTOIDS,MOSTRAR_REVIEWS} from "../actions/products.js";
 
 const initalStore ={
     products:[],
-    selectedProduct:[]
+    selectedProduct:[],
+    reviews:[]
 }
 
 export default (state=initalStore, actions) =>{
@@ -16,6 +17,7 @@ export default (state=initalStore, actions) =>{
 
         case MOSTRAR_PRODUCTOID:{
             return{
+                ...state,
                 selectedProduct:actions.producto.data
             }
         }
@@ -52,6 +54,13 @@ export default (state=initalStore, actions) =>{
             return{
                products:actions.producto.data,
                selectedProduct:[]
+            }
+        }
+
+        case MOSTRAR_REVIEWS:{
+            return{
+                ...state,
+                reviews:actions.reviews.data
             }
         }
 

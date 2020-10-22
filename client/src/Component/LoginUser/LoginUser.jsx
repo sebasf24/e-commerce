@@ -6,17 +6,11 @@ import { makeStyles, Typography, Container,Box } from '@material-ui/core';
 import style from '../User/FormAddUser.module.css';
 import {Link} from 'react-router-dom';
 import {loginUser} from '../../actions/user';
-import { useLocation } from 'react-router-dom'; //permitira al usuario mantener la sesion despues de loguearse
-import { RiCreativeCommonsZeroLine } from 'react-icons/ri';
 import Cookies from 'universal-cookie';
 import axios from 'axios';
 // import useUser from './useUser';
 
-import md5 from 'md5';
 
-
-
- 
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -57,32 +51,27 @@ const handlerOnchange=(e)=>{
 }
  const Session=(e)=>{
   e.preventDefault();
-   console.log(login)
-  
-    axios.get(`http://localhost:3000/user/login?username=${login.username}&password=${login.password}`)
+  const {username, password}=login
+   console.log(username, password)
+    axios.post('http://localhost:3000/auth/login',{
+      username,
+      password})
    .then(response=>{
-     console.log(response)
+     console.log(response.data)
      return response.data;
    })
    .then(response=>{
-     console.log(response.id)
      if(response){
-       var user=response;
-       cookies.set('id',user.id, {path:"/"});
-       cookies.set('username',user.username, {path:"/"});
-       cookies.set('typeUser', user.typeUser, {path:"/"});
+       var user=response.user;
       alert(`${user.username} logged`) ;
-       cookies.set('username',user.unsername, {path:"/"});
-      alert(`Bienvenid ${user.username}`) ;
       window.location.href='./products'
      }
    })
    .catch(error=>{
-    console.log(error);
-})
+    console.log(error);})
+ 
+
  }
-
-
 
   return (
     <Container component="main" maxWidth="xs">
@@ -131,7 +120,7 @@ const handlerOnchange=(e)=>{
           <br/><br/>        
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
+              <Link to='/resetPass' variant="body2">
                 Olvidaste el password?
               </Link>
             </Grid>

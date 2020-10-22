@@ -28,17 +28,28 @@ server.get('/', (req,res)=>{
 })
 
 //ruta para obtener una orden por id
+// server.get('/:id',(req,res)=>{
+//     const orderId =req.params.id;
+
+//     Order.findOne({
+//         where:{id:orderId}
+//     }).then(respuesta=>{
+//         console.log("respuesta:",respuesta)
+
+//         return res.send(respuesta);
+//     })
+// })
+
 server.get('/:id',(req,res)=>{
     const orderId =req.params.id;
-
-    Order.findOne({
-        where:{id:orderId}
-    }).then(respuesta=>{
-        console.log("respuesta:",respuesta)
-
-        return res.send(respuesta);
+    Order_line.findAll({
+        where:{orderId: orderId}
+    }).then((resp)=>{
+        res.send(resp)
     })
+
 })
+
 
 //ruta para modificar una orden por id
 server.put('/:id', (req,res)=>{
