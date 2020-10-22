@@ -8,11 +8,27 @@
     font-weight: 400;
     src: local('Titillium WebLight'), local('TitilliumWeb-Light'), url(http://themes.googleusercontent.com/static/fonts/titilliumweb/v2/anMUvcNT0H1YN4FII8wpr24bNCNEoFTpS2BTjF6FB5E.woff) format('woff');
   }
-
-
-.img{
-    height: 300px;
-    width: 500px;
+  
+  .container{
+    margin-left: 0px;
+    padding-left: 0px;
+    width: 720px;
+    height: 80%;
+    display: grid;
+    place-items: center;
   }
   
+  
+  .img{
+    max-width: 720px;
+    height: auto;
+  }
+  @supports(object-fit: cover){
+      .box img{
+        height: 100%;
+        object-fit: cover;
+        object-position: center center;
+      }
+  }
+
   
