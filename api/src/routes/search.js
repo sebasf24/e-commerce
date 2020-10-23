@@ -10,7 +10,7 @@ server.get('/',(req,res)=>{
     
 
     if(!search){
-        return res.send("Ingrese lo que desea buscar")
+        return res.json([])
     }
     Product.findAll({
         where:{ [Op.or]: {
@@ -24,7 +24,7 @@ server.get('/',(req,res)=>{
     })
     .then(products => {
         if(products== false){
-            return res.send('No hay publicaciones que coincidan con tu búsqueda.')
+            return res.json([])
         }
         res.send(products);
     })

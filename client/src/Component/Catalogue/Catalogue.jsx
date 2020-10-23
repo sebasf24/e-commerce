@@ -17,9 +17,7 @@ const productsl = useSelector(state=>state.products);
   let conStock= products.filter(el=> el.stock > 0)
    products = conStock.concat(sinStock)
 }
- if(products === 'No hay publicaciones que coincidan con tu búsqueda.'){
-     products = [];
- }
+
  const dispatch=useDispatch();
   useEffect(()=>{
     if(cat.split('/')[4] =='category'){
@@ -33,12 +31,14 @@ const productsl = useSelector(state=>state.products);
 
             <MenuCategories className={style.menuCategories}/>
             <div className={style.productos}>
-                { products ? 
+                { products.length !== 0 ? 
                 products.map(product => {
                     return (<ProductCard Product={product} />)
                 })
                 :
-                <h1>No hay publicaciones que coincidan con tu búsqueda.</h1>
+                <h5>No hay publicaciones que coincidan con tu búsqueda.
+                Revisá la ortografía de la palabra.
+                Utilizá palabras más genéricas o menos palabras.</h5>
                 }
             </div>
                
