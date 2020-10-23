@@ -45,20 +45,8 @@ export default function FormReview({id}){
         )
 
     }
-    const handleSubmit=(e)=>{
-        e.preventDefault();
-        const review={
-            calificacion:value,
-            descripcion:description,
-            userId:1
-        }
-        axios.post(`http://localhost:3006/products/${id}/review`,review, {
-            headers: { "Content-type": "application/json; charset=UTF-8" }
-        })
-
-    }
     return(
-        <Container>
+        <Container className={style.Container}>
             <Form >
                 <Form.Group className={style.starContainer} ><StyledRating className={classes.star}
                     value={value}
@@ -80,7 +68,7 @@ export default function FormReview({id}){
                 <Form.Group className={style.groupDescription}>
                     <textarea className={style.textDescription} placeholder='Descripcion...' onChange={handleDescription}></textarea>
                 </Form.Group>
-                <Form.Group className={style.button}>
+                <Form.Group className={style.reviewbutton}>
                     <Button type='submit' variant="primary" onClick={()=>{
                          const review={
                             calificacion:value,
