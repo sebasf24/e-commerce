@@ -1,5 +1,6 @@
 const server = require('express').Router();
 const { User, Order, Order_line, Product } = require('../db');
+const nodemailer = require('nodemailer');
 
 //Ruta que retorne todos los Usuarios
 server.get('/', (req, res) => {
@@ -279,6 +280,75 @@ server.delete('/:id', (req, res) => {
         .catch(err => {
             res.send('Esto es un error: ' + err);
         })
+});
+
+
+//resetPassword
+server.post('/:idUser/passwordReset', (req, res) => {
+    const { idUser } = req.params;
+    const { password } = req.body;
+
+    const { email } = req.body;
+
+    if (idUser === "0") {
+        User.findOne({
+            where: {
+                email: email
+            }
+        })
+            .then(user => {
+
+                var transporter = nodemailer.createTransport({
+                    service: 'Gmail',
+                    auth: {
+                        user: 'ecomerceft1@gmail.com',
+                        pass: 'ecomerce1547'
+                    }
+                });
+
+
+                var mailOptions = {
+                    from: 'Remitente',
+                    to: user.email,
+                    subject: 'ResetPassword',
+                    text: `Cambiar contraseña http://localhost:3006/newPass?id=${user.id}`
+                };
+
+                transporter.sendMail(mailOptions, function (error, info) {
+                    if (error) {
+                        console.log(error);
+                        res.status(500);
+                        res.send(error);
+                        return
+                    } else {
+                        console.log("Email sent");
+                        res.status(200).jsonp(req.body);
+                        return
+                    }
+                });
+            })
+            .catch(err => {
+                return res.send('Esto es un error: ' + err);
+            })
+
+    } else if (password) {
+        
+                User.update(
+                    {
+                        password: password
+                    },
+                    {
+                        where: {
+                            id: idUser
+                        }
+                    })
+                    .then(user => {
+                        return res.status(200);
+                    })
+                    .catch(err => {
+                        return res.send(err);
+                    })
+    }
 });
 
 

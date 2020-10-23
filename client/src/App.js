@@ -17,6 +17,7 @@ import FormAdmin from './Component/formProductAdmin/formProductAdmin';
 import FormAdminAdd from './Component/formProductAdmin/formProductAdd';
 import NavBar from './Component/NavBar/navbar.jsx';
 import resetPassword from './Component/LoginUser/resetPassword';
+import newPassword from './Component/LoginUser/newPassword';
 import Footer from './Component/footer/footer';
 import About from './Component/About/About';
 
@@ -46,8 +47,10 @@ function App() {
     <Route exact path='/administrar' component={FormAdmin}/>
     <Route exact path='/administrarAdd' component={FormAdminAdd}/>
     <Route exact path='/resetPass' component={resetPassword}/>
+    <Route exact path='/newPass' component={newPassword}/>
     <Route exact path='/about' component={About}/>
     <Route path='/' component={ Footer } />
+
     
     
     </Router>
