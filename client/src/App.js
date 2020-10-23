@@ -28,11 +28,8 @@ function App() {
   return (
   
     <Router >
-    
-    <Switch>
-      <Route exact path='/' render={Home}/>
-      <Route component={ NavBar } />
-    </Switch>
+    <Route path='/' component={ NavBar } />
+    <Route exact path='/' render={Home}/>
     <Route exact path='/order' component={Order}/>
     <Route exact path='/cart' component={Cart}/>
     <Route exact path='/admin' component={DashboardAdmin}/>
