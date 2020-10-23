@@ -5,23 +5,6 @@ import ProductCard from '../ProductCard/ProductCard.jsx';
 import { useSelector, useDispatch } from 'react-redux';
 import {mostrarProductos} from "../../actions/products.js"
 
-// var products = [{id:0, name:"item1", stock: 10, price:500, img: null },
-// {id:0, name:"item2", stock: 10, price:500, img: null },
-// {id:0, name:"item3", stock: 10, price:500, img: null },
-// {id:0, name:"item4", stock: 10, price:500, img: null },
-// {id:0, name:"item5", stock: 10, price:500, img: null },
-// {id:0, name:"item6", stock: 10, price:500, img: null },
-// {id:0, name:"item7", stock: 10, price:500, img: null },
-// {id:0, name:"item8", stock: 10, price:500, img: null },
-// {id:0, name:"item9", stock: 10, price:500, img: null },
-// {id:0, name:"item10", stock: 10, price:500, img: null },
-// {id:0, name:"item11", stock: 10, price:500, img: null },
-// {id:0, name:"item12", stock: 10, price:500, img: null },
-// {id:0, name:"item13", stock: 10, price:500, img: null },
-// {id:0, name:"item14", stock: 10, price:500, img: null },
-// {id:0, name:"item15", stock: 10, price:500, img: null } ]
-
-
 
 export default function Carrusel(){
 
@@ -54,6 +37,9 @@ console.log(productsl)
       };
     return (
         <div>
+          <div>
+            <h1>Nuestros Productos 5 estrellas!</h1>
+          </div>
             <Carousel
             additionalTransfrom={0}
             minimumTouchDrag={80}
