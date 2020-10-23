@@ -3,6 +3,7 @@
   height: 80%;
   display: grid;
   place-items: center;
+  margin-top: 20px;
 }
 
 .botonlink{

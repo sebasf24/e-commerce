@@ -1,4 +1,4 @@
-import { ADD_USER, LIST_USERS, LOGIN_USER, EDIT_USER, DELETE_USER } from '../actions/user';
+import { ADD_USER, LIST_USERS, LOGIN_USER, EDIT_USER, DELETE_USER, ENVIAR_EMAIL, RESET_PASSWORD } from '../actions/user';
 
 
 const initialState = {
@@ -31,6 +31,17 @@ export default (state = initialState, actions) => {
             return{
                 user: state.user.filter( us=> us.id !== actions.user.data.id)
             }
+
+        case ENVIAR_EMAIL:
+                return{
+                    user:actions.user
+            }
+
+        case RESET_PASSWORD:
+             return{
+                user:actions.user
+            }
+
         default:
             return state;
     }
