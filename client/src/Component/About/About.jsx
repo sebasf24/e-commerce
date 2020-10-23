@@ -1,5 +1,4 @@
 import React from 'react';
-import style from './About.css'
 import luciano from "./images/luciano.jpg"
 import seba from "./images/seba.jpg"
 import delfi from "./images/delfi.jpg"
