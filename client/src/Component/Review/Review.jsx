@@ -1,6 +1,6 @@
 import React from 'react';
 import {Card,Container} from 'react-bootstrap';
-import {FaStar,FaRegStar} from "react-icons/fa";
+import {AiFillStar} from "react-icons/ai"
 import style from './Review.module.css';
 
 export default function Review({Review}){
@@ -24,8 +24,8 @@ export default function Review({Review}){
 
     }
 
-    let fillStar=<FaStar className={style.Star}/>;
-    let emptyStar=<FaRegStar className={style.Star} />;
+    let fillStar=<AiFillStar className={style.Star}/>;
+    let emptyStar=<AiFillStar className={style.emptyStar} />;
     let stars=[emptyStar,emptyStar,emptyStar,emptyStar,emptyStar];
     for(let i=0;i<Review.calificacion;i++){
         stars[i]=fillStar;

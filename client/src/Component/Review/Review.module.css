@@ -1,6 +1,9 @@
 .Star{
     color:#4280ff;
 }
+.emptyStar{
+    color: #b9b9b9;
+}
 
 .Container{
     width: 90%;
