@@ -19,6 +19,7 @@ export default function Product(props) {
     const productS = useSelector(state=>state.products);
     const {selectedProduct}=productS;
     const reviewsP=productS.reviews
+    console.log(reviewsP)
     const { name, description, price, stock, img }=selectedProduct;
     const id = props.match.params.id;
 

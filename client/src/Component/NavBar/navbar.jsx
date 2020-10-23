@@ -68,10 +68,7 @@ export default function NavBar (){
                 <Link to="/">Home</Link></Nav.Link>
         </Nav.Item>
         <Nav.Item>
-            <Nav.Link href='#'>Sobre Nosotros</Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-            <Nav.Link href='#'>Cuenta</Nav.Link>
+            <Nav.Link href='/about'>Sobre Nosotros</Nav.Link>
         </Nav.Item>
         </ul>
         <ul className="nav navbar pull-xs-right">

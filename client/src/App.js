@@ -18,6 +18,8 @@ import FormAdminAdd from './Component/formProductAdmin/formProductAdd';
 import NavBar from './Component/NavBar/navbar.jsx';
 import resetPassword from './Component/LoginUser/resetPassword';
 import newPassword from './Component/LoginUser/newPassword';
+import Footer from './Component/footer/footer';
+import About from './Component/About/About';
 
 !localStorage.stocarritoLocalck && localStorage.setItem("carritoLocal",JSON.stringify([]))
 !localStorage.stock && localStorage.setItem("stock",JSON.stringify({}))
@@ -29,11 +31,8 @@ function App() {
   return (
   
     <Router >
-    
-    <Switch>
-      <Route exact path='/' render={Home}/>
-      <Route component={ NavBar } />
-    </Switch>
+    <Route path='/' component={ NavBar } />
+    <Route exact path='/' render={Home}/>
     <Route exact path='/order' component={Order}/>
     <Route exact path='/cart' component={Cart}/>
     <Route exact path='/admin' component={DashboardAdmin}/>
@@ -49,6 +48,9 @@ function App() {
     <Route exact path='/administrarAdd' component={FormAdminAdd}/>
     <Route exact path='/resetPass' component={resetPassword}/>
     <Route exact path='/newPass' component={newPassword}/>
+    <Route exact path='/about' component={About}/>
+    <Route path='/' component={ Footer } />
+
     
     
     </Router>
