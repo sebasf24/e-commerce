@@ -5,7 +5,9 @@ export const ADD_USER='ADD_USER';
 export const LIST_USERS='LIST_USERS';
 export const LOGIN_USER='LOGIN_USER';
 export const DELETE_USER='DELETE_USER';
-export const EDIT_USER= 'EDIT_USER'
+export const EDIT_USER= 'EDIT_USER';
+export const ENVIAR_EMAIL = 'ENVIAR_EMAIL';
+export const RESET_PASSWORD = 'RESET_PASSWORD';
 
 export function addUser(user){
    
@@ -76,6 +78,30 @@ export function deleteUser(id){
         .then((user)=>{
             dispatch({
                 type: DELETE_USER,
+                user:user
+            })
+        })
+    }
+}
+
+export function enviarEmail(email){
+    return function(dispatch){
+        return axios.post(`http://localhost:3000/user/0/passwordReset`,email)
+        .then((user)=>{
+            dispatch({
+                type: ENVIAR_EMAIL,
+                user:user
+            })
+        })
+    }
+}
+
+export function resetPassword(password){
+    return function(dispatch){
+        return axios.post(`http://localhost:3000/user/${password.id}/passwordReset`,password)
+        .then((user)=>{
+            dispatch({
+                type: RESET_PASSWORD,
                 user:user
             })
         })
