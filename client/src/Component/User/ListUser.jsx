@@ -21,7 +21,7 @@ export default function ListUser() {
     const dispatch = useDispatch()
     const us = useSelector(store => store.user);
     console.log(us)
-    const users = us.user;
+    const listaUsuarios = us.listUser;
 
     //EDITAR USUARIO
 
@@ -83,7 +83,7 @@ export default function ListUser() {
                     </thead>
                     <tbody>
                         {
-                            users && users.map(us => {
+                            listaUsuarios ? listaUsuarios.map(us => {
                                 return (
                                     <tr>
                                         <td><InputGroup.Checkbox className="mb-3" /></td>
@@ -102,6 +102,8 @@ export default function ListUser() {
                                     </tr>
                                 )
                             })
+                            :
+                            <div></div>
                         }
                     </tbody>
 

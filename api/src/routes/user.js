@@ -80,7 +80,6 @@ server.get('/:idUser/cart', (req, res) => {
     const { idUser } = req.params;
 
     Product.findAll({
-        attributes: ['id', 'name'],
         include: [{
             model: Order,
             attributes: ['id', 'estado'],
@@ -121,48 +120,51 @@ server.get('/login', (req, res, next) => {
             res.send('Usuario Invalido')
         }
     })
+
 //ruta que agrega un item al carrito
 server.post('/:idUser/cart', (req, res) => {
-    const {idUser} = req.params;
-    const estado=req.body[0]
-   // productId,cantidad,price
-    const producto=req.body[1]
-    console.log(producto)
-   /*  Product.findOne({
-        where:{id:producto.productId}
-    }).then(product=>{
-        //let stockUpdate=product.stock-cantidad
+    const { idUser } = req.params;
+    const {productId,cantidad,price,estado} = req.body
+        Product.findOne({
+            where: { id: productId }
+        })
+        .then(prod => {
         Product.update(
-            {stock:producto.cantidad},{where:{id:producto.productId}}
-        )
-    }) */
-
-     Order.findOrCreate({
-       where:{userId:idUser},
-       defaults: {estado:estado,userId:idUser}
-    }).then(respuesta=>{
-        var objOrder_line=[]
-        for(let i=0 ; i<producto.length;i++){
-          var {productId,cantidad,price}=producto[i]
-            objOrder_line.push({
-                orderId:respuesta[0].id,
-                productId:productId,
-                cantidad:cantidad,
-                price:price
-            })
-        console.log(objOrder_line)
-        }
-        Order_line.bulkCreate(
-            objOrder_line
-        )
-
-        return res.status(200).send(respuesta);
-    }).catch(err=>{
-        return res.send(err);
+            {stock: prod.stock -cantidad},
+            {where:{ id: productId }})
+        }) 
+    Order.findOrCreate({
+        where: { userId: idUser },
+        defaults: { estado: estado, userId: idUser },
     })
+        .then(respuesta => {
+            var idOrden=respuesta[0].dataValues.id
+            Order_line.findOne({
+                where:{ orderId: idOrden,productId: productId}
+            })
+            .then(resp=>{
+                var lineaDeOrden={cantidad: cantidad,
+                            price: price,
+                            productId: productId,
+                            orderId: idOrden,}
+                if(resp==null){
+                    Order_line.create(lineaDeOrden)
+                    return res.send(lineaDeOrden)
+                }
+                console.log(resp)
+                Order_line.update({
+                    cantidad:resp.dataValues.cantidad+cantidad
+                },
+                {
+                    where:{ orderId: idOrden,productId: productId}
 
-
-});
+                })
+                return res.send(resp)
+            })
+            .catch(err=>{res.send(err)})
+  
+        })        
+    })
 
 //ruta para modificar las cantidades en el carrito
 server.put('/:idUser/cart',async(req,res)=>{
