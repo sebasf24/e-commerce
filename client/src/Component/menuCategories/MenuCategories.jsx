@@ -15,8 +15,7 @@ export default function MenuCategories() {
     useEffect(()=>{
          dispatch(listCategory())
      },[]);
-     console.log(categories);    
-
+   
     return (
             <Nav  className={`flex-column ${styles.main_menu}`}>
                 <Nav.Link className={styles.text + ' ' + styles.centrar }

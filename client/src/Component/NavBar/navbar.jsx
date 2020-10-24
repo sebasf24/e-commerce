@@ -1,13 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Logo from './technav1.png';
-import { Nav } from 'react-bootstrap';
+import { Nav, NavDropdown } from 'react-bootstrap';
 import styles from './navbar.module.css';
+import {useDispatch} from 'react-redux'
 import SearchBar from '../SearchBar/SearchBar.js';
-import {Avatar, Button, makeStyles} from '@material-ui/core';
+import {Avatar, Button, makeStyles, MenuItem} from '@material-ui/core';
 import { ImPodcast } from 'react-icons/im';
 import { RiLogoutCircleRLine } from 'react-icons/ri';
-import Cookies from 'universal-cookie'
+import {logoutUser} from '../../actions/user'
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -22,21 +24,12 @@ const useStyles = makeStyles((theme) => ({
         background:theme.palette.secondary.light
       },
   }));
-const cookies=new Cookies();
-export default function NavBar (){
-    const userlogged=cookies.get('typeUser')
 
+export default function NavBar (islog){
+ 
     const classes= useStyles();
-
-    const cerrarSesion=()=>{
-        cookies.remove('id', {path:"/"});
-        cookies.remove('username', {path:"/"});
-        cookies.remove('typeUser', {path:'/'})
-        window.location.href='./products';
-    }
-    //console.log('username:'+ cookies.get('username'))
-
-    
+    const dispatch=useDispatch();
+    const usuario=islog.islog 
  return (
      <Nav className={`navbar navbar-dark bg-dark ${styles.nav}`}>
        
@@ -50,7 +43,7 @@ export default function NavBar (){
         </Nav.Item>
 
         <Nav.Item>
-           {  userlogged==='Admin'? <Nav.Link href="#">
+           {  usuario && usuario.typeUser==='Admin'? <Nav.Link href="#">
                 <Link to={'/admin'}>
                  Admin
                 </Link>
@@ -86,11 +79,21 @@ export default function NavBar (){
         </Nav.Item>
         <Nav.Item>
             <p className={styles.userName}>
-                {cookies.get('username')}
+               {usuario? usuario.username : ''} 
             </p>
         </Nav.Item>
         <Nav.Item><Nav.Link href='/login'><Avatar className={classes.small}  /></Nav.Link></Nav.Item>
-        <Nav.Item><Button onClick={()=>{cerrarSesion()}}><Avatar className={classes.small}><RiLogoutCircleRLine/></Avatar></Button></Nav.Item>
+        {
+            usuario && usuario.id?
+            <NavDropdown>
+            <MenuItem>My Profile</MenuItem>
+            <MenuItem>Your gits</MenuItem>
+            <MenuItem>Starred gists</MenuItem>
+            <MenuItem onClick={()=>{dispatch(logoutUser())}} >Sign out</MenuItem>
+        </NavDropdown>
+        : <div></div>
+        }
+       
       
         </ul>
 

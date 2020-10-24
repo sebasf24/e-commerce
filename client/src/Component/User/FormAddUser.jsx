@@ -11,9 +11,6 @@ import { addUser, listUser } from '../../actions/user';
 import { BiArrowBack } from "react-icons/bi";
 import Cookies from 'universal-cookie'
 
-
-
-
 const useStyles = makeStyles((theme) => ({
     root: {
         '& .MuiTextField-root': {

@@ -38,9 +38,8 @@ export default function Loginuser(onLogin) {
     username: '',
     password:''
   })
-  const cookies = new Cookies();
-  const userLogged=useSelector(store=>store.user)
-  const userlog={userLogged}
+  const dispatch=useDispatch();
+  
  
 
 const handlerOnchange=(e)=>{
@@ -52,25 +51,8 @@ const handlerOnchange=(e)=>{
  const Session=(e)=>{
   e.preventDefault();
   const {username, password}=login
-   console.log(username, password)
-    axios.post('http://localhost:3000/auth/login',{
-      username,
-      password})
-   .then(response=>{
-     console.log(response.data)
-     return response.data;
-   })
-   .then(response=>{
-     if(response){
-       var user=response.user;
-      alert(`${user.username} logged`) ;
-      window.location.href='./products'
-     }
-   })
-   .catch(error=>{
-    console.log(error);})
+  dispatch(loginUser(username, password))
  
-
  }
 
   return (
