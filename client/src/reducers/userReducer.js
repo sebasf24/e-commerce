@@ -1,4 +1,12 @@
-import { ADD_USER, LIST_USERS, LOGIN_USER, EDIT_USER, DELETE_USER, ENVIAR_EMAIL, RESET_PASSWORD } from '../actions/user';
+import { ADD_USER, 
+    LIST_USERS, 
+    LOGIN_USER, 
+    EDIT_USER, 
+    DELETE_USER, 
+    ENVIAR_EMAIL, 
+    RESET_PASSWORD, 
+    USER_PROFILE,
+    LOGOUT_USER} from '../actions/user';
 
 
 const initialState = {
@@ -21,6 +29,8 @@ export default (state = initialState, actions) => {
                 ...state,
                 user: actions.user.data
             }
+        case LOGOUT_USER:
+                return state;
         case EDIT_USER:
             return{
                 ...state,
@@ -41,6 +51,11 @@ export default (state = initialState, actions) => {
              return{
                 user:actions.user
             }
+        case USER_PROFILE:
+
+            return{
+                    user: actions.user
+                }
 
         default:
             return state;
