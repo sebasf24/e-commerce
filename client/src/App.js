@@ -17,8 +17,10 @@ import FormAdmin from './Component/formProductAdmin/formProductAdmin';
 import FormAdminAdd from './Component/formProductAdmin/formProductAdd';
 import NavBar from './Component/NavBar/navbar.jsx';
 import resetPassword from './Component/LoginUser/resetPassword';
+import newPassword from './Component/LoginUser/newPassword';
 import Footer from './Component/footer/footer';
 import About from './Component/About/About';
+import UserProfile from './Component/User/UserProfile'
 
 !localStorage.stocarritoLocalck && localStorage.setItem("carritoLocal",JSON.stringify([]))
 !localStorage.stock && localStorage.setItem("stock",JSON.stringify({}))
@@ -26,11 +28,13 @@ import About from './Component/About/About';
 
 function App() {  
   const productsl = useSelector(state=>state.products);
-
+  const userlog=useSelector(state=>state.user)
+  const us=userlog.user
+  
   return (
   
     <Router >
-    <Route path='/' component={ NavBar } />
+    <Route path='/' render={()=> <NavBar islog={us? us : undefined}/>} />
     <Route exact path='/' render={Home}/>
     <Route exact path='/order' component={Order}/>
     <Route exact path='/cart' component={Cart}/>
@@ -46,8 +50,11 @@ function App() {
     <Route exact path='/administrar' component={FormAdmin}/>
     <Route exact path='/administrarAdd' component={FormAdminAdd}/>
     <Route exact path='/resetPass' component={resetPassword}/>
+    <Route exact path='/newPass' component={newPassword}/>
+    <Route exact path='/me' component={UserProfile}/>
     <Route exact path='/about' component={About}/>
     <Route path='/' component={ Footer } />
+
     
     
     </Router>

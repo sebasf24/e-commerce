@@ -59,7 +59,7 @@ const FormProductEdit = (productEdit) => {
             ...product,
             [e.target.name]: e.target.value
         })
-        
+
     }
 
     function encodeImageFileAsURL(e) {
@@ -87,7 +87,7 @@ const FormProductEdit = (productEdit) => {
 
     const envioformulario = (e) => {
         e.preventDefault();
-       
+
     }
 
     const redireccionarEdicion = product => {
@@ -95,15 +95,15 @@ const FormProductEdit = (productEdit) => {
     }
 
     return (
-        <Container id='container' className='container-fluid col-6 mt-4 bg-white p-3'>
-            <Link to={`/administrar`}><Button className='mr-3' variant="primary" type="button" >Volver atras</Button></Link>
+        <Container id='container' className='container-fluid col-12  mt-4 bg-white p-3'>
+            <Link to={`/administrarAdd`}><Button className='mr-3' variant="primary" type="button" >Volver atras</Button></Link>
             <Form id='formProduct' name="editar" onSubmit={envioformulario} >
 
-                <Form.Label id='formTitle'>Editar Producto</Form.Label>
+                <Form.Label id='formTitle'>Editar Producto</Form.Label><br />
 
 
                 <Form.Label>Nombre</Form.Label>
-                <Form.Control column="sm" size="sm" type='text' placeholder='nombre'
+                <Form.Control type='text' placeholder='nombre'
                     name='name'
                     onChange={obtenerInfo}
                     value={product.name}
@@ -138,21 +138,19 @@ const FormProductEdit = (productEdit) => {
                 />
 
                 <Form.Group>
-                    <Form.Label>Categorias</Form.Label>
+                    <Form.Label>Categorias</Form.Label><br />
 
                     {checkboxes.map((categoria, i) => {
                         return (
                             <Form.Label>
                                 <input
                                     type="checkbox"
-                                    className="checks"
+                                    className="checks ml-1"
                                     value={i}
                                     checked={categoria.add}
                                     onChange={handleCategoryChecks}
                                 />{categoria.name}
                             </Form.Label>
-
-
 
                         );
                     })}
@@ -165,7 +163,7 @@ const FormProductEdit = (productEdit) => {
                     onChange={encodeImageFileAsURL}
                 //value={base64ToString}
                 />
-                <img src={product.img} width="300px" />
+                <img src={product.img} style={{ width: '150px' }} />
 
                 <Form.Group controlId="formBasic">
                     <Button type="button" className='mt-3' variant="primary" onClick={() => {
@@ -180,15 +178,15 @@ const FormProductEdit = (productEdit) => {
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 dispatch(editarProducto(product))
-                                let categoriesCheck=[]
+                                let categoriesCheck = []
                                 for (let i = 0; i < checkboxes.length; i++) {
                                     if (checkboxes[i].add === true) {
                                         categoriesCheck.push(checkboxes[i].id);
                                     }
                                 }
-                                axios.post(`http://localhost:3000/products/${product.id}/category/`, [product,categoriesCheck], {
-                                            headers: { "Content-type": "application/json; charset=UTF-8" }
-                                        })
+                                axios.post(`http://localhost:3000/products/${product.id}/category/`, [product, categoriesCheck], {
+                                    headers: { "Content-type": "application/json; charset=UTF-8" }
+                                })
 
                                 Swal.fire({
                                     icon: 'success',
@@ -196,10 +194,9 @@ const FormProductEdit = (productEdit) => {
                                     showConfirmButton: false,
                                     timer: 1500
                                 })
-                                setTimeout(function () {  window.location.pathname = '/administrar'; }, 0);
+                                setTimeout(function () { window.location.pathname = '/admin'; }, 0);
                             }
                         })
-
 
                     }}>Editar</Button>
                 </Form.Group>

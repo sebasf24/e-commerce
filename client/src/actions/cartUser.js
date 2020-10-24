@@ -9,6 +9,8 @@ export const MOSTRAR_TOTAL ="MOSTRAR_PRECIO";
 export function agregarProductoCarritoUser(id,product){
     return function(dispatch){
         return axios.post(`http://localhost:3000/user/${id}/cart'`, product,{
+            withCredentials: true
+        },{
          headers:{"Content-type":"application/json; charset=UTF-8"}})
                 .then(json=>{
                     dispatch({

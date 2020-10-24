@@ -21,7 +21,9 @@ export default function listOrders(){
 
 export  function findbyId(id){
     return function(dispatch){
-        return axios.get(`http://localhost:3000/orders/${id}`)
+        return axios.get(`http://localhost:3000/orders/${id}`,{
+            withCredentials: true,
+        })
 
         .then(json=>{
             dispatch({

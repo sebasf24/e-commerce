@@ -23,9 +23,17 @@ isAdmin = (req, res, next) => {
       });
 };
   
+server.get('/me', isLogged, function(req, res){
+  res.status(200).json({
+    loggedin: true,
+    message: 'Usuario autenticado',
+    user: req.user,
+  });
+});
+
 
 server.post('/login', (req, res, next) => {
-    passport.authenticate('local', (err, user, info) => {
+    passport.authenticate('login', (err, user, info) => {
       
       if (err) {
        res.json({

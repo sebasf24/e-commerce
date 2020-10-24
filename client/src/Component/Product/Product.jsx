@@ -8,7 +8,8 @@ import Reviews from '../Review/ReviewContainer.jsx';
 import styles from './Product.module.css';
 import { BiArrowBack,BiCart} from "react-icons/bi";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Card, Image, Col, Row, Container, Button,Form } from 'react-bootstrap';
+import { Card, Image, Container, Button,Form } from 'react-bootstrap';
+import FormReview from '../Review/FormReview.jsx';
 
 
 export default function Product(props) {
@@ -172,6 +173,8 @@ export default function Product(props) {
         </Container>
         <p></p>
         <Reviews Reviews={reviewsP}></Reviews>
+        <p></p>
+        <FormReview id={id}></FormReview>
         </div>
     )
 
