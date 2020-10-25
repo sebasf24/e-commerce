@@ -43,7 +43,8 @@ const cambiarCantidad=(e)=>{
     }
 }
 
-const borrarItems=()=>{
+
+const borrarItems= async()=>{
     let prodStock = JSON.parse(localStorage.stock)[producto.id]
     if(prodStock){
         eliminarItems(prodStock,producto.id,borrar)
@@ -54,12 +55,10 @@ const borrarItems=()=>{
             productId: producto.id,
             cantidad:0
         }
-        dispatch(modificarStock(idUser,prodEliminar))
-        dispatch(quitarProdCarrito(currentProd.productId,currentProd.id))
+    await dispatch(quitarProdCarrito(currentProd.productId,currentProd.id))
+    await dispatch(modificarStock(idUser,prodEliminar))
     }
-        
 }
-
     (producto.img) && (base64ToString = Buffer.from(producto.img.data, "base64").toString())
     return(
         

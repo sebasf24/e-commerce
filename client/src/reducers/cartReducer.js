@@ -58,13 +58,13 @@ switch(actions.type){
 
      case QUITAR_PRODUCTO_CARRITO:
         var aux = state.stockProduct.filter(prod=>prod.id == actions.orderLine)[0]
-        console.log(existe)
+        console.log(actions.idProduct)
         console.log(aux)
         return  {
             ...state,
             productos: state.productos.filter(prod=>prod.id !== actions.idProduct),
             stockProduct : state.stockProduct.filter(prod=>prod.id !== actions.orderLine),
-            total: state.total - (aux.price * aux.cantidad)
+            //total: state.total - (aux.price * aux.cantidad)
         } 
     case VACIAR_CARRITO:
         return  {
