@@ -22,7 +22,7 @@ import Footer from './Component/footer/footer';
 import About from './Component/About/About';
 import UserProfile from './Component/User/UserProfile'
 
-!localStorage.stocarritoLocalck && localStorage.setItem("carritoLocal",JSON.stringify([]))
+!localStorage.carritoLocal && localStorage.setItem("carritoLocal",JSON.stringify([]))
 !localStorage.stock && localStorage.setItem("stock",JSON.stringify({}))
 !localStorage.total && localStorage.setItem("total",JSON.stringify(0))
 
@@ -32,12 +32,11 @@ function App() {
   const us=userlog.user
   
   return (
-  
     <Router >
     <Route path='/' render={()=> <NavBar islog={us? us : undefined}/>} />
     <Route exact path='/' render={Home}/>
     <Route exact path='/order' component={Order}/>
-    <Route exact path='/cart' component={Cart}/>
+  <Route exact path='/cart' render={()=><Cart islog={us? us : undefined}/>}/>
     <Route exact path='/admin' component={DashboardAdmin}/>
     <Route exact path={['/products','/products/category/:id']} component={Catalogue} />
     <Route exact path='/products/:id' component={Product}/>

@@ -9,6 +9,7 @@ import {mostrarProductos,mostrarProducto_category} from "../../actions/products.
 export default function Catalogue() {
    var cat=window.location.href
 const productsl = useSelector(state=>state.products);
+const userlog=useSelector(state=>state.user)
 
  let products = productsl.products;
 
@@ -33,7 +34,7 @@ const productsl = useSelector(state=>state.products);
             <div className={style.productos}>
                 { products.length !== 0 ? 
                 products.map(product => {
-                    return (<ProductCard Product={product} />)
+                    return (<ProductCard userlog={userlog?userlog:""} Product={product} />)
                 })
                 :
                 <h5>No hay publicaciones que coincidan con tu búsqueda.

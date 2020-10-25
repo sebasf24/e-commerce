@@ -10,7 +10,8 @@ import { ADD_USER,
 
 
 const initialState = {
-    user: []
+    listUser: [],
+    user:[]
 }
 export default (state = initialState, actions) => {
     switch (actions.type) {
@@ -25,9 +26,10 @@ export default (state = initialState, actions) => {
                 user: actions.user.data
             }
         case LOGIN_USER:
+            console.log(actions.user.data)
             return {
                 ...state,
-                user: actions.user.data
+                listUser: actions.user.data
             }
         case LOGOUT_USER:
                 return state;
