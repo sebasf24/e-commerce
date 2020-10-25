@@ -6,13 +6,15 @@ import userReducer from '../reducers/userReducer';
 import cartReducer from '../reducers/cartReducer'
 import cartUserReducer from '../reducers/cartUserReducer.js'
 import ordesReducer from '../reducers/ordesReducer.js'
+import usersReducer from '../reducers/usersReducer'
 
 const rootReducer =combineReducers({
     products: productsReducer,
     category: categoryReducer,
     user: userReducer,
     order: ordesReducer,
-    productsCart:cartReducer
+    productsCart:cartReducer,
+    users: usersReducer
 })
 
 const store = createStore(

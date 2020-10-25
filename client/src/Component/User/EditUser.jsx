@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react'
-import { editUser,listUser } from '../../actions/user';
+import { editUser,listUser } from '../../actions/users';
 import { Button, Form, Col, Row, Card} from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom'
@@ -11,7 +11,7 @@ export default function EditUser(userEd) {
   console.log(userEd.user)
     const [edituser, UpdateUser]=useState(userEd.user)
     const [Open, setOpen]=useState(false)
-   const storeUser=useSelector(store=>store.user)
+//    const storeUser=useSelector(store=>store.users)
     const dispatch = useDispatch();
     const hadlerChange=(e)=>{
         UpdateUser({
@@ -73,7 +73,7 @@ export default function EditUser(userEd) {
             <Button className={style.boton} type='submit'
                 onClick={() => { 
                     dispatch(editUser(edituser))
-                    dispatch(listUser())
+                    // dispatch(listUser())
                 }} >Actualizar</Button>
                     </Col>
            </Form.Group>

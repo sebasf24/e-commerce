@@ -2,21 +2,20 @@ import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Form, Button, Col, Card } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import { addCategory, listCategory } from '../../actions/category';
+import { editCategory, listCategory } from '../../actions/category';
 import style from './FormCategory.module.css';
 import { BiArrowBack } from "react-icons/bi";
 import {Link} from 'react-router-dom'
 import Swal from 'sweetalert2';
 
 
-export default function FormCategory() {
+
+export default function EditCategory(category) {
 
     const dispatch = useDispatch();
+    console.log(category.data)
   
-    const [formData, updateFormData] = useState({
-        name: '',
-        description: ''
-    });
+    const [formData, updateFormData] = useState(category.data);
 
     const handleChange = (e) => {
         updateFormData({
@@ -25,57 +24,32 @@ export default function FormCategory() {
         });
 
     };
-    useEffect(() => {
-        dispatch(listCategory())
-    }, []);
-  
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        var newDate = {
-            name: formData.name,
-            description: formData.description
-        }
-        dispatch(addCategory(newDate))
-        Swal.fire({
-            position: 'top-center',
-            icon: 'success',
-            title: 'Categoria Agregada',
-            showConfirmButton: true
-          })
-        limpiarFormulario()
-        updateFormData('')
-        
-    }
 
     function limpiarFormulario() {
         document.getElementById("form").reset();
     }
- 
     useEffect(() => {
         dispatch(listCategory())
-        return () => {
-
-        }
-    }, [])
-
+    }, [category]);
+  
     return (
         <div>
             <Container>
                 <br />
             <Card className={style.card}>
             <Link className={style.botonlink} to={`./admin`}>
-                        <BiArrowBack/>
+                        <BiArrowBack onClose={true}/>
                     </Link>
 
-                <Form id="form"  className="card-boy" onSubmit={(e)=>{handleSubmit(e)}}>
-                    <Form.Label className={style.h3}><h3>Ingresar Nueva Categoria</h3></Form.Label>
+                <Form id="form"  className="card-boy">
+                    <Form.Label className={style.h3}><h3>Editar Categoria</h3></Form.Label>
                     <br /><br /><br />
                     <Form.Row>
                         <Form.Label className={style.input}><h5>Nombre:</h5></Form.Label>
                         <Form.Group as={Col}>
                             <Form.Control
                                 name='name'
+                                defaultValue= {formData.name}
                                 onChange={handleChange}
                                 type='text'
                                 placeholder="Ingrese Nombre Categoria..."
@@ -89,6 +63,7 @@ export default function FormCategory() {
                         <Form.Group as={Col}>
                             <Form.Control
                                 name='description'
+                                defaultValue={formData.description}
                                 onChange={handleChange} block
                                 type='text'
                                 placeholder="Ingrese descripcion..."
@@ -98,20 +73,19 @@ export default function FormCategory() {
                     </Form.Row>
                     <br />
 
-                    <Button  className={style.button}  type="submit"
-                    // onClick={() => {
-                    //     Swal.fire({
-                    //         position: 'top-center',
-                    //         icon: 'success',
-                    //         title: 'Categoria Agregada',
-                    //         showConfirmButton: false,
-                    //         timer: 1500
-                    //       })
-                    //        dispatch(addCategory(formData))
-                    //        limpiarFormulario()
-                    //        updateFormData('')  
-                    // }} 
-                    >Agregar</Button>
+                    <Button className={style.button} onClick={() => {                       
+                     dispatch(editCategory(category.data.id, formData.name, formData.description))
+                           limpiarFormulario()
+                           updateFormData('')
+                           Swal.fire({
+                            position: 'top-center',
+                            icon: 'success',
+                            title: 'Categoria Actualizada',
+                            showConfirmButton: false,
+                            timer: 1500
+                          })
+                           window.location.href='./admin'
+                    }} >Editar</Button>
                 </Form>
                 </Card>
             </Container>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { listUser, deleteUser } from '../../actions/user'
+import  {listUser, deleteUser} from '../../actions/users'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { Container, Button, Col, Table,Row, InputGroup } from 'react-bootstrap';
@@ -8,6 +8,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import style from './FormAddUser.module.css'
 import EditUser from './EditUser'
 import FormAddUser from './FormAddUser'
+import Swal from 'sweetalert2';
 
 
 
@@ -19,15 +20,17 @@ export default function ListUser() {
     })
 
     const dispatch = useDispatch()
-    const us = useSelector(store => store.user);
-    console.log(us)
-    const users = us.user;
+    const us = useSelector(store => store.users);
+    const users = us.users;
+    useEffect(() => {
+        dispatch(listUser())
+    }, []);
+
 
     //EDITAR USUARIO
 
     const editUser = (us) => {
         setclick({
-
             clicked: <EditUser user={us} />
         })
 
@@ -35,7 +38,13 @@ export default function ListUser() {
     //ELIMINAR USUARIO
     const eliminarU = (usuario) => {
         dispatch(deleteUser(usuario.id))
-        alert('usuario eliminado')
+        Swal.fire({
+            position: 'top-center',
+            icon: 'success',
+            title: 'Categoria Eliminada',
+            showConfirmButton: false,
+            timer: 1500
+          })
         dispatch(listUser())
 
     }
@@ -47,10 +56,7 @@ export default function ListUser() {
         })
 
     }
-    useEffect(() => {
-        dispatch(listUser())
-    }, []);
-
+ 
     return (
         <div>
             <Row>

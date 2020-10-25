@@ -21,7 +21,7 @@ server.post('/',(req,res) => {
 	})
 	.then((cat)=>{
 		//console.log(cat)
-		res.send("Categoria agregada")
+		res.send(cat)
 	})
 
 }) 
