@@ -26,9 +26,10 @@ export function listCategory(){
     return function(dispatch){
         return axios.get('http://localhost:3000/category')
         .then(json=>{
+            console.log(json.data)
             dispatch({
                 type:LIST_CATEGORY,
-                category:json
+                category:json.data
             })
         })
     }
@@ -43,6 +44,7 @@ export function editCategory(id, name, description){
         .then((resp)=>{
             dispatch({
                 type:EDIT_CATEGORY,
+                id,
                 category: resp
             })
 

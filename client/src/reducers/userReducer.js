@@ -1,4 +1,4 @@
-import { ADD_USER,
+import { 
     LOGIN_USER, 
     LOGOUT_USER,
     USER_PROFILE
@@ -10,12 +10,7 @@ user: []
 }
 export default (state = initialState, actions) => {
 switch (actions.type) {
-    case ADD_USER:
-        console.log(actions)
-        return {
-            ...state,
-           user: state.user.concat[(actions.user)]
-        }
+
 
     case LOGIN_USER:
         return {
