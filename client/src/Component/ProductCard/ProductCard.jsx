@@ -6,7 +6,7 @@ import { Card,Button} from 'react-bootstrap';
 import {Link} from 'react-router-dom'
 import { BiArrowBack,BiCart} from "react-icons/bi";
 import {useDispatch, useSelector } from 'react-redux';
-import {agregarProductoCarrito} from '../../actions/cart.js';
+import {agregarProductoCarrito,modificarStock} from '../../actions/cart.js';
 
 export default function ProductCard({userlog,Product}) {
 
@@ -37,8 +37,14 @@ const sumarAlCarrito = ()=>{
             price:parseInt(Product.price),
             estado:"carrito"}
 
-        dispatch(agregarProductoCarrito(idUser,productos_line))
-   } 
+            
+            let obj={
+                productId: Product.id,
+                cantidad:parseInt(cantidad)
+            }
+            dispatch(modificarStock(idUser,obj))
+            dispatch(agregarProductoCarrito(idUser,productos_line))
+        } 
 
     if(!prodStock && cantidad<Product.stock){
                 sumarProdLocalStorage()

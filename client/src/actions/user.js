@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 
-export const ADD_USER='ADD_USER';
+
 export const LOGIN_USER='LOGIN_USER';
 export const ENVIAR_EMAIL = 'ENVIAR_EMAIL';
 export const RESET_PASSWORD = 'RESET_PASSWORD';
@@ -26,31 +26,7 @@ export function isLogged(){
 }
 
 
-export function addUser(user){
-   
-    return function(dispatch){
-        console.log(user)
-        const newUser={
-            name:user.name,
-            lastname:user.lastname,
-            dni:user.dni,
-            email:user.email,
-            username:user.username,
-            password:user.password,
-            image:user.image,
-            typeUser:user.typeUser==='' ?  user.typeUser='cliente' : user.typeUser
-        };
-        return axios.post('http://localhost:3000/user', newUser)
-        .then(us=>{
-            dispatch({
-                type: ADD_USER,
-                user:us
-            })
-           
-        })
-       
-    }
-}
+
 
 export function loginUser(username, password){
     var cart=localStorage.getItem('carritoLocal')
@@ -152,29 +128,21 @@ export function logoutUser(){
     }
 }
 
-const agregarProdUsuario = (idUser) => {
+const agregarProdUsuario = (idUser)=>{
     let prodStock = JSON.parse(localStorage.stock)
-    var productos_line = []
+    if(idUser){
 
-    for (var prod in prodStock) {
-        var { cantidad, precio } = prodStock[prod]
-        productos_line.push({
-            productId: parseInt(prod),
-            cantidad: cantidad,
-            price: precio
-        })
-    }
-
-    var agregaProducto = []
-    agregaProducto.push("carrito")
-    agregaProducto.push(productos_line)
-    console.log(agregaProducto)
-    // agregarProductoCarritoUser(idUser,agregaProducto)
-    axios.post(`http://localhost:3000/user/${idUser}/cart`, agregaProducto, {
-        headers: { "Content-type": "application/json; charset=UTF-8" }
-    })
-
-        .catch(err => { console.log(err) })
-
-
-}
+        for(var prod in prodStock){
+          var {cantidad,precio}=prodStock[prod]
+          var productos_line={
+                productId:parseInt(prod),
+                cantidad:cantidad,
+                price:precio,
+                estado:"carrito"
+            }
+            axios.post(`http://localhost:3000/user/${idUser}/cart`, productos_line,{
+             headers:{"Content-type":"application/json; charset=UTF-8"}})
+                    .catch(err=>{console.log(err)})
+        }
+    }else{return}
+  } 
