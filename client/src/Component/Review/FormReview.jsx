@@ -32,7 +32,7 @@ const StyledRating = withStyles({
   })(Rating);  
 
 
-export default function FormReview({id}){
+export default function FormReview({id, actualizarReviews}){
     const [value, setValue] = React.useState(1);
   const [hover, setHover] = React.useState(-1);
   const classes = useStyles();
@@ -69,15 +69,16 @@ export default function FormReview({id}){
                     <textarea className={style.textDescription} placeholder='Descripcion...' onChange={handleDescription}></textarea>
                 </Form.Group>
                 <Form.Group className={style.reviewbutton}>
-                    <Button type='submit' variant="primary" onClick={()=>{
+                    <Button  variant="primary" onClick={()=>{
                          const review={
                             calificacion:value,
                             descripcion:description,
                             userId:1
                         }
-                        axios.post(`http://localhost:3000/products/${id}/review`,review, {
+                        axios.post(`http://localhost:3000/products/${id}/review`,review,{withCredentials: true}, {
                             headers: { "Content-type": "application/json; charset=UTF-8" }
-                        })
+                        }) 
+                        actualizarReviews()
                     }}>Enviar Review</Button>
                 </Form.Group>
             </Form>

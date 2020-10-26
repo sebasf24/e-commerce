@@ -27,7 +27,6 @@ export default function ResetPassword () {
         <Typography component="h3" variant="h5">Reset Password</Typography>
         <form noValidate>
           <TextField
-            type="password"
             value={email.email}
             onChange={obtenerEmail}
             variant="outlined"

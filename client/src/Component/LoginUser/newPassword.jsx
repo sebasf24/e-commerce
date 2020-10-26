@@ -59,6 +59,7 @@ export default function ResetPassword () {
           /><br /><br />
 
           <TextField
+            type="password"
             value={password.newPasswordRepit}
             onChange={obtenerPassword}
             variant="outlined"
