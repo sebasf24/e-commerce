@@ -47,7 +47,7 @@ export default function ResetPassword () {
             onClick={() =>  {
               dispatch(enviarEmail(email));
               setEmail({email:''});
-              alert('Revice en su casila de corre para secuperar su Password')
+              alert('Revise su casila de correo para recuperar su Password')
             }}
           >
             Reset

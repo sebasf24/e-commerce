@@ -45,6 +45,10 @@ console.log(idUser)
         dispatch(mostrarReviews(id))
     },[])
 
+    const actualizarReviews=()=>{
+        dispatch(mostrarReviews(id))
+    }
+
     //store carrito  
     console.log(stock)
     const sumarProdLocalStorage=()=>{
@@ -103,8 +107,10 @@ const sumarAlCarrito = ()=>{
     <Form.Control value={cantidad} onChange={cambiarCantidad} placeholder="1" min={1} max={stock} className={styles.cantidad} type="number"/>
     <Button onClick={sumarAlCarrito} className={styles.boton +' '+ styles.boton1} 
        ><BiCart/> AGREGAR AL CARRITO</Button>
-    <Button className={styles.boton +' '+ styles.boton2} 
+     <Link to="/cart">
+        <Button onClick={sumarAlCarrito} className={styles.boton +' '+ styles.boton2} 
         >COMPRAR AHORA</Button>
+    </Link>
     </Form>
 
     let cartel = <div className={styles.sinstock}>
@@ -153,7 +159,7 @@ const sumarAlCarrito = ()=>{
         <p></p>
         <Reviews Reviews={reviewsP}></Reviews>
         <p></p>
-        <FormReview id={id}></FormReview>
+        <FormReview id={id}actualizarReviews={actualizarReviews} ></FormReview>
         </div>
     )
 
