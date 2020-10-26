@@ -42,8 +42,8 @@ server.post('/', (req, res) => {
                 image:req.body.image,
                 typeUser:req.body.typeUser
             }).then(user=>{
-                console.log(user)
-                res.send('Usuario creado')
+                
+                res.send(user)
             })
     
         }else res.send('usuario existente')
