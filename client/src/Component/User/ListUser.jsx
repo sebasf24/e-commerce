@@ -38,10 +38,11 @@ export default function ListUser() {
     //ELIMINAR USUARIO
     const eliminarU = (usuario) => {
         dispatch(deleteUser(usuario.id))
+        console.log(usuario.id)
         Swal.fire({
             position: 'top-center',
             icon: 'success',
-            title: 'Categoria Eliminada',
+            title: 'Usuario Eliminado',
             showConfirmButton: false,
             timer: 1500
           })

@@ -9,21 +9,22 @@ export default (state=initialState, actions)=>{
         case ADD_CATEGORY:
             return  {
                 ...state,
-                category: actions.category
+                category: state.category.concat(actions.category)
             }
         case DELETE_CATEGORY:
             return{
                 category: state.category.filter( cat=> cat.id !== actions.category.id)
             }
         case EDIT_CATEGORY:
-            return{
+            console.log(actions)
+            return {
                 ...state,
-                category:actions.category.data
+                category: state.category.map((cat)=>cat.id=== actions.category.data.id? {...cat,...actions.category}: cat)
             }
         case LIST_CATEGORY:
             return{
                 ...state,
-                category: actions.category.data
+                category: actions.category
             }
         default:
             return state;

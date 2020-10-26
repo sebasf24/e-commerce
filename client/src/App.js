@@ -26,7 +26,7 @@ import UserProfile from './Component/User/UserProfile'
 !localStorage.stock && localStorage.setItem("stock",JSON.stringify({}))
 !localStorage.total && localStorage.setItem("total",JSON.stringify(0))
 
-function App(uerlog) {  
+function App() {  
   const productsl = useSelector(state=>state.products);
 
   const userlog=useSelector(state=>state.user)
@@ -39,7 +39,7 @@ function App(uerlog) {
     <Route exact path='/' render={Home}/>
     <Route exact path='/order' component={Order}/>
     <Route exact path='/cart' component={Cart}/>
-    <Route exact path='/admin' component={us && us.typeUser==='Admin' ?DashboardAdmin : Catalogue}/>
+    <Route exact path='/admin' component={us && us.typeUser==='Admin' ? DashboardAdmin : Catalogue}/>
     <Route exact path={['/products','/products/category/:id']} component={Catalogue} />
     <Route exact path='/products/:id' component={Product} onEnter={userlog}/>
     <Route exact path='/listCategory' component={homeCategories} onEnter={userlog}/>
@@ -56,8 +56,6 @@ function App(uerlog) {
     <Route exact path='/about' component={About} onEnter={userlog}/>
     <Route path='/' component={ Footer } />
 
-    
-    
     </Router>
   );
 }

@@ -1,4 +1,4 @@
-import { ADD_USER,
+import { 
     LOGIN_USER, 
     LOGOUT_USER,
     USER_PROFILE
@@ -10,15 +10,11 @@ user: []
 }
 export default (state = initialState, actions) => {
 switch (actions.type) {
-    case ADD_USER:
-        return {
-            ...state,
-            user: actions.user
-        }
+   
 
     case LOGIN_USER:
         return {
-            ...state,
+            
             user: actions.user
            
         }
@@ -26,7 +22,6 @@ switch (actions.type) {
             return state;
 
     case USER_PROFILE:
-
         return{
             user: actions.user
         }
