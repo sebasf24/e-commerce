@@ -60,7 +60,7 @@ export default function ListCategory() {
               <div style={{width:"110px"}}>
               <Button onClick={()=>{editarCategory(item)}}><FiEdit/></Button>
               {'  '}
-              <Button onClick={()=>{eliminarCategory(item)}}><RiDeleteBin6Line/></Button>
+              <Button onClick={()=>eliminarCategory(item)}><RiDeleteBin6Line/></Button>
               </div>
             </td>
           </tr>

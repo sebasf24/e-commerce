@@ -28,9 +28,13 @@ export default function EditCategory(category) {
     function limpiarFormulario() {
         document.getElementById("form").reset();
     }
+
     useEffect(() => {
         dispatch(listCategory())
-    }, [category]);
+        return () => {
+
+        }
+    }, [])
   
     return (
         <div>
@@ -73,10 +77,9 @@ export default function EditCategory(category) {
                     </Form.Row>
                     <br />
 
-                    <Button className={style.button} onClick={() => {                       
+                    <Button className={style.button} onClick={(e) => {  
+                        e.preventDefault();                     
                      dispatch(editCategory(category.data.id, formData.name, formData.description))
-                           limpiarFormulario()
-                           updateFormData('')
                            Swal.fire({
                             position: 'top-center',
                             icon: 'success',
@@ -84,7 +87,8 @@ export default function EditCategory(category) {
                             showConfirmButton: false,
                             timer: 1500
                           })
-                           window.location.href='./admin'
+                          limpiarFormulario()
+                           updateFormData('')
                     }} >Editar</Button>
                 </Form>
                 </Card>
