@@ -32,7 +32,7 @@ server.get('/me', isLogged, function(req, res){
 });
 
 
-server.post('/login', (req, res, next) => {
+server.post('/login',(req, res, next) => {
     passport.authenticate('login', (err, user, info) => {
       
       if (err) {
@@ -67,5 +67,16 @@ server.get('/logout', isLogged, (req, res)=> {
         req.logout();
         res.json({ message: 'Logged out!' });
 });
+
+server.post('/promote/:id', (req, res)=>{
+  const {id}=req.params
+  User.update({
+    typeUser: 'Admin'
+  },{where: id})
+  .then(user=>{
+    res.send(user)
+  })
+
+})
 
 module.exports =server;

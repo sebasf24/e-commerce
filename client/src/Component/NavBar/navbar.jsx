@@ -86,7 +86,7 @@ export default function NavBar (islog){
         {
             usuario && usuario.id?
             <NavDropdown>
-            <MenuItem>My Profile</MenuItem>
+            <MenuItem onClick={()=>{window.location.href='./me'}}>My Profile</MenuItem>
             <MenuItem>Your gits</MenuItem>
             <MenuItem>Starred gists</MenuItem>
             <MenuItem onClick={()=>{dispatch(logoutUser())}} >Sign out</MenuItem>

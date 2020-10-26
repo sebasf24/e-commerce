@@ -1,4 +1,4 @@
-import {ADD_CATEGORY, LIST_CATEGORY} from '../actions/category';
+import {ADD_CATEGORY, LIST_CATEGORY, DELETE_CATEGORY, EDIT_CATEGORY} from '../actions/category';
 
 const initialState={
   category:[]
@@ -9,12 +9,22 @@ export default (state=initialState, actions)=>{
         case ADD_CATEGORY:
             return  {
                 ...state,
-                category: actions.category
+                category: state.category.concat(actions.category)
+            }
+        case DELETE_CATEGORY:
+            return{
+                category: state.category.filter( cat=> cat.id !== actions.category.id)
+            }
+        case EDIT_CATEGORY:
+            console.log(actions)
+            return {
+                ...state,
+                category: state.category.map((cat)=>cat.id=== actions.category.data.id? {...cat,...actions.category}: cat)
             }
         case LIST_CATEGORY:
             return{
                 ...state,
-                category: actions.category.data
+                category: actions.category
             }
         default:
             return state;

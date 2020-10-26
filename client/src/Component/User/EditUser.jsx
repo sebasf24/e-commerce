@@ -1,17 +1,18 @@
 
-import React, { useState } from 'react'
-import { editUser,listUser } from '../../actions/user';
+import React, { useState, useEffect } from 'react'
+import { editUser,listUser } from '../../actions/users';
 import { Button, Form, Col, Row, Card} from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom'
 import style from './FormAddUser.module.css'
+import Swal from 'sweetalert2';
 
 
 export default function EditUser(userEd) {
   console.log(userEd.user)
     const [edituser, UpdateUser]=useState(userEd.user)
     const [Open, setOpen]=useState(false)
-   const storeUser=useSelector(store=>store.user)
+//    const storeUser=useSelector(store=>store.users)
     const dispatch = useDispatch();
     const hadlerChange=(e)=>{
         UpdateUser({
@@ -19,9 +20,14 @@ export default function EditUser(userEd) {
             [e.target.name]: e.target.value
         })
     }
+    useEffect(() => {
+        dispatch(listUser())
+        return () => {
+
+        }
+    }, [])
 
   
-
     return (
         // <form onSubmit={(e)=>editar(e)}>
        
@@ -71,15 +77,22 @@ export default function EditUser(userEd) {
                    <Col sm={{ span: 10, offset: 2 }}>
 
             <Button className={style.boton} type='submit'
-                onClick={() => { 
+                onClick={(e) => {
+                    e.preventDefault() 
                     dispatch(editUser(edituser))
-                    dispatch(listUser())
+                    Swal.fire({
+                        position: 'top-center',
+                        icon: 'success',
+                        title: 'Registro Actualizado',
+                        showConfirmButton: false,
+                        timer: 1500
+                      })
+                      UpdateUser('')
+                   
                 }} >Actualizar</Button>
                     </Col>
            </Form.Group>
-           
-            {/* <Button type='submit' onClick={()=>{setOpen(false)}}>Cerrar</Button> */}
-
+        
         </form>
        
     )

@@ -1,4 +1,5 @@
 import React from 'react';
+import {enviarAlCarritoLocalStorage,sumarCarritoLocal} from '../carrito/localStorage'
 import styles from './ProductCard.module.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Card,Button} from 'react-bootstrap';
@@ -7,67 +8,49 @@ import { BiArrowBack,BiCart} from "react-icons/bi";
 import {useDispatch, useSelector } from 'react-redux';
 import {agregarProductoCarrito} from '../../actions/cart.js';
 
-export default function ProductCard({ Product }) {
+export default function ProductCard({userlog,Product}) {
 
     let base64ToString;
     (Product.img) && (base64ToString = Buffer.from(Product.img.data, "base64").toString())
-
+    
+    const productId=Product.id
+    const cantidad =1
+    
 const dispatch=useDispatch()
 
- let prodStock = JSON.parse(localStorage.stock)[Product.id] 
- 
-    
+let prodStock = JSON.parse(localStorage.stock)[Product.id] 
+
+
+const sumarProdLocalStorage=()=>{
+    sumarCarritoLocal(prodStock,cantidad,Product,productId)
+}
+
 const sumarAlCarrito = ()=>{
- 
-// si el producto no existe lo agrega 
-    if(!prodStock){
-            localStorage.setItem("stock",JSON.stringify(
-                Object.assign(JSON.parse(localStorage.stock),
-                {[Product.id]:{ cantidad:1,
-                                stock:Product.stock-1,
-                                precio:Product.price 
-                            }
-                            })))                  
-        }
-//si el producto existe suma la cantidad,resta el stock y modifica el precio total
+    // si el producto no existe lo agrega 
+    let prodStock = JSON.parse(localStorage.stock)[Product.id] 
+    const idUser=userlog.user.id
+   if(idUser){
+        console.log("aasdadasdasd")
+        var productos_line={
+            productId:parseInt(Product.id),
+            cantidad:1,
+            price:parseInt(Product.price),
+            estado:"carrito"}
 
-        if(prodStock && prodStock.stock>0){
-                localStorage.setItem("stock",JSON.stringify(
-                    Object.assign(JSON.parse(localStorage.stock),
-                    {[Product.id]:{ cantidad: ++prodStock.cantidad,
-                                    stock:prodStock.stock-1,
-                                    precio: Product.price * prodStock.cantidad
-                                }
-                                })))   
-        }    
+        dispatch(agregarProductoCarrito(idUser,productos_line))
+   } 
 
-       // console.log("Product", Product);
-        // existe = no
-        // Loop recorriendo ls 
-        //     pregunto si id = Producto id
-        //      existe = si
-        // End Loop
-        // if existe == no
-        //      lo agrego
-        // else
-        //      lo ignoro
-        var ls = JSON.parse(localStorage.getItem("carritoLocal"));
-        var existe = false;
-        for (let i = 0; i < ls.length; i++) {
-            if(ls[i].id == Product.id)
-                existe = true;
-        } 
-        if(existe == false)
-            {
-                localStorage.setItem("carritoLocal",JSON.stringify(
-                JSON.parse(localStorage.getItem("carritoLocal"))            
-                .concat(Product)
-                ))
+    if(!prodStock && cantidad<Product.stock){
+                sumarProdLocalStorage()
+               enviarAlCarritoLocalStorage(Product)
+                return 
             }
-
-        dispatch(agregarProductoCarrito(Product))
-        
-    }
+     //si el prod exite, verifica el stock no existe lo agrega        
+        if(prodStock && prodStock.stock>0){
+                sumarProdLocalStorage()
+                return 
+            }
+        }
 
      
     let botones=

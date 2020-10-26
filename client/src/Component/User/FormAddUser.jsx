@@ -6,10 +6,14 @@ import { makeStyles, Container, OutlinedInput, Typography, InputAdornment, IconB
 import { TextField, InputLabel, Avatar, MenuItem, Select} from '@material-ui/core';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 import style from './FormAddUser.module.css';
-import { useDispatch } from 'react-redux';
-import { addUser, listUser } from '../../actions/user';
+import { useDispatch, useSelector} from 'react-redux';
 import { BiArrowBack } from "react-icons/bi";
+import Swal from 'sweetalert2';
 import Cookies from 'universal-cookie'
+import { ImGift } from 'react-icons/im';
+import { useEffect } from 'react';
+import { listUser, addUser} from '../../actions/users';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -33,10 +37,7 @@ function limpiarFormulario() {
     document.getElementById("form").reset();
 }
 //Funcion para crear un nueva cuenta de usuario
-export default function FormAddUser(message) {
-    const cookies=new Cookies();
-    const userlogged=cookies.get('typeUser')
-    console.log(userlogged)
+export default function FormAddUser() {
 
     const classes = useStyles();
     const dispach = useDispatch();
@@ -46,7 +47,6 @@ export default function FormAddUser(message) {
     const [shownPass, setShownpass] = useState(false);
     const switchwShow = () => setShownpass(!shownPass);
 
-
     const onChange = (e) => {
         setUser({
             ...user,
@@ -55,13 +55,36 @@ export default function FormAddUser(message) {
    
 
     }
+    const userlog=useSelector(state=>state.user)
+    const usuarioLogueado=userlog.user
+    const handlerSubmit=(e)=>{
+        e.preventDefault();
+        dispach(addUser(user))
+        Swal.fire({
+            position: 'top-center',
+            icon: 'success',
+            title: 'Registro Exitoso',
+            showConfirmButton: false,
+            timer: 1500
+          })
+          limpiarFormulario()
+          if(!usuarioLogueado.name){
+              window.location.href='./login'
+          }
+    }
+    useEffect(() => {
+        dispach(listUser())
+        return () => {
+
+        }
+    }, [])
     return (
 
         <Container component="main" maxWidth="lg">
             <Card className={style.Card}>
           
              
-                <form id="form" className={classes.root} noValidate autoComplete="on">
+                <form id="form" className={classes.root} noValidate autoComplete="on" onSubmit={(e)=>{handlerSubmit(e)}}>
                      
                     <br />
                     <Typography component="h1" variant="h5">Registrar Usuario:</Typography>
@@ -136,8 +159,8 @@ export default function FormAddUser(message) {
                         </Row>
                         <Row>
                             {/* {mostarTipos()  
-                            } */}{
-                                 userlogged==='Admin'? <FormControl variant="outlined" className={clsx(classes.margin, classes.textField)}>
+                            } */}{ usuarioLogueado.typeUser==='Admin'?
+                                 <FormControl variant="outlined" className={clsx(classes.margin, classes.textField)}>
                                 <InputLabel >Type User</InputLabel>
                                 <Select
                                     labelId="demo-simple-select-outlined-label"
@@ -152,7 +175,7 @@ export default function FormAddUser(message) {
                                     <MenuItem value='Admin'>Admin</MenuItem>
                                     <MenuItem value='cliente'>cliente</MenuItem>
                                 </Select>
-                            </FormControl>: <div></div>
+                            </FormControl> : <div></div>
 
                             }
                         
@@ -166,13 +189,7 @@ export default function FormAddUser(message) {
                         </Grid>
 
                     </Col>
-                    <Button className={style.boton} type="submit" 
-                    onClick={()=>{    
-                        dispach(addUser(user))
-                        limpiarFormulario();
-                        setUser('')
-                        dispach(listUser());}}
-                     >Agregar</Button>
+                    <Button className={style.boton} type='submit'>Agregar</Button>
                 </form>
 
             </Card>
