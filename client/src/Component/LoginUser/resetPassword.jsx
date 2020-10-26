@@ -27,6 +27,7 @@ export default function ResetPassword () {
         <Typography component="h3" variant="h5">Reset Password</Typography>
         <form noValidate>
           <TextField
+            type="password"
             value={email.email}
             onChange={obtenerEmail}
             variant="outlined"
@@ -47,7 +48,7 @@ export default function ResetPassword () {
             onClick={() =>  {
               dispatch(enviarEmail(email));
               setEmail({email:''});
-              alert('Revice en su casila de corre para secuperar su Password')
+              alert('Revise su casila de correo para recuperar su Password')
             }}
           >
             Reset
