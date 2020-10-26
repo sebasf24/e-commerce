@@ -13,13 +13,14 @@ import {modificarStock,quitarProdCarrito} from '../../actions/cart'
 export default function Items({idUser,currentProd,producto,borrar,actualizarPrecio}){
 console.log(idUser)
     let base64ToString;
+    console.log(producto)
     
     const dispatch = useDispatch();
     let prodStock = JSON.parse(localStorage.stock)[producto.id]
 
 
-const [cantidad, setCantidad] = useState(currentProd.cantidad) 
-
+const [cantidad, setCantidad] = useState(currentProd && currentProd.cantidad) 
+console.log(currentProd)
 const cambiarCantidad=(e)=>{
 
     if(!idUser){
@@ -44,19 +45,29 @@ const cambiarCantidad=(e)=>{
 }
 
 
-const borrarItems= async()=>{
+const borrarItems= ()=>{
     let prodStock = JSON.parse(localStorage.stock)[producto.id]
     if(prodStock){
         eliminarItems(prodStock,producto.id,borrar)
         borrar(producto.id)
     } 
+    
     if(idUser){
+        if(cantidad>=1){
+            var RecupStock={
+                productId: producto.id,
+                cantidad:cantidad
+            }
+            dispatch(modificarStock(idUser,RecupStock))
+        }
         var prodEliminar={
             productId: producto.id,
             cantidad:0
         }
-    await dispatch(quitarProdCarrito(currentProd.productId,currentProd.id))
-    await dispatch(modificarStock(idUser,prodEliminar))
+
+        dispatch(quitarProdCarrito(currentProd.productId,currentProd.id))
+        dispatch(modificarStock(idUser,prodEliminar))
+  
     }
 }
     (producto.img) && (base64ToString = Buffer.from(producto.img.data, "base64").toString())
@@ -81,7 +92,7 @@ const borrarItems= async()=>{
                         onClick={actualizarPrecio} 
                         onChange={cambiarCantidad} 
                         placeholder="1" min={1} max={producto.stock} 
-                        value={currentProd ? currentProd.cantidad : cantidad}
+                        value={currentProd ? currentProd.cantidad : (cantidad ? cantidad:1)}
                         className={styles.inputCantidad} 
                         type="number"/>
                 </Form>

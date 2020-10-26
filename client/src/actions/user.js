@@ -128,29 +128,21 @@ export function logoutUser(){
     }
 }
 
-const agregarProdUsuario = (idUser) => {
+const agregarProdUsuario = (idUser)=>{
     let prodStock = JSON.parse(localStorage.stock)
-    var productos_line = []
+    if(idUser){
 
-    for (var prod in prodStock) {
-        var { cantidad, precio } = prodStock[prod]
-        productos_line.push({
-            productId: parseInt(prod),
-            cantidad: cantidad,
-            price: precio
-        })
-    }
-
-    var agregaProducto = []
-    agregaProducto.push("carrito")
-    agregaProducto.push(productos_line)
-    console.log(agregaProducto)
-    // agregarProductoCarritoUser(idUser,agregaProducto)
-    axios.post(`http://localhost:3000/user/${idUser}/cart`, agregaProducto, {
-        headers: { "Content-type": "application/json; charset=UTF-8" }
-    })
-
-        .catch(err => { console.log(err) })
-
-
-}
+        for(var prod in prodStock){
+          var {cantidad,precio}=prodStock[prod]
+          var productos_line={
+                productId:parseInt(prod),
+                cantidad:cantidad,
+                price:precio,
+                estado:"carrito"
+            }
+            axios.post(`http://localhost:3000/user/${idUser}/cart`, productos_line,{
+             headers:{"Content-type":"application/json; charset=UTF-8"}})
+                    .catch(err=>{console.log(err)})
+        }
+    }else{return}
+  } 

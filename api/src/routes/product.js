@@ -202,7 +202,31 @@ server.delete('/:productId/review/:review', (req, res) => {
 			res.send("algo salio mal")
 		})
 })
+server.put("/:idProducto/review/:idReview", (req,res)=>{
+	const { idProducto,idReview } = req.params;
+	const { calificacion, descripcion} = req.body
 
+	if (!idProducto) {
+		return res.status(400).send("Faltan parametros !!!")
+	}
+	if (!calificacion || !descripcion){
+		return res.status(400).send("Los campos enviados no son correctos.")
+	}
+
+	Review.update(
+		{
+			descripcion: descripcion,
+			calificacion: calificacion,
+		},
+		{
+			where:
+				{ id: idReview,productId: idProducto}
+		}
+	)
+		.then((r) => {
+			res.status(200).json(req.body)
+		})
+})
 //Trae todas las review de un producto
 server.get("/:id/review/", (req,res)=>{
 	let prodId= req.params.id
