@@ -75,6 +75,24 @@ server.put('/:id', (req, res) => {
         })
 
 })
+//ruta para obtener las Order_Line del usuario 
+server.get('/:idUser/orderLines', (req, res) => {
+    const { idUser } = req.params;
+    Order.findOne({
+        atributes: ['id', 'estado'],
+        where: {
+            userId: idUser,
+            estado: 'carrito'
+        },
+        include: [{
+            model: Order_line,
+            atributes: ['id', 'price', 'cantidad']
+        }]
+    })
+        .then(prod => {
+            return res.send(prod)
+        })
+})
 //ruta que devuelve todos los items del carrito
 server.get('/:idUser/cart', (req, res) => {
     const { idUser } = req.params;
