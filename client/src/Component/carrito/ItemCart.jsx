@@ -1,77 +1,65 @@
+import {SumarRestarCantidad,eliminarItems} from '../carrito/localStorage'
+import axios from 'axios'
+import Cookies from 'universal-cookie'
 import React,{useState,useEffect} from 'react';
 import {Link} from 'react-router-dom'
 import {Card, Image,Button, Form} from 'react-bootstrap';
 import { BiTrash} from "react-icons/bi";
 import styles from "./ItemCart.module.css";
-import {mostraTotal} from '../../actions/cart.js';
 import { useDispatch, useSelector, useStore } from 'react-redux';
+import {modificarStock,quitarProdCarrito} from '../../actions/cart'
 
-export default function Items({producto,borrar,actualizarPrecio}){
-const dispatch = useDispatch();
-const products = useSelector(store=>store.productsCart)
 
+export default function Items({idUser,currentProd,producto,borrar,actualizarPrecio}){
+console.log(idUser)
     let base64ToString;
+    
+    const dispatch = useDispatch();
     let prodStock = JSON.parse(localStorage.stock)[producto.id]
-//quito productos del estado local y el localStorage
 
-const [cantidad, setCantidad] = useState({}) 
-useEffect(()=>{ 
-    setCantidad(prodStock.cantidad)
-},[])
+
+const [cantidad, setCantidad] = useState(currentProd.cantidad) 
 
 const cambiarCantidad=(e)=>{
-    setCantidad(prodStock.cantidad)
-    if(e.target.value>producto.stock){
-        alert("no hay estock suficiente")
+
+    if(!idUser){
+        if(e.target.value>producto.stock){
+            alert("no hay stock suficiente")
+            return
+        }
+        let cant= parseInt(e.target.value)
+        SumarRestarCantidad(prodStock,cant,producto,producto.id)
+        setCantidad(e.target.value)
+
         return
     }
-    let cant= e.target.value
-    let cantidadActualizada = cantidad - cant
-console.log(cantidadActualizada)
-
-    if(prodStock.stock && cant<=producto.stock && cantidadActualizada<0){
-        
-        localStorage.setItem("stock",JSON.stringify(
-            Object.assign(JSON.parse(localStorage.stock),
-            {[producto.id]:{ cantidad:parseInt(cant),
-                            stock:parseInt(producto.stock)-cant,
-                            precio:producto.price * cant
-                        }
-                        })))
+    if(idUser){
+        setCantidad(parseInt(e.target.value))
+        let obj={
+           productId: producto.id,
+           cantidad:parseInt(e.target.value)
+        }
+        dispatch(modificarStock(idUser,obj))
     }
-
-     if(cant<=producto.stock && cantidadActualizada>0){
-        localStorage.setItem("stock",JSON.stringify(
-            Object.assign(JSON.parse(localStorage.stock),
-            {[producto.id]:{ cantidad:parseInt(cant),
-                            stock:parseInt(prodStock.stock*1)+1,
-                            precio:producto.price*cant
-                        }
-                        })))
-    }
-
-    setCantidad(e.target.value)
-    actualizarPrecio()
-}
-const eliminarItems = ()=>{
-    var obj=JSON.parse(localStorage.stock)
-    var precioProd=prodStock.precio
-    var precioTotal=JSON.parse(localStorage.total)
-    console.log(precioTotal-precioProd);
-
-    localStorage.setItem("total",JSON.stringify(precioTotal-precioProd))
-    delete obj[producto.id]
-    dispatch(mostraTotal(precioTotal-precioProd))
-    localStorage.setItem("stock",JSON.stringify(obj))
-    borrar(producto.id)
-    
-    
 }
 
+
+const borrarItems= async()=>{
+    let prodStock = JSON.parse(localStorage.stock)[producto.id]
+    if(prodStock){
+        eliminarItems(prodStock,producto.id,borrar)
+        borrar(producto.id)
+    } 
+    if(idUser){
+        var prodEliminar={
+            productId: producto.id,
+            cantidad:0
+        }
+    await dispatch(quitarProdCarrito(currentProd.productId,currentProd.id))
+    await dispatch(modificarStock(idUser,prodEliminar))
+    }
+}
     (producto.img) && (base64ToString = Buffer.from(producto.img.data, "base64").toString())
-
-   
-
     return(
         
             <Card className={styles.container}>
@@ -93,14 +81,14 @@ const eliminarItems = ()=>{
                         onClick={actualizarPrecio} 
                         onChange={cambiarCantidad} 
                         placeholder="1" min={1} max={producto.stock} 
-                        value={cantidad}
+                        value={currentProd ? currentProd.cantidad : cantidad}
                         className={styles.inputCantidad} 
                         type="number"/>
                 </Form>
                             
                 <div className={styles.boton}>
                     <Button
-                    onClick={eliminarItems}
+                    onClick={borrarItems}
                     className={styles.tachito}><BiTrash/></Button>
                 </div>
                 

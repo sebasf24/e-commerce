@@ -11,14 +11,15 @@ user: []
 export default (state = initialState, actions) => {
 switch (actions.type) {
     case ADD_USER:
+        console.log(actions)
         return {
             ...state,
-            user: actions.user
+           user: state.user.concat[(actions.user)]
         }
 
     case LOGIN_USER:
         return {
-            ...state,
+            
             user: actions.user
            
         }
@@ -26,7 +27,6 @@ switch (actions.type) {
             return state;
 
     case USER_PROFILE:
-
         return{
             user: actions.user
         }
