@@ -6,7 +6,7 @@ import Cookies from 'universal-cookie';
 import FormReview from '../Review/FormReview.jsx';
 import Reviews from '../Review/ReviewContainer.jsx';
 //ACTIONS
-import {mostrarProducto_id} from "../../actions/products.js";
+import {mostrarProducto_id,mostrarReviews} from "../../actions/products.js";
 import {agregarProductoCarrito} from '../../actions/cart.js';
 
 //ESTILOS/BOOTSTRAP
@@ -16,37 +16,37 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Card, Image,Container, Button,Form } from 'react-bootstrap';
 
 export default function Product(props) {
-    const cookies = new Cookies();
-    const [cantidad, setCantidad] = useState(1)
-//estados redux
+    //estado store reducer
     const productosCarrito = useSelector(state=>state.productsCart).stockProduct;
     const {selectedProduct,reviews} = useSelector(state=>state.products);
     const reviewsP=reviews
+    const { name, description, price, stock, img }=selectedProduct;
+    //selecciono producto por id 
+        const id = props.match.params.id;
+        const dispatch=useDispatch();
+        let prodStock = JSON.parse(localStorage.stock)[id]
+
+        let base64ToString;
+        (img) && (base64ToString = Buffer.from(img.data, "base64").toString())
     
+    //estado local
+    const [cantidad, setCantidad] = useState(1)
+    
+
 //obtengo id de usuario log
 const userlog=useSelector(state=>state.user)
 const idUser=userlog.user.id
 console.log(idUser)
     
-
-    const { name, description, price, stock, img }=selectedProduct;
-
-//selecciono producto por id 
-    const id = props.match.params.id;
-    const dispatch=useDispatch();
-    let prodStock = JSON.parse(localStorage.stock)[id]
-//store products
-    let base64ToString;
-    (img) && (base64ToString = Buffer.from(img.data, "base64").toString())
-
     useEffect(()=>{
         
         setCantidad(1)
         dispatch(mostrarProducto_id(id))
+        dispatch(mostrarReviews(id))
     },[])
 
     //store carrito  
-    
+    console.log(stock)
     const sumarProdLocalStorage=()=>{
             let prodStock = JSON.parse(localStorage.stock)[id]
             sumarCarritoLocal(prodStock,cantidad,selectedProduct,id)
@@ -55,13 +55,13 @@ console.log(idUser)
     const cambiarCantidad=(e)=>{
         let prodStock = JSON.parse(localStorage.stock)[id]
         if( !prodStock && e.target.value>stock){
-            alert(" no hay estock suficiente")
+            alert(" no hay stock suficiente")
             setCantidad(stock)
             return
         }
 
         if(prodStock && e.target.value>prodStock.stock){
-            alert("2 no hay estock suficiente")
+            alert("2 no hay stock suficiente")
             setCantidad(prodStock.stock)
             return
         }
@@ -82,11 +82,11 @@ const sumarAlCarrito = ()=>{
             price:price,
             estado:"carrito"}
 
-        dispatch(agregarProductoCarrito(idUser,productos_line))
+        dispatch(agregarProductoCarrito(idUser,productos_line,selectedProduct))
    }
      
 // si el producto no existe lo agrega 
-    if(!prodStock && cantidad<stock){
+    if(!prodStock && cantidad<=stock){
             sumarProdLocalStorage()
             enviarAlCarritoLocalStorage(selectedProduct)
             return 
@@ -145,7 +145,7 @@ const sumarAlCarrito = ()=>{
                     <Card.Footer className={styles.botones}>
                                  
                         
-                        {stock==0 ? cartel : botones}
+                        {(idUser && stock==0) || (prodStock && prodStock.stock==0) ? cartel : botones}
                     </Card.Footer>
                   
             </Card>
