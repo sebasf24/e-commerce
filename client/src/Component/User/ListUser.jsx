@@ -90,7 +90,7 @@ export default function ListUser() {
                     </thead>
                     <tbody>
                         {
-                            listaUsuarios ? listaUsuarios.map(us => {
+                            users ? users.map(us => {
                                 return (
                                     <tr>
                                         <td><InputGroup.Checkbox className="mb-3" /></td>
