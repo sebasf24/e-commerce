@@ -1,121 +1,101 @@
+import {enviarAlCarritoLocalStorage,sumarCarritoLocal} from '../carrito/localStorage'
 import React,{useEffect,useState} from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector, useStore } from 'react-redux';
-import {mostrarProducto_id,mostrarReviews} from "../../actions/products.js";
-import {agregarProductoCarrito} from '../../actions/cart.js';
+import { useDispatch, useSelector} from 'react-redux';
+import Cookies from 'universal-cookie';
+import FormReview from '../Review/FormReview.jsx';
 import Reviews from '../Review/ReviewContainer.jsx';
+//ACTIONS
+import {mostrarProducto_id} from "../../actions/products.js";
+import {agregarProductoCarrito} from '../../actions/cart.js';
 
+//ESTILOS/BOOTSTRAP
 import styles from './Product.module.css';
 import { BiArrowBack,BiCart} from "react-icons/bi";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Card, Image, Col, Row, Container, Button,Form } from 'react-bootstrap';
-
+import { Card, Image,Container, Button,Form } from 'react-bootstrap';
 
 export default function Product(props) {
-
-    
+    const cookies = new Cookies();
     const [cantidad, setCantidad] = useState(1)
-    const productoCarrito = useSelector(state=>state.productsCart);
-    const productS = useSelector(state=>state.products);
-    const {selectedProduct}=productS;
-    const reviewsP=productS.reviews
-    console.log(reviewsP)
+//estados redux
+    const productosCarrito = useSelector(state=>state.productsCart).stockProduct;
+    const {selectedProduct,reviews} = useSelector(state=>state.products);
+    const reviewsP=reviews
+    
+//obtengo id de usuario log
+const userlog=useSelector(state=>state.user)
+const idUser=userlog.user.id
+console.log(idUser)
+    
+
     const { name, description, price, stock, img }=selectedProduct;
+
+//selecciono producto por id 
     const id = props.match.params.id;
-
-    let prodStock = JSON.parse(localStorage.stock)[id]
-
     const dispatch=useDispatch();
+    let prodStock = JSON.parse(localStorage.stock)[id]
 //store products
-
-
     let base64ToString;
     (img) && (base64ToString = Buffer.from(img.data, "base64").toString())
 
     useEffect(()=>{
+        
         setCantidad(1)
         dispatch(mostrarProducto_id(id))
-        dispatch(mostrarReviews(id))
-        return ()=>{}},[])
+    },[])
 
-        console.log('Reviews',productS);
-    //store carrito    
+    //store carrito  
+    
+    const sumarProdLocalStorage=()=>{
+            let prodStock = JSON.parse(localStorage.stock)[id]
+            sumarCarritoLocal(prodStock,cantidad,selectedProduct,id)
+    }
 
     const cambiarCantidad=(e)=>{
-        
+        let prodStock = JSON.parse(localStorage.stock)[id]
         if( !prodStock && e.target.value>stock){
-            alert("no hay estock suficiente")
+            alert(" no hay estock suficiente")
             setCantidad(stock)
             return
         }
 
-        if( prodStock && e.target.value>prodStock.cantidad){
-            alert("no hay estock suficiente")
+        if(prodStock && e.target.value>prodStock.stock){
+            alert("2 no hay estock suficiente")
             setCantidad(prodStock.stock)
             return
         }
         setCantidad(e.target.value)
     }
-            
-    const sumarAlCarrito = ()=>{
-       
+    console.log(prodStock)
+
+const sumarAlCarrito = ()=>{
+    console.log(productosCarrito)
+    let prodStock = JSON.parse(localStorage.stock)[id]
+
+    const idUser=userlog.user.id
+
+    if(idUser){
+        var productos_line={
+            productId:parseInt(id),
+            cantidad:cantidad,
+            price:price,
+            estado:"carrito"}
+
+        dispatch(agregarProductoCarrito(idUser,productos_line))
+   }
+     
 // si el producto no existe lo agrega 
-     if(!prodStock){
-        if(cantidad>stock){
-            alert("no hay stock suficiente")
-            return
+    if(!prodStock && cantidad<stock){
+            sumarProdLocalStorage()
+            enviarAlCarritoLocalStorage(selectedProduct)
+            return 
         }
-            localStorage.setItem("stock",JSON.stringify(
-                Object.assign(JSON.parse(localStorage.stock),
-                    {[id]:{ cantidad: cantidad,
-                            stock:selectedProduct.stock-cantidad,
-                            precio:selectedProduct.price*cantidad 
-                            }
-                            })))                  
-        } 
-//si el producto existe, suma la cantidad,resta el stock y modifica el precio total
-
-        if(prodStock && prodStock.stock>=0){
-            if(cantidad>prodStock.stock){
-                alert("no hay stock suficiente")
-                return
-            }
-                localStorage.setItem("stock",JSON.stringify(
-                    Object.assign(JSON.parse(localStorage.stock),
-                    {[id]:{ cantidad: ++prodStock.cantidad,
-                            stock:selectedProduct.stock-prodStock.cantidad,
-                            precio: selectedProduct.price *prodStock.cantidad
-                                }
-                                })))   
-        }    
-
-       // console.log("Product", Product);
-        // existe = no
-        // Loop recorriendo ls 
-        //     pregunto si id = Producto id
-        //      existe = si
-        // End Loop
-        // if existe == no
-        //      lo agrego
-        // else
-        //      lo ignoro
-        var ls = JSON.parse(localStorage.getItem("carritoLocal"));
-        var existe = false;
-        for (let i = 0; i < ls.length; i++) {
-            if(ls[i].id == selectedProduct.id)
-                existe = true;
-        } 
-        if(existe == false)
-        
-            {   
-                localStorage.setItem("carritoLocal",JSON.stringify(
-                JSON.parse(localStorage.getItem("carritoLocal"))            
-                .concat(selectedProduct)
-                ))
-            }
-
-        dispatch(agregarProductoCarrito(Product))
-        
+ //si el prod exite, verifica el stock no existe lo agrega        
+    if(prodStock && prodStock.stock>0){
+            sumarProdLocalStorage()
+            return 
+        }
     }
         
     let botones = <Form >
@@ -172,6 +152,8 @@ export default function Product(props) {
         </Container>
         <p></p>
         <Reviews Reviews={reviewsP}></Reviews>
+        <p></p>
+        <FormReview id={id}></FormReview>
         </div>
     )
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { Button, Form, Container, Table } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useDispatch, useSelector, useStore } from 'react-redux';
@@ -10,6 +10,7 @@ import { mostrarProductos, eliminarProducto } from "../../actions/products.js";
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import Swal from 'sweetalert2';
+import { TableBody } from '@material-ui/core';
 
 const FormProductAdmin = () => {
 
@@ -22,7 +23,9 @@ const FormProductAdmin = () => {
         return () => {
 
         }
+
     },[])
+
 
     const [click, setclick] = useState({
         clicked: ''
@@ -38,7 +41,7 @@ const FormProductAdmin = () => {
         setclick({
             clicked: <FormEdit product={product} />
         })
-       
+
     }
 
     const clickDelete = (id) => {
@@ -51,16 +54,16 @@ const FormProductAdmin = () => {
             cancelButtonColor: '#d33',
             confirmButtonText: 'Si, eliminar'
         }).then((result) => {
-            
+
             if (result.isConfirmed) {
-                
+
                 dispatch(eliminarProducto(id))
                 Swal.fire(
                     'Eliminado!',
                     'Tu producto fue eliminado con exito.',
                     'success'
                 )
-                dispatch(mostrarProductos())  
+                dispatch(mostrarProductos())
             }
 
         })
@@ -69,18 +72,16 @@ const FormProductAdmin = () => {
     let items = '';
     (productS1.products) && (items = productS1.products.map(product => {
         return (
-            <tr>
-                <td>{product.name}</td>
-                <td>{product.description}</td>
-                <td>{product.price}</td>
-                <td>{product.stock}</td>
-                <td><img width={100} height={350} className='w-100' src={Buffer.from(product.img.data, "base64").toString()} /></td>
+            <tr >
+                <th scope="row">{product.name}</th>
+                <th scope="row">{product.description}</th>
+                <th scope="row">{product.price}</th>
+                <th scope="row">{product.stock}</th>
+                <th scope="row" ><img style={{ width: '150px' }} src={Buffer.from(product.img.data, "base64").toString()} /></th>
                 <td>
-                    <div style={{ width: "110px" }}>
-                        <Button className='btn btn-warning' onClick={() => clickEdit(product)}><FiEdit /></Button>
-                        {'  '}
-                        <Button className='btn btn-danger opacity-2' onClick={() => clickDelete(product.id)}><RiDeleteBin6Line /></Button>
-                    </div>
+                    <Button className='btn btn-warning' onClick={() => clickEdit(product)}><FiEdit /></Button>
+                    {'  '}
+                    <Button className='btn btn-danger opacity-2' onClick={() => clickDelete(product.id)}><RiDeleteBin6Line /></Button>
                 </td>
             </tr>
         )
@@ -88,46 +89,54 @@ const FormProductAdmin = () => {
 
 
     return (
-        <Container className='container-fluid col-6 mt-4 bg-white p-3'>
+        <Container className='container-fluid col-lg-6 col-sm-12 p-3 bg-white '>
 
-
-            <div id="formPage">
+            <Fragment id="formPage">
                 {click.clicked}
-            </div>
+            </Fragment>
 
-
-            <div style={{ borderTop: '1px solid black' }} className={style.productos} id="producto">
+            <Fragment id="producto">
                 {
                     (click.clicked === '') ?
-                        <Container className='container col-12 mt-4 bg-white p-3'>
+                        <Fragment>
                             <Link to={'/administrarAdd'}><Button className='mr-3 mb-2' variant="primary" type="button" onClick={clickAdd}>Agregar</Button></Link>
-                            <Table className='container-fluid col-12 mt-4 bg-white p-3' striped bordered hover>
-                                <thead >
-                                    <tr >
-                                        <th>Name</th>
-                                        <th>Description</th>
-                                        <th>Price </th>
-                                        <th>Stock </th>
-                                        <th >Image </th>
-                                        <th>Edit/Delete</th>
+                            <Table className='table-sm table-bordered table-hover table-responsive-md table-responsive-sm'>
+                                <thead className='thead-dark ' >
+                                    <tr>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Descripción</th>
+                                        <th scope="col">Precio </th>
+                                        <th scope="col">Stock </th>
+                                        <th scope="col" >Imagen </th>
+                                        <th scope="col">Editar/Eliminar</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody >
                                     {items}
                                 </tbody>
 
                             </Table>
-                        </Container>
+                        </Fragment>
                         :
-                        <div></div>
+                        <Fragment></Fragment>
                 }
-            </div>
-
-
+            </Fragment>
         </Container>
+
     )
 }
 
 export default FormProductAdmin;
+
+
+
+
+
+
+
+
+
+
+
 
 

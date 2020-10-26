@@ -78,21 +78,22 @@ const FormProductAdd = () => {
             title: 'Producto agregado con exito',
         })
         e.preventDefault();
-        
-        axios.post(`http://localhost:3000/products/`, product,{
-         headers:{"Content-type":"application/json; charset=UTF-8"}}
-         ).then(respuesta=>{
-             
-             let categoriesCheck = []
-             for (let i = 0; i < checkboxes.length; i++) {
-                 if (checkboxes[i].add === true) {
-                     categoriesCheck.push(checkboxes[i].id);
-                 }
-             }
-             axios.post(`http://localhost:3000/products/${respuesta.data.id}/category/`, [product, categoriesCheck], {
-                 headers: { "Content-type": "application/json; charset=UTF-8" }
-             })
-         })
+
+        axios.post(`http://localhost:3000/products/`, product, {
+            headers: { "Content-type": "application/json; charset=UTF-8" }
+        }
+        ).then(respuesta => {
+
+            let categoriesCheck = []
+            for (let i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].add === true) {
+                    categoriesCheck.push(checkboxes[i].id);
+                }
+            }
+            axios.post(`http://localhost:3000/products/${respuesta.data.id}/category/`, [product, categoriesCheck], {
+                headers: { "Content-type": "application/json; charset=UTF-8" }
+            })
+        })
 
         //Cuarto: Reiniciar el form
         setProduct({
@@ -104,7 +105,7 @@ const FormProductAdd = () => {
             img: ''
         });
         setCheckboxes([]);
-        
+
         const categoryTypes = categories.map(c => ({
             name: c.name,
             id: c.id,
@@ -125,7 +126,7 @@ const FormProductAdd = () => {
 
     return (
         <Container id='container' className='container-fluid col-6 mt-4 bg-white p-3'>
-            <Link to={`/admin`}><Button className='mr-3' variant="primary" type="button" >Volver atras</Button></Link>
+            <Button className='mr-3' variant="primary" type="button" onClick={() => window.history.back()} >Volver atras</Button>
             <Form id='formProduct' name="add" onSubmit={envioformulario} >
 
                 <Form.Label id='formTitle'>Agregar Producto</Form.Label><br />
@@ -166,14 +167,14 @@ const FormProductAdd = () => {
                 /><p id="pStock"></p>
 
                 <Form.Group>
-                    <Form.Label>Categorias</Form.Label>
+                    <Form.Label>Categorias</Form.Label><br />
 
                     {checkboxes.map((categoria, i) => {
                         return (
                             <Form.Label>
                                 <input
                                     type="checkbox"
-                                    className="checks"
+                                    className="checks ml-1"
                                     value={i}
                                     checked={categoria.add}
                                     onChange={handleCategoryChecks}
@@ -191,7 +192,7 @@ const FormProductAdd = () => {
                     onChange={encodeImageFileAsURL}
                     required
                 /><p id="pImg"></p>
-                <img src={product.img} width="70%" />
+                <img src={product.img} style={{ width: '150px' }} />
 
 
                 <Form.Group controlId="formBasic">

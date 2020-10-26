@@ -10,7 +10,7 @@ user: []
 }
 export default (state = initialState, actions) => {
 switch (actions.type) {
-   
+
 
     case LOGIN_USER:
         return {
