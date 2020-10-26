@@ -7,9 +7,12 @@ import { TextField, InputLabel, Avatar, MenuItem, Select} from '@material-ui/cor
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 import style from './FormAddUser.module.css';
 import { useDispatch } from 'react-redux';
-import { addUser, listUser } from '../../actions/user';
+import { addUser} from '../../actions/user';
 import { BiArrowBack } from "react-icons/bi";
+import Swal from 'sweetalert2';
 import Cookies from 'universal-cookie'
+import { ImGift } from 'react-icons/im';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -166,13 +169,11 @@ export default function FormAddUser(message) {
                         </Grid>
 
                     </Col>
-                    <Button className={style.boton} type="submit" 
+                    <Button className={style.boton} 
                     onClick={()=>{    
                         dispach(addUser(user))
-                        limpiarFormulario();
-                        setUser('')
-                        dispach(listUser());}}
-                     >Agregar</Button>
+                        // window.location.href='./admin'
+                   }}>Agregar</Button>
                 </form>
 
             </Card>

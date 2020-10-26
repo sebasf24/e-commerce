@@ -2,6 +2,8 @@ import axios from 'axios';
 
 export const ADD_CATEGORY= 'ADD_CATEGORY';
 export const LIST_CATEGORY= 'LIST_CATEGORY';
+export const EDIT_CATEGORY='EDIT_CATEGORY';
+export const DELETE_CATEGORY='DELETE_CATEGORY'
 
 export function addCategory(cat){
     return function(dispatch){
@@ -10,13 +12,13 @@ export function addCategory(cat){
             description:cat.description
         };
         return axios.post('http://localhost:3000/category',newCategory)
-        .then((category)=>{
+        .then((cat)=>{
             dispatch({
                 type:ADD_CATEGORY,
-                category:category
+                category:cat.data
             })
-
         })
+       
 
     }
 }
@@ -30,4 +32,33 @@ export function listCategory(){
             })
         })
     }
+}
+export function editCategory(id, name, description){
+    
+    return function(dispatch){
+        return axios.put(`http://localhost:3000/category/${id}`,{
+            name,
+            description
+        })
+        .then((resp)=>{
+            dispatch({
+                type:EDIT_CATEGORY,
+                category: resp
+            })
+
+        })
+    }
+
+}
+export function deleteCategory(id){
+    return function(dispatch){
+        return axios.delete(`http://localhost:3000/category/${id}`)
+        .then(cat=>{
+            dispatch({
+                type: DELETE_CATEGORY,
+                category: cat
+            })
+        })
+    }
+
 }
