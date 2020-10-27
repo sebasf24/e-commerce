@@ -159,7 +159,7 @@ const sumarAlCarrito = ()=>{
         <p></p>
         <Reviews Reviews={reviewsP}></Reviews>
         <p></p>
-        <FormReview id={id}actualizarReviews={actualizarReviews} ></FormReview>
+        <FormReview id={id} ></FormReview>
         </div>
     )
 
