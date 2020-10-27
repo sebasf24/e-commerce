@@ -10,7 +10,6 @@ import {ENVIAR_REVIEW,
 
 const initalStore ={
     products:[],
-    productCategory:[],
     selectedProduct:[],
     reviews:[]
 }
@@ -55,7 +54,7 @@ export default (state=initalStore, actions) =>{
         case MOSTRAR_PRODUCTO_CATEGORY:{
             return{
                 ...state,
-                productCategory:actions.productos.data
+                products:actions.productos.data
             }
         }
 
