@@ -1,5 +1,5 @@
 const server = require('express').Router();
-const { Product, Category, Categoryproduct, Review } = require('../db.js');
+const { Product, Category, Categoryproduct, Review, User} = require('../db.js');
 
 server.get('/', (req, res, next) => {
 	Product.findAll()
@@ -167,18 +167,39 @@ server.get("/category/:id", (req, res) => {
 
 server.post("/:id/review", (req, res) => {
 
-	const { calificacion, descripcion, userId } = req.body;
-	let productId = req.params.id
-	Review.create({
-		calificacion: calificacion,
-		descripcion: descripcion,
-		userId: userId,
-		productId: productId
+	const { calificacion, descripcion} = req.body;
+	let productId = req.params.id;
+    const userId = req.body.userId;
+
+	console.log("uId=", userId, "productId=", productId );
+	
+	Review.findAll({
+			where: {
+				userId: userId, 
+				productId: productId
+			},
 	})
-		.then(function (Review) {
-			res.json(Review);
-		})
+	.then(function (out) {
+
+		if(out.length==0)
+			{
+				Review.create({
+					calificacion: calificacion,
+					descripcion: descripcion,
+					userId: userId,
+					productId: productId
+				})
+					.then(function (Review) {
+						res.json(Review);
+					})
+			}
+		else
+			{
+			res.status(400).send("Error ya hay review");
+			}
+	})
 })
+
 
 // DELETE /product/:id/review/:idReview
 //ELIMINAR REVIEW
