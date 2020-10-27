@@ -31,6 +31,12 @@ server.post('/:idProducto/category/', (req, res) => {
 	if (!idProducto) {
 		return res.status(400).send("Faltan parametros !!!")
 	}
+
+	Categoryproduct.destroy({
+		where: {
+			productId: idProducto
+		}
+	})
 	let categoriesProductCreate = [];
 	for (let i = 0; i < categoriesCheck.length; i++) {
 		objCategoriesProduct = {

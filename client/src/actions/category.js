@@ -3,7 +3,8 @@ import axios from 'axios';
 export const ADD_CATEGORY= 'ADD_CATEGORY';
 export const LIST_CATEGORY= 'LIST_CATEGORY';
 export const EDIT_CATEGORY='EDIT_CATEGORY';
-export const DELETE_CATEGORY='DELETE_CATEGORY'
+export const DELETE_CATEGORY='DELETE_CATEGORY';
+export const LIST_CATEGORYPRODUCT = 'LIST_CATEGORYPRODUCT';
 
 export function addCategory(cat){
     return function(dispatch){
@@ -63,4 +64,16 @@ export function deleteCategory(id){
         })
     }
 
+}
+
+export function listCategoryProduct(id){
+    return function(dispatch){
+        return axios.get(`http://localhost:3000/category/${id}`)
+        .then(json=>{
+            dispatch({
+                type:LIST_CATEGORYPRODUCT,
+                categoryProduct:json
+            })
+        })
+    }
 }
