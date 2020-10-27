@@ -45,6 +45,7 @@ export default function ResetPassword () {
         <Typography component="h3" variant="h5">Reset Password set new password</Typography>
         <form noValidate>
           <TextField
+            type="password"
             value={password.password}
             onChange={obtenerPassword}
             variant="outlined"
@@ -58,6 +59,7 @@ export default function ResetPassword () {
           /><br /><br />
 
           <TextField
+            type="password"
             value={password.newPasswordRepit}
             onChange={obtenerPassword}
             variant="outlined"

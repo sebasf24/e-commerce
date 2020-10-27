@@ -61,8 +61,9 @@ export default function NavBar (islog){
                 <Link to="/">Home</Link></Nav.Link>
         </Nav.Item>
         <Nav.Item>
-            <Nav.Link href='/about'>Sobre Nosotros</Nav.Link>
-        </Nav.Item>
+                    <Nav.Link href='#'>
+                        <Link to='/about'>Sobre Nosotros</Link></Nav.Link>
+                </Nav.Item>
         </ul>
         <ul className="nav navbar pull-xs-right">
         <Nav.Item>
@@ -82,7 +83,7 @@ export default function NavBar (islog){
                {usuario? usuario.username : ''} 
             </p>
         </Nav.Item>
-        <Nav.Item><Nav.Link href='/login'><Avatar className={classes.small}  /></Nav.Link></Nav.Item>
+        <Nav.Item><Link to='/login'><Avatar className={classes.small}  /></Link></Nav.Item>
         {
             usuario && usuario.id?
             <NavDropdown>

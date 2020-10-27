@@ -1,10 +1,11 @@
-import React,{ useState } from 'react';
+import React,{ useState} from 'react';
 import {Container,Form,Button} from 'react-bootstrap';
-import axios from 'axios';
+import { useDispatch} from 'react-redux';
 import { makeStyles,withStyles } from '@material-ui/core/styles';
 import { Rating } from '@material-ui/lab';
 import style from './FormReview.module.css'
 import Box from '@material-ui/core/Box';
+import {enviarReview} from "../../actions/products.js";
 
 const labels = {
   1: 'Malo',
@@ -33,21 +34,34 @@ const StyledRating = withStyles({
 
 
 export default function FormReview({id}){
+    const dispatch=useDispatch();
+
     const [value, setValue] = React.useState(1);
-  const [hover, setHover] = React.useState(-1);
-  const classes = useStyles();
+    const [hover, setHover] = React.useState(-1);
+    const classes = useStyles();
     const [description,setDescription]=useState('');
     
     const handleDescription= (e)=>{
-        e.preventDefault();
-        setDescription(
-             e.target.value
-        )
+        console.log(e.target.value)
+        setDescription(e.target.value)
+        }
 
+    const handleSubmit = (event)=>{
+        event.preventDefault()
+        const review={
+            calificacion:value,
+            descripcion:description,
+            userId:1
+        }
+     
+        dispatch(enviarReview(id,review))
+        setDescription(" ")
+        setValue(1)
     }
+
     return(
         <Container className={style.Container}>
-            <Form >
+            <Form onSubmit={(e) => handleSubmit(e)}>
                 <Form.Group className={style.starContainer} ><StyledRating className={classes.star}
                     value={value}
                     precision={1}
@@ -66,19 +80,10 @@ export default function FormReview({id}){
                 />
                     {value !== null && <Box ml={2}>{labels[hover !== -1 ? hover : value]}</Box>}</Form.Group>
                 <Form.Group className={style.groupDescription}>
-                    <textarea className={style.textDescription} placeholder='Descripcion...' onChange={handleDescription}></textarea>
+                    <textarea value={description} className={style.textDescription} placeholder='Descripcion...' onChange={handleDescription}></textarea>
                 </Form.Group>
                 <Form.Group className={style.reviewbutton}>
-                    <Button type='submit' variant="primary" onClick={()=>{
-                         const review={
-                            calificacion:value,
-                            descripcion:description,
-                            userId:1
-                        }
-                        axios.post(`http://localhost:3000/products/${id}/review`,review, {
-                            headers: { "Content-type": "application/json; charset=UTF-8" }
-                        })
-                    }}>Enviar Review</Button>
+                    <Button  type='submit' variant="primary" >Enviar Review</Button>
                 </Form.Group>
             </Form>
         </Container>

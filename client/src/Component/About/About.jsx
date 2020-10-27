@@ -14,18 +14,8 @@ export default function About(){
     <div>
         <span>
             <h1>Somos Tech Store</h1>
-            <h4>agregar subtitulo re copado</h4>
-            <p>Arroz con leche, me quiero casar
-Con una señorita de San Nicolás
-Que sepa cocer, que sepa bordar
-Que sepa abrir la puerta para ir a jugar
-Yo soy la viudita del barrio del rey
-Me quiero casar y no sé con quién
-Con esta sí, con esta no
-Con esta señorita me caso yo
-Arroz con leche, me quiero casar
-Con una señorita de San Nicolás
-Que sepa cocer, que sepa bordar</p>
+            <h4> Lideres en Tecnologia </h4>
+            <p> - </p>
         </span>
     <CardColumns>
     
