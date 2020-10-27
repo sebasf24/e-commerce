@@ -1,7 +1,8 @@
-import {ADD_CATEGORY, LIST_CATEGORY, DELETE_CATEGORY, EDIT_CATEGORY} from '../actions/category';
+import {ADD_CATEGORY, LIST_CATEGORY, DELETE_CATEGORY, EDIT_CATEGORY, LIST_CATEGORYPRODUCT} from '../actions/category';
 
 const initialState={
-  category:[]
+  category:[],
+  categoryProduct:[]
 }
 
 export default (state=initialState, actions)=>{
@@ -25,6 +26,11 @@ export default (state=initialState, actions)=>{
             return{
                 ...state,
                 category: actions.category
+            }
+        case LIST_CATEGORYPRODUCT:
+            return{
+                ...state,
+                categoryProduct: actions.categoryProduct.data
             }
         default:
             return state;

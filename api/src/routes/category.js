@@ -1,5 +1,5 @@
 const server = require('express').Router();
-const {Category} = require('../db.js');
+const {Category, Categoryproduct} = require('../db.js');
 //TODAS LAS CATEGORIAS
 server.get('/', (req, res, next) => {
 	
@@ -59,6 +59,26 @@ server.put('/:idCategoria', (req, res) => {
         res.status(201).send(category);
 	})
 });
+
+server.get('/:idProducto', (req, res) => {
+	const { idProducto } = req.params;
+
+	if (!idProducto) {
+		return res.status(400), res.send("Faltan parametros !!!");
+	}
+
+	Categoryproduct.findAll({
+		where: {
+			productId: idProducto
+		}
+	})
+	.then(categories => {
+		res.json(categories);
+	})
+	.catch(err => {
+		res.send(err);
+	})
+})
 
 
 module.exports = server;
