@@ -4,9 +4,12 @@ import OrderLine from './OrderLine.jsx';
 import styles from './Order.module.css';
 import {Link} from 'react-router-dom'
 import { useDispatch, useSelector, useStore } from 'react-redux';
+import { mostraTotal } from "../../actions/cart";
 import Checkout from '../Checkout/Checkout'
 
-export default function Order(){
+
+export default function Order(islog){
+    const idUser = islog.id
     console.log("COMPONENTE ORDEN");
 const dispatch = useDispatch();
 
@@ -14,6 +17,35 @@ var prodGuardados = JSON.parse(localStorage.getItem("carritoLocal"))
 console.log("PRODUCTOS GUARDADOS = ", prodGuardados);
 
 
+ //obtengo los productos del usuario
+ const prodGuardadosCartUser = useSelector(store => store.productsCart).productos
+ const cantidadUser = useSelector(store => store.productsCart).stockProduct
+ //obtengo los productos de localStorage
+ let prodGuardadosLStorage = JSON.parse(localStorage.getItem("carritoLocal"))
+ 
+//selecciono la lista de items del carrito
+let listaProductos = prodGuardadosCartUser.length ? prodGuardadosCartUser : prodGuardadosLStorage
+ //total
+ let total = useSelector(store => store.productsCart).total 
+
+const actualizarPrecio = () => {
+    let objetoStock = JSON.parse(localStorage.stock) 
+    if (!idUser) {
+        let suma = 0
+        for (let obj in objetoStock) {
+            suma = suma + objetoStock[obj].precio
+        }
+       
+        localStorage.setItem("total",JSON.stringify(suma))
+        dispatch(mostraTotal(JSON.parse(localStorage.total)))
+    }   
+    if(idUser){
+    var total  =  cantidadUser.reduce((acc,curr) => {
+        return acc = acc+ (parseInt(curr.price)*curr.cantidad)
+    },0)
+    dispatch(mostraTotal(total))
+}
+}
 
 
         return(
@@ -50,20 +82,14 @@ console.log("PRODUCTOS GUARDADOS = ", prodGuardados);
                         <Card className={styles.total}>
                             <div className={styles.items}> 
                         <Card.Subtitle>Items</Card.Subtitle>
-                                <p>{prodGuardados.length}</p>
+                                <p>{listaProductos.length}</p>
                             </div>
                             <div className={styles.precioFinal}>
                         <Card.Subtitle>TOTAL</Card.Subtitle>
-                          <p>{
-                            prodGuardados.length 
-                             ?
-                             prodGuardados.reduce((acc,curr)=>{
-                              return acc+=curr.price*curr.stock
-                             },0)
-                             : 
-                             0
-                             }
-                        </p>
+                            <Card.Subtitle>{
+                                total
+                            }</Card.Subtitle>
+
                             </div> 
                      <Card.Footer className={styles.boton}>
                         <Link to={`/cart`}>
