@@ -64,6 +64,7 @@ export default function NavBar (islog){
                     <Nav.Link href='#'>
                         <Link to='/about'>Sobre Nosotros</Link></Nav.Link>
                 </Nav.Item>
+
         </ul>
         <ul className="nav navbar pull-xs-right">
         <Nav.Item>

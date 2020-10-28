@@ -79,6 +79,11 @@ export default function Cart({islog}) {
         }
 
     }
+    const checkoutHandler=()=>{
+        //  
+       window.location.href='./shipping'
+    
+       }
 
     return (
         <Container className={styles.container}>
@@ -154,9 +159,7 @@ export default function Cart({islog}) {
 
                     <Card.Footer className={styles.boton}>
                         <Button className={styles.botonCancelar + ' ' + styles.button}>Cancelar</Button>
-                        <Link to={`/order`}>
-                            <Button className={styles.botonAceptar + ' ' + styles.button}>Finalizar Compra</Button>
-                        </Link>
+                        <Link to='/shipping'><Button className={styles.botonAceptar+' '+styles.button} >Finalizar Compra</Button></Link>
                     </Card.Footer>
 
                 </Card>
