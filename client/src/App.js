@@ -21,6 +21,9 @@ import newPassword from './Component/LoginUser/newPassword';
 import Footer from './Component/footer/footer';
 import About from './Component/About/About';
 import UserProfile from './Component/User/UserProfile'
+import Shipping from './Component/Checkout/Shipping'
+import Checkout from './Component/Checkout/Checkout'
+import Payment from './Component/Checkout/Payment'
 
 !localStorage.carritoLocal && localStorage.setItem("carritoLocal",JSON.stringify([]))
 !localStorage.stock && localStorage.setItem("stock",JSON.stringify({}))
@@ -38,9 +41,7 @@ function App() {
     <Route exact path='/' render={Home}/>
     <Route exact path='/order' component={Order}/>
     <Route exact path='/admin' component={us && us.typeUser==='Admin' ?DashboardAdmin : Catalogue}/>
-
     <Route exact path='/cart' render={()=><Cart islog={us? us : undefined}/>}/>
-
     <Route exact path={['/products','/products/category/:id']} component={Catalogue} />
     <Route exact path='/products/:id' component={Product} onEnter={userlog}/>
     <Route exact path='/listCategory' component={homeCategories} onEnter={userlog}/>
@@ -54,6 +55,9 @@ function App() {
     <Route exact path='/resetPass' component={resetPassword}/>
     <Route exact path='/newPass' component={newPassword}/>
     <Route exact path='/me' component={UserProfile}/>
+    <Route exact path='/checkout' component={Checkout}/>
+    <Route exact path='/shipping' component={Shipping}/>
+    <Route exact path='/payment' component={Payment}/>
     <Route exact path='/about' component={About} onEnter={userlog}/>
     <Route path='/' component={ Footer } />
 

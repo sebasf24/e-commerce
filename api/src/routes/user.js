@@ -1,5 +1,5 @@
 const server = require('express').Router();
-const { User, Order, Order_line, Product } = require('../db');
+const { User, Order, Order_line, Product, Address } = require('../db');
 const nodemailer = require('nodemailer');
 
 //Ruta que retorne todos los Usuarios
@@ -370,6 +370,31 @@ server.post('/:idUser/passwordReset', (req, res) => {
                     })
     }
 });
+
+//RUTA PARA AGREGAR UNA DIRECCION DE ENVIO AL USUARIO
+server.post('/:id/address', (req, res) => {
+    const { id } = req.params;
+    User.findOne({
+        where:{id:id}
+    }).then((user)=>{
+        if(user){
+            Address.create({
+                name: req.body.name,
+                number: req.body.number,
+                postalCode: req.body.postalCode,
+                city: req.body.city,
+                userId:id
+        
+            }).then(add => {
+                res.send(add)
+            })
+
+        }
+
+    })
+    .catch(error => res.json(error));
+
+})
 
 
 module.exports = server;

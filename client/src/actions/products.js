@@ -7,6 +7,7 @@ export const ELIMINAR_PRODUCTOID= "MOSTRAR_PRODUCTOID";
 export const MOSTRAR_PRODUCTO_CATEGORY = "MOSTRAR_PRODUCTO_CATEGORY";
 export const BUSCAR_PRODUCTOIDS = "BUSCAR_PRODUCTOIDS";
 export const MOSTRAR_REVIEWS = "MOSTRAR_REVIEWS";
+export const ENVIAR_REVIEW =  "ENVIAR_REVIEW"
 
 //const fetch = require('node-fetch');
 
@@ -39,7 +40,6 @@ export function mostrarProducto_id(id){
 
     }
 }
-
 
 export function agregarProducto(product){
     return function(dispatch){
@@ -117,6 +117,21 @@ export function mostrarBusqueda(search){
     }
 }
 
+export function enviarReview(productId,review){
+    return function(dispatch){
+        return axios.post(`http://localhost:3000/products/${productId}/review`,review,)
+        .then(review=>{
+            console.log(review)
+            dispatch({
+
+                type:ENVIAR_REVIEW,
+                review:review
+            })
+            
+        })
+        .catch(err=>{console.log(err)})
+    }
+}
 
 export function mostrarReviews(productId){
     return function(dispatch){

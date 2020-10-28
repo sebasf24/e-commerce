@@ -5,29 +5,31 @@ import { Button, Form, Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { editarProducto } from "../../actions/products.js";
-import { listCategory } from '../../actions/category';
+import { listCategory, listCategoryProduct } from '../../actions/category';
 import { useHistory, Link } from 'react-router-dom';
 
 
 const FormProductEdit = (productEdit) => {
-    // extrae los valores
-    //console.log(productEdit)
+
     const dispatch = useDispatch();
     const categ = useSelector(store => store.category);
     const categories = categ.category;
+    const categoriesProduct = categ.categoryProduct;
     useEffect(() => {
-        dispatch(listCategory())
+        dispatch(listCategoryProduct(productEdit.product.id));
+        dispatch(listCategory());
     }, []);
 
-    const history = useHistory();
-
     let { id, name, description, price, stock, img } = productEdit.product;
-    //console.log(productEdit.product);
+
     //pasa la imagen a base 64 desde un buffer
     let base64ToString;
     (img) && (base64ToString = Buffer.from(img.data, "base64").toString())
+
     //crea los checkbox con las categorias
     const [checkboxes, setCheckboxes] = useState([]);
+    const [checked, setChecked] = useState(0);
+
     useEffect(
         () => {
             const categoryTypes = categories.map(c => ({
@@ -35,7 +37,6 @@ const FormProductEdit = (productEdit) => {
                 id: c.id,
                 add: false
             }));
-
             setCheckboxes(categoryTypes);
         },
         [categories]
@@ -48,10 +49,6 @@ const FormProductEdit = (productEdit) => {
         stock: stock,
         img: base64ToString
     });
-
-
-
-
 
     //leer datos del formulario
     const obtenerInfo = e => {
@@ -67,7 +64,6 @@ const FormProductEdit = (productEdit) => {
         var fReader = new FileReader();
         fReader.readAsDataURL(input.files[0]);
         fReader.onloadend = function (event) {
-            //console.log(event);
             var base64 = event.target.result;
             let buff = new Buffer(base64, 'base64');
 
@@ -90,8 +86,21 @@ const FormProductEdit = (productEdit) => {
 
     }
 
-    const redireccionarEdicion = product => {
-        history.push('/administrar')
+    const checkedTrue = () => {
+        if (checked === 0) {
+            let form = document.getElementById('category').children;
+
+            for (let i = 2; i < form.length; i++) {
+                for (let j = 0; j < categoriesProduct.length; j++) {
+                    if (parseInt(form[i].children[0].id) === parseInt(categoriesProduct[j].categoryId)) {
+                        const modifiedCategories = [...checkboxes];
+                        modifiedCategories[form[i].children[0].value].add = true;
+                        setCheckboxes(modifiedCategories);
+                    }
+                }
+            }
+            setChecked(1);
+        }
     }
 
     return (
@@ -137,23 +146,24 @@ const FormProductEdit = (productEdit) => {
                     required
                 />
 
-                <Form.Group>
+                <Form.Group id='category' onMouseOver={checkedTrue}>
                     <Form.Label>Categorias</Form.Label><br />
-
-                    {checkboxes.map((categoria, i) => {
-                        return (
-                            <Form.Label>
-                                <input
-                                    type="checkbox"
-                                    className="checks ml-1"
-                                    value={i}
-                                    checked={categoria.add}
-                                    onChange={handleCategoryChecks}
-                                />{categoria.name}
-                            </Form.Label>
-
-                        );
-                    })}
+                    {
+                        checkboxes.map((categoria, i) => {
+                            return (
+                                <Form.Label>
+                                    <input
+                                        type="checkbox"
+                                        className="checks ml-1"
+                                        value={i}
+                                        id={categoria.id}
+                                        checked={categoria.add}
+                                        onChange={handleCategoryChecks}
+                                    />{categoria.name}
+                                </Form.Label>
+                            )
+                        })
+                    }
 
                 </Form.Group>
 
@@ -161,7 +171,6 @@ const FormProductEdit = (productEdit) => {
                 <Form.Control type='file' placeholder='imagen'
                     name='img'
                     onChange={encodeImageFileAsURL}
-                //value={base64ToString}
                 />
                 <img src={product.img} style={{ width: '150px' }} />
 
@@ -206,4 +215,3 @@ const FormProductEdit = (productEdit) => {
 }
 
 export default FormProductEdit;
-
