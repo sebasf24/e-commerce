@@ -41,9 +41,7 @@ function App() {
     <Route exact path='/' render={Home}/>
     <Route exact path='/order' component={Order}/>
     <Route exact path='/admin' component={us && us.typeUser==='Admin' ?DashboardAdmin : Catalogue}/>
-
     <Route exact path='/cart' render={()=><Cart islog={us? us : undefined}/>}/>
-
     <Route exact path={['/products','/products/category/:id']} component={Catalogue} />
     <Route exact path='/products/:id' component={Product} onEnter={userlog}/>
     <Route exact path='/listCategory' component={homeCategories} onEnter={userlog}/>

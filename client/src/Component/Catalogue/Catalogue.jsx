@@ -1,13 +1,12 @@
-import React,{useEffect} from 'react';
-import ProductCard from '../ProductCard/ProductCard.jsx';
+import React from 'react';
 import style from './Catalogue.module.css'
 import MenuCategories from '../menuCategories/MenuCategories.jsx'
-import { useDispatch, useSelector, useStore } from 'react-redux';
-import {mostrarProductos,mostrarProducto_category} from "../../actions/products.js"
+import {useSelector} from 'react-redux';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import AllProducts from './AllProducts.jsx'
 
+export default function Catalogue(props) {
 
-export default function Catalogue() {
-   var cat=window.location.href
 const productsl = useSelector(state=>state.products);
 const userlog=useSelector(state=>state.user)
 
@@ -18,32 +17,13 @@ const userlog=useSelector(state=>state.user)
   let conStock= products.filter(el=> el.stock > 0)
    products = conStock.concat(sinStock)
 }
-
- const dispatch=useDispatch();
-  useEffect(()=>{
-    if(cat.split('/')[4] =='category'){
-        dispatch(mostrarProducto_category(parseInt(cat.split('/')[5])))
-        return
-    }
-        dispatch(mostrarProductos())
-},[])
     return (
         <div className={style.container}>
-
             <MenuCategories className={style.menuCategories}/>
-            <div className={style.productos}>
-                { products.length !== 0 ? 
-                products.map(product => {
-                    return (<ProductCard userlog={userlog?userlog:""} Product={product} />)
-                })
-                :
-                <h5>No hay publicaciones que coincidan con tu búsqueda.
-                Revisá la ortografía de la palabra.
-                Utilizá palabras más genéricas o menos palabras.</h5>
-                }
-            </div>
-               
-            
+            <Switch>
+                <Route component={AllProducts}/>                 
+            </Switch>
+
         </div>
     )
 }

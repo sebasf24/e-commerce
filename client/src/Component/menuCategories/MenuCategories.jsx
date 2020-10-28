@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Nav } from 'react-bootstrap';
 import {Link} from 'react-router-dom'
 import { useDispatch,useSelector} from 'react-redux';
-import {mostrarProducto_category} from '../../actions/products.js';
+import {mostrarProducto_category,mostrarProductos} from '../../actions/products.js';
 import {listCategory} from '../../actions/category.js';
 
 export default function MenuCategories() {
@@ -22,20 +22,19 @@ export default function MenuCategories() {
                 eventKey="disabled" 
                 disabled>CATEGORIAS</Nav.Link>
                 <hr class="clearfix w-100"/>
-                    <Nav.Link href='/products'
-                    className={styles.text}>Todos</Nav.Link>
+                    <Link onClick={()=>{dispatch(mostrarProductos())}} className={`text-decoration-none ${styles.text}`} to='/products'
+                    className={styles.text}>Todos</Link>
                 {   
                     categories 
                     ?
                     categories.map(cat=>{
                         return(
                           
-                            <Nav.Link  href={`/products/category/${cat.id}`}
+                            <Link  to={`/products/category/${cat.id}`}
+                                    onClick={()=>{dispatch(mostrarProducto_category(cat.id))}}
                                     className={`text-decoration-none ${styles.text}`}>
                                 {cat.name}
-                            </Nav.Link>
-                        
-                           
+                            </Link>   
                         )
                     })
                     :
