@@ -4,6 +4,7 @@ import OrderLine from './OrderLine.jsx';
 import styles from './Order.module.css';
 import {Link} from 'react-router-dom'
 import { useDispatch, useSelector, useStore } from 'react-redux';
+import Checkout from '../Checkout/Checkout'
 
 export default function Order(){
     console.log("COMPONENTE ORDEN");
@@ -17,6 +18,7 @@ console.log("PRODUCTOS GUARDADOS = ", prodGuardados);
 
         return(
             <Container >
+                <Checkout step1 step2 step3></Checkout>
                 <Navbar className={styles.heaedr}>
                     <Navbar.Collapse className="justify-content-start">
                         <Navbar.Brand> Detalles de la orden </Navbar.Brand>
