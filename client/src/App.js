@@ -21,6 +21,9 @@ import newPassword from './Component/LoginUser/newPassword';
 import Footer from './Component/footer/footer';
 import About from './Component/About/About';
 import UserProfile from './Component/User/UserProfile'
+import Shipping from './Component/Checkout/Shipping'
+import Checkout from './Component/Checkout/Checkout'
+import Payment from './Component/Checkout/Payment'
 
 !localStorage.carritoLocal && localStorage.setItem("carritoLocal",JSON.stringify([]))
 !localStorage.stock && localStorage.setItem("stock",JSON.stringify({}))
@@ -54,6 +57,9 @@ function App() {
     <Route exact path='/resetPass' component={resetPassword}/>
     <Route exact path='/newPass' component={newPassword}/>
     <Route exact path='/me' component={UserProfile}/>
+    <Route exact path='/checkout' component={Checkout}/>
+    <Route exact path='/shipping' component={Shipping}/>
+    <Route exact path='/payment' component={Payment}/>
     <Route exact path='/about' component={About} onEnter={userlog}/>
     <Route path='/' component={ Footer } />
 

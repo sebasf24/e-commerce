@@ -7,6 +7,7 @@ import cartReducer from '../reducers/cartReducer'
 import cartUserReducer from '../reducers/cartUserReducer.js'
 import ordesReducer from '../reducers/ordesReducer.js'
 import usersReducer from '../reducers/usersReducer'
+import addressReducer from '../reducers/addressReducer'
 
 const rootReducer =combineReducers({
     products: productsReducer,
@@ -14,7 +15,8 @@ const rootReducer =combineReducers({
     user: userReducer,
     order: ordesReducer,
     productsCart:cartReducer,
-    users: usersReducer
+    users: usersReducer,
+    address: addressReducer
 })
 
 const store = createStore(
