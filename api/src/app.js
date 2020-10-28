@@ -7,6 +7,7 @@ const cors = require('cors');
 const session= require('express-session');
 const passport= require('passport')
 const server = express();
+//const googleStratergy = require('./googleStrategy');
 
 require('./db.js');
 require('./passportConfig')
@@ -22,19 +23,30 @@ server.use(session({
   saveUninitialized:true,
   // cookie:{maxAge: 60000 }
 }))
-
+//server.use(googleStratergy());
 server.use(cookieParser('iniciarSesion'));
 server.use(passport.initialize())
 server.use(passport.session());
 
+
 server.use(morgan('dev'));
 server.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*'); // update to match the domain you will make the request from
+  res.setHeader('Access-Control-Allow-Origin', 'https://accounts.google.com/');
+  res.setHeader('Access-Control-Allow-Origin', '*'); // update to match the domain you will make the request from
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
   res.header('Access-Control-Allow-Credentials', 'true');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
+
+
+
+// Api call for google 
+/* authenticationapp.get('/',
+  passport.authenticate('google', {scope:['email', 'profile']}),(req,res)=>{
+}); */
+// Api call back function
+
 
 server.use('/', routes);
 server.use('/',(req,res)=>{
