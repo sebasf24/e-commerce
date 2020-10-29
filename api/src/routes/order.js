@@ -66,4 +66,136 @@ server.put('/:id', (req,res)=>{
     res.send('orden modificada correctamente');
 })
 
+//Camiar estado order
+server.get('/state/:id/:cancel', (req, res) => {
+    const orderId = req.params.id;
+
+    const cancel = req.params.cancel;
+
+    if (cancel === 'false') {
+        Order.findOne({
+            where: {
+                id: orderId
+            }
+        })
+            .then(respuesta => {
+                console.log(respuesta.dataValues.estado)
+                switch (respuesta.dataValues.estado) {
+                    case 'carrito':
+                        Order.update(
+                            {
+                                estado: 'procesando'
+                            },
+                            {
+                                where:
+                                {
+                                    id: respuesta.dataValues.id
+                                }
+                            }
+                        )
+                            .then(resp => {
+                                Order.findAll()
+                                    .then(order => {
+                                        return res.send(order);
+                                    })
+                            })
+                        break;
+                    case 'procesando':
+                        Order.update(
+                            {
+                                estado: 'enviada'
+                            },
+                            {
+                                where:
+                                {
+                                    id: respuesta.dataValues.id
+                                }
+                            }
+                        )
+                            .then(resp => {
+                                Order.findAll()
+                                    .then(order => {
+                                        return res.send(order);
+                                    })
+                            })
+                        break;
+                    case 'enviada':
+                        Order.update(
+                            {
+                                estado: 'completada'
+                            },
+                            {
+                                where:
+                                {
+                                    id: respuesta.dataValues.id
+                                }
+                            }
+                        )
+                            .then(resp => {
+                                Order.findAll()
+                                    .then(order => {
+                                        return res.send(order);
+                                    })
+                            })
+                        break;
+                    case 'completada':
+                        Order.update(
+                            {
+                                estado: 'completada'
+                            },
+                            {
+                                where:
+                                {
+                                    id: respuesta.dataValues.id
+                                }
+                            }
+                        )
+                            .then(resp => {
+                                Order.findAll()
+                                    .then(order => {
+                                        return res.send(order);
+                                    })
+                            })
+                        break;
+                    default:
+                        break;
+                }
+            })
+            .catch(err => {
+                console.log(err)
+                res.send(err)
+            })
+    } else {
+        Order.findOne({
+            where: {
+                id: orderId
+            }
+        })
+            .then(respuesta => {
+                if (respuesta.dataValues.estado !== 'completada') {
+                    Order.update(
+                        {
+                            estado: 'cancelada'
+                        },
+                        {
+                            where:
+                            {
+                                id: respuesta.dataValues.id
+                            }
+                        }
+                    )
+                        .then(resp => {
+                            Order.findAll()
+                                .then(order => {
+                                    return res.send(order);
+                                })
+                        })
+                }
+            })
+            .catch(err => {
+                return res.send(err);
+            })
+    }
+})
+
 module.exports= server;
