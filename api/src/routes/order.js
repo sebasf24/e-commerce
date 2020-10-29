@@ -63,7 +63,6 @@ server.put('/:id', (req,res)=>{
         where:{id:id}
     }
     )
-    res.send('orden modificada correctamente');
     
     Order.findAll({
         where:{
@@ -74,10 +73,11 @@ server.put('/:id', (req,res)=>{
         }
     })
     .then(resp=>{
+        res.send('orden modificada correctamente. Enviando mail');
         let {estado , user} = resp[0];
-
-            var transporter =  nodemailer.createTransport({
-                service: 'Gmail',
+        
+        var transporter =  nodemailer.createTransport({
+            service: 'Gmail',
                 auth: {
                     user: 'ecomerceft1@gmail.com',
                     pass: 'ecomerce1547'
