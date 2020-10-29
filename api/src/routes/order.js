@@ -52,7 +52,7 @@ server.get('/:id',(req,res)=>{
 })
 
 
-//ruta para modificar una orden por id
+//ruta para modificar una orden por id (envia automaticamente un mail al usuario)
 server.put('/:id', (req,res)=>{
     const {id} = req.params;
     const {estado} = req.body;
@@ -239,17 +239,3 @@ server.put('/:id', (req,res)=>{
 })
 
 module.exports= server;
-
-
-
-Order.findAll({
-    where:{
-        id: 1},
-        include:{
-         model: User}
-    
-})
-.then(resp=>{
-    res.send(resp)
-
-})
