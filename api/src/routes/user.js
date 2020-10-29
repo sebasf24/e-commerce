@@ -328,10 +328,21 @@ server.post('/:idUser/passwordReset', (req, res) => {
 
 
                 var mailOptions = {
-                    from: 'Remitente',
+                    from: 'TechShop',
                     to: user.email,
-                    subject: 'ResetPassword',
-                    text: `Cambiar contraseña http://localhost:3006/newPass?id=${user.id}`
+                    subject: 'Restauracion de Contraseña',
+                    html: `<img alt=logo src="https://i.postimg.cc/vZsQxVPF/fondotech.jpg" style="width:100% ;max-height:150px"/>
+                                    <div style="text-align: justify; font-size: 16px">
+                                    <h1>Muchas gracias por elegirnos</h1>
+                                    <p>¿Olvidaste tu contraseña?<br/>Hemos recibido una peticion para restaurar tu contraseña. Por favor has click en el boton para reestablecer una contraseña para ti.(Si no fuiste tu o si ya la recordaste ignora este mensaje).</p>
+                                    </div>
+                                    <hr/>
+                                    <div style="width:100% ; text-align: center">
+                                        <a style="text-decoration: none; border-radius: 5px; padding:11px 23px; color: white; background-color: #3498db" href="http://localhost:3006/newPass?id=${user.id}" >Cambiar contraseña </a>
+                                    </div>
+                                    <div>
+                                        <p style="color:#b3b3b3 ; font-size:12px; text-align: center">Tech Shop 2020.</p>
+                                    </div>`
                 };
 
                 transporter.sendMail(mailOptions, function (error, info) {
