@@ -8,6 +8,13 @@ export default function OrderLine ({producto}){
     const products = useSelector(store=>store.productsCart)
     const dispatch=useDispatch();
 
+//obtengo los productos de localStorage
+let prodGuardadosLStorage = JSON.parse(localStorage.getItem("carritoLocal"))      
+console.log("PRODUCTOS GUARDADOS LOCALSOTAGE = ", prodGuardadosLStorage);
+
+let cantidadLStorage = JSON.parse(localStorage.getItem("stock"))[[producto.id]]
+console.log("CANTIDAD STORAGE = ", cantidadLStorage);
+
 
     return(
         
@@ -19,7 +26,7 @@ export default function OrderLine ({producto}){
                 </Link> 
                     <Card.Subtitle>Precio: { producto.price }</Card.Subtitle>
                     <Card.Text>Descripción del producto: {producto.description}</Card.Text>
-                 <div className={styles.cantidad}>Cantidad: </div>
+                 <div className={styles.cantidad}>Cantidad: {cantidadLStorage.cantidad} </div>
                 </div>
                
             </Card>

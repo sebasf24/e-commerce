@@ -10,6 +10,9 @@ module.exports = (sequelize) => {
     },
     descripcion: {
       type: DataTypes.TEXT
+    },
+    userId: {
+      type: DataTypes.INTEGER
     }
   });
 };

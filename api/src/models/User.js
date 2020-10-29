@@ -8,15 +8,15 @@ module.exports = (sequelize) => {
    const User= sequelize.define('user', {
         name:{
             type: DataTypes.STRING,
-            allowNull:false,
+            allowNull:true,
         },
         lastname:{
             type: DataTypes.STRING,
-            allowNull:false,
+            allowNull:true,
         },
         dni:{
             type: DataTypes.INTEGER,
-            allowNull:false,
+            allowNull:true,
         },
         email:{
             type: DataTypes.STRING,
@@ -29,11 +29,11 @@ module.exports = (sequelize) => {
         username:{
             type: DataTypes.STRING,
             unique:true,
-            allowNull:false,
+            allowNull:true,
         },
         password:{
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
             set(value){
                 const newPass=User.generateHash(value)
                 this.setDataValue('password',newPass)
@@ -45,6 +45,9 @@ module.exports = (sequelize) => {
         typeUser:{
             type: DataTypes.ENUM('Admin','cliente'),
         
+        },
+        googleId:{
+            type: DataTypes.STRING
         }
     })
 User.generateHash= function(password) {
