@@ -33,20 +33,19 @@ server.get('/me', isLogged, function(req, res){
 
 //google login
 server.get('/google'
-        ,passport.authenticate('google', {scope: ['email', 'profile']}),
+        ,passport.authenticate('google', {scope: ['email', 'profile'],display:'popup'}),
      (req,res)=>{
            return res.send(req.user);
 });
 
 // In this route you can see that if the user is logged in u can acess his info in: req.user
-server.get('/good',isLogged, (req, res) => { res.send(req.user)})
+server.get('/success',isLogged, (req, res) => { 
+  console.log(req.user) 
+  res.send(req.user)})
 server.get('/failed', (req, res) => res.send('You Failed to log in!'))
 
 server.get('/google/callback', 
-  passport.authenticate('google', { failureRedirect: '/auth/failed' }),
-  function(req, res) {
-    res.redirect('/auth/good');
-  });
+  passport.authenticate('google', { successRedirect: 'http://localhost:3006/googleLoginSuccess'}));
 
 server.post('/login',(req, res, next) => {
     passport.authenticate('login', (err, user, info) => {

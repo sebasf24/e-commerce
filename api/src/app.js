@@ -31,8 +31,8 @@ server.use(passport.session());
 
 server.use(morgan('dev'));
 server.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'https://accounts.google.com/');
-  res.setHeader('Access-Control-Allow-Origin', '*'); // update to match the domain you will make the request from
+  res.header('Access-Control-Allow-Origin', 'https://accounts.google.com/');
+  res.header('Access-Control-Allow-Origin', '*'); // update to match the domain you will make the request from
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
   res.header('Access-Control-Allow-Credentials', 'true');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
@@ -40,12 +40,6 @@ server.use((req, res, next) => {
 });
 
 
-
-// Api call for google 
-/* authenticationapp.get('/',
-  passport.authenticate('google', {scope:['email', 'profile']}),(req,res)=>{
-}); */
-// Api call back function
 
 
 server.use('/', routes);
