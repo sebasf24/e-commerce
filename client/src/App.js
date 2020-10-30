@@ -24,6 +24,7 @@ import UserProfile from './Component/User/UserProfile'
 import Shipping from './Component/Checkout/Shipping'
 import Checkout from './Component/Checkout/Checkout'
 import Payment from './Component/Checkout/Payment'
+import GoogleLoginSuccess from './Component/LoginUser/GoogleLoginSuccess'
 
 !localStorage.carritoLocal && localStorage.setItem("carritoLocal",JSON.stringify([]))
 !localStorage.stock && localStorage.setItem("stock",JSON.stringify({}))
@@ -48,6 +49,7 @@ function App() {
     <Route path='/addCategory' component={FormCategory}/>
     <Route exact path='/search' render={()=> <Catalogue Products={productsl.products}/>} />
     <Route path='/login' component={LoginUser}/>
+    <Route exact path='/googleLoginSuccess' component={GoogleLoginSuccess}/>
     <Route path='/listUser' component={ListUser}/>
     <Route path='/addUser' component={FormAddUser}/>
     <Route exact path='/administrar' component={FormAdmin}/>

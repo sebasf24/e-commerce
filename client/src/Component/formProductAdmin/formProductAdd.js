@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import axios from 'axios';
-import { Button, Form, Container } from 'react-bootstrap';
+import { Button, Form, Container,Row,Col} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { mostrarProductos, agregarProducto } from "../../actions/products.js";
@@ -125,11 +125,16 @@ const FormProductAdd = () => {
     }, [])
 
     return (
-        <Container id='container' className='container-fluid col-6 mt-4 bg-white p-3'>
+        <Container id='container' className='container-fluid col-lg-6 col-sm-12 mt-4 bg-white p-3'>
+             <Row>
+                <Col>
+                    <h1 style={{ textAlign: "center" }}>Productos</h1>
+                </Col>
+            </Row>
             <Button className='mr-3' variant="primary" type="button" onClick={() => window.history.back()} >Volver atras</Button>
             <Form id='formProduct' name="add" onSubmit={envioformulario} >
 
-                <Form.Label id='formTitle'>Agregar Producto</Form.Label><br />
+                <Form.Label className='font-weight-bold' id='formTitle'>Agregar Producto</Form.Label><br />
 
                 <Form.Label>Name</Form.Label>
                 <Form.Control column="sm" size="sm" type='text' placeholder='Nombre'
