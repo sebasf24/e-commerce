@@ -61,7 +61,7 @@ passport.use('login',
 
   })
 )
-passport.use('google',new GoogleStrategy({
+passport.use(new GoogleStrategy({
   clientID: config.clientId,
   clientSecret: config.secret,
   callbackURL: config.callback,

@@ -1,5 +1,6 @@
 const server = require('express').Router();
 const { Product, Category, Categoryproduct, Review, User} = require('../db.js');
+const mercadopago = require('mercadopago');
 
 server.get('/', (req, res, next) => {
 	Product.findAll({include:{
@@ -264,6 +265,31 @@ server.get("/:id/review/", (req,res)=>{
 			res.send(reviews)
 	})
 })
+
+//mercado pago
+server.post('/mercadoPago', (req, res) => {
+	mercadopago.configure({
+		access_token: 'TEST-577722203307587-031506-1b58f85e3673ad5209388d3d95940707-307991210'
+	  });
+	  
+	  let preference = {
+		  items: [
+			{
+			  title: req.body.title,
+			  unit_price: req.body.price,
+			  quantity: req.body.quantity
+			}
+		  ]
+		};
+		
+	  mercadopago.preferences.create(preference)
+		.then(response => {
+			console.log(response.body.id);
+		  res.send(response.body.id)
+		}).catch(error => {
+		  res.send(error)
+		});
+	})
 
 
 module.exports = server;
