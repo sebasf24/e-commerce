@@ -108,8 +108,7 @@ const FormProductEdit = (productEdit) => {
             <Link to={`/administrarAdd`}><Button className='mr-3' variant="primary" type="button" >Volver atras</Button></Link>
             <Form id='formProduct' name="editar" onSubmit={envioformulario} >
 
-                <Form.Label id='formTitle'>Editar Producto</Form.Label><br />
-
+                <Form.Label className='font-weight-bold' id='formTitle'>Editar Producto</Form.Label><br />
 
                 <Form.Label>Nombre</Form.Label>
                 <Form.Control type='text' placeholder='nombre'
