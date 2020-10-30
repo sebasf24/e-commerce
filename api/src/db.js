@@ -43,6 +43,11 @@ Product.belongsToMany(Category, { through: "categoryproduct"})
 Order.belongsToMany(Product, {through: 'order_line'});
 Product.belongsToMany(Order, {through: 'order_line'});
 
+
+User.belongsToMany(Product,{through: 'favorite'})
+//Product.belongsToMany(User,{through:'favorite'})
+//User.hasMany(Product,{as: 'Favorite'})
+
 User.hasMany(Order)
 Order.belongsTo(User);
 Order.hasMany(Order_line);

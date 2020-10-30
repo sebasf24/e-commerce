@@ -5,9 +5,10 @@ import {Button, CssBaseline,TextField, FormControlLabel,Checkbox,Grid} from '@ma
 import { makeStyles, Typography, Container,Box } from '@material-ui/core';
 import style from '../User/FormAddUser.module.css';
 import {Link} from 'react-router-dom';
-import {loginUser} from '../../actions/user';
+import {loginUser,loginGoogle} from '../../actions/user';
 import Cookies from 'universal-cookie';
 import axios from 'axios';
+import {FcGoogle} from 'react-icons/fc'
 // import useUser from './useUser';
 
 
@@ -32,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Loginuser(onLogin) {
+  //const user= useSelector(store=>store.user);
 
   const classes = useStyles();
   const [login, setLogin]=useState({
@@ -54,6 +56,16 @@ const handlerOnchange=(e)=>{
   dispatch(loginUser(username, password))
  
  }
+
+
+ const popup = e => {
+  e.preventDefault();
+
+  var googleLogin = window.open(`http://localhost:3000/auth/google`, 'googleLogin', 'height=500, width=500');
+  googleLogin.moveTo(100,100)
+  //setTimeout(()=>{dispatch(loginGoogle())},5000);
+
+};
 
   return (
     <Container component="main" maxWidth="xs">
@@ -98,6 +110,19 @@ const handlerOnchange=(e)=>{
             className={style.boton}
           >
             Sign In
+          </Button>
+
+          <br></br>
+          <br></br>
+          <br></br>
+          <Button
+            onClick={popup}
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={style.boton}
+          >
+           <FcGoogle/>
           </Button>
           <br/><br/>        
           <Grid container>
