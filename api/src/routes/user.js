@@ -405,15 +405,21 @@ server.post('/:id/address', (req, res) => {
 
 })
 //Obtener todos los productos favoritos de un usuario
-server.get('/:id/favorite', (req, res) => {
+server.get('/:id/favorite', async(req, res) => {
     const userId = req.params.id;
 
-    Favorite.findAll({
+    let favorite = await Favorite.findAll({
         where: { userId: userId }
-    }).then(resp => {
-        return res.send(resp)
     })
-
+    let arrayProducts = [];
+    for (let i = 0; i < favorite.length; i++) {
+        let product = await Product.findOne({
+            where: { id: favorite[i].productId }
+        })
+        arrayProducts.push(product);
+    }
+    res.send(arrayProducts);
+    
 
 })
 //agregar un producto a favoritos
@@ -428,7 +434,7 @@ server.post('/:id/favorite', (req, res) => {
     }).then(resp => {
         return res.send(resp);
     }).catch(err => {
-        return res.send('ese producto ya esta en favoritos');
+        return res.send('Ese producto ya esta en favoritos');
     })
 
 })
