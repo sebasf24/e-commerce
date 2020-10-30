@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import { Button, Form, Container, Table } from 'react-bootstrap';
+import { Button, Form, Container, Table,Row,Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import FormAdd from './formProductAdd';
@@ -90,7 +90,11 @@ const FormProductAdmin = () => {
 
     return (
         <Container className='container-fluid col-lg-6 col-sm-12 p-3 bg-white '>
-
+             <Row>
+                <Col>
+                    <h1 style={{ textAlign: "center" }}>Productos</h1>
+                </Col>
+            </Row>
             <Fragment id="formPage">
                 {click.clicked}
             </Fragment>
