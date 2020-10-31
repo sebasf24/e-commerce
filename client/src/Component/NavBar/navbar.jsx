@@ -39,29 +39,34 @@ return (
                <span>Catalogo</span>
             </Link>
             <Link className={ styles.container_carrito } to={'/cart'}>
-                <Button className={styles.boton_carrito}><AiOutlineShoppingCart className={styles.iconos}/>
+                <AiOutlineShoppingCart className={styles.icono_carrito}/>
                     {
                         notProd?
                         <span className={styles.notCarrito}>{notProd}</span>
                         : ''
                     }
-                </Button>
             </Link>
-        </div>
-        <div className={styles.user}> 
                 {  usuario && usuario.typeUser==='Admin'
                     ? 
-                    <Link className={styles.navSec} to={'/admin'}>Admin</Link>
-                    : <div></div>}
+                    <Link className={styles.navSec +" "+styles.navBoton} to={'/admin'}>Admin</Link>
+                    : <div></div>
+                }
+        </div>
+        <div className={styles.user}> 
                 {
-                usuario && usuario.id?
+            usuario && usuario.id
+            ?
+            <>
+            <span className={styles.navSec}>{usuario.username}</span>
             <NavDropdown>
                 <MenuItem onClick={()=>{window.location.href='./me'}}>My Profile</MenuItem>
                 <MenuItem>Your gits</MenuItem>
                 <MenuItem>Starred gists</MenuItem>
                 <MenuItem onClick={()=>{dispatch(logoutUser())}} >Sign out</MenuItem>
             </NavDropdown>
-            : <div></div>
+            </>
+            : 
+            <div></div>
             }
             <Link to='/login'>
                 <Avatar className={styles.iconos}/>

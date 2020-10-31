@@ -17,6 +17,21 @@ console.log(productsl)
         dispatch(mostrarProductos())
 },[])
 
+//saca promedio de las review de cada producto y le agrega la propiedad "promedio"
+for(let i = 0; i<products.length; i++){
+  let reviews = products[i].reviews
+  let suma = 0
+  for(let j = 0; j < reviews.length; j++){
+
+    suma = suma + reviews[j].calificacion
+  } 
+   let promedio =  suma / reviews.length
+  
+   products[i].promedio= promedio
+}
+//solo arma un array de productos 5 estrellas
+let excelente = products.filter(product => product.promedio === 5)
+ 
 
     const responsive = {
         desktop: {
@@ -59,7 +74,7 @@ console.log(productsl)
   itemClass="carousel-item-padding-40-px"
   customTransition="transform 800ms ease-in-out"
 >
-{products.map(product => {
+{excelente.map(product => {
                     return (<ProductCard Product={product} />)})}
 </Carousel>;
         </div>
