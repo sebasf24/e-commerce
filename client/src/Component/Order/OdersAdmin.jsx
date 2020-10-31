@@ -68,7 +68,7 @@ export default function OrdersAdmin() {
                     <Navbar.Brand> Lista de ordenes  </Navbar.Brand>
                 </Navbar.Collapse>
             </Navbar>
-            <h1> Seleccione: Estado de la orden </h1>
+            <p> Seleccione: Estado de la orden </p>
             <select name ='filtro' id= 'filtro' onChange={() => dispatch(listOrders())}>
                  <option value="creada">Creada</option> 
                  <option value="procesando">Procesando</option>
