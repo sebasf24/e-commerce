@@ -23,18 +23,14 @@ const SerchBar = () => {
         }
     }
 
-    const handlerSubmit = (e) => {
-        e.preventDefault();
-    }
-
     return (
-        <div>
-            <form className={styles.form} onSubmit={handlerSubmit}>
-                <Link to={'/search'} style={{display:'flex'}}><Button type="submit" className={styles.boton} variant="light" ><ImSearch/></Button>
-                <input className={styles.buscador} type="text" placeholder="BUSCAR"
-                onChange={handlerSerch} /></Link>
-            </form>
-        </div>
+
+        <Link to={'/search'} className={styles.container}>
+            <Button type="submit" className={styles.boton} variant="light" ><ImSearch/></Button>
+            <input className={styles.buscador} type="text" placeholder="Buscar productos"
+                onChange={handlerSerch} />
+        </Link>
+
     )
 }
 
