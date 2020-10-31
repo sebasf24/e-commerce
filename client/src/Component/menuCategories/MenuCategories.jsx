@@ -6,24 +6,34 @@ import {Link} from 'react-router-dom'
 import { useDispatch,useSelector} from 'react-redux';
 import {mostrarProducto_category,mostrarProductos} from '../../actions/products.js';
 import {listCategory} from '../../actions/category.js';
+import { BiCheckboxSquare, BiCheckbox } from "react-icons/bi";
 
-export default function MenuCategories() {
+export default function MenuCategories(props) {
     const dispatch=useDispatch();
     const prod=useSelector(store=>store.products);
     const categ=useSelector(store=>store.category);
     const categories=categ.category;
+    console.log()
     useEffect(()=>{
          dispatch(listCategory())
      },[]);
    
     return (
             <Nav  className={`flex-column ${styles.main_menu}`}>
-                <Nav.Link className={styles.text + ' ' + styles.centrar }
-                eventKey="disabled" 
-                disabled>CATEGORIAS</Nav.Link>
-                <hr class="clearfix w-100"/>
+
+                    <div className={styles.centrar}>
+                        Categorias
+                    </div>
                     <Link onClick={()=>{dispatch(mostrarProductos())}} className={`text-decoration-none ${styles.text}`} to='/products'
-                    className={styles.text}>Todos</Link>
+                        className={styles.text}>
+                        Todos
+                        {window.location.href.split("/")[5]
+                        ?
+                        <BiCheckbox/>
+                        :
+                        <BiCheckboxSquare/>
+                        }
+                    </Link>
                 {   
                     categories 
                     ?
@@ -33,7 +43,12 @@ export default function MenuCategories() {
                             <Link  to={`/products/category/${cat.id}`}
                                     onClick={()=>{dispatch(mostrarProducto_category(cat.id))}}
                                     className={`text-decoration-none ${styles.text}`}>
-                                {cat.name}
+                                     {cat.name} 
+                                    {window.location.href.split("/")[5]==cat.id
+                                    ?
+                                    <BiCheckboxSquare/>
+                                     :
+                                    <BiCheckbox/>}
                             </Link>   
                         )
                     })

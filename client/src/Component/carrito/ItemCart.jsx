@@ -65,7 +65,7 @@ const borrarItems= ()=>{
             cantidad:0
         }
 
-        dispatch(quitarProdCarrito(currentProd.productId,currentProd.id))
+        currentProd &&  dispatch(quitarProdCarrito( currentProd.productId,currentProd.id))
         dispatch(modificarStock(idUser,prodEliminar))
   
     }

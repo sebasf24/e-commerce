@@ -1,19 +1,22 @@
 .container {
-  margin-left: 100px;
-  margin-right: 100px;
   margin-top: 30px;
   margin-bottom: 30px;
     display: grid;
-    grid-template-columns: 1fr 2.5fr;
-    gap: 0px 0px;
+    grid-template-columns: auto auto;
     grid-template-areas:
       "menuCategories productos";  
   }
-  .menuCategories { 
-      grid-area: menuCategories; 
-    }
+
+.boton:focus, .boton:active{
+  outline: none !important;
+  box-shadow: none;
+}
+
   .productos { 
     display: flex;
     grid-area: productos;
     flex-wrap: wrap;
+    margin: 0 20px;
     }
+
+
