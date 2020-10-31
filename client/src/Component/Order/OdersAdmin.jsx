@@ -15,6 +15,9 @@ export default function OrdersAdmin() {
 
     const [detalle, setDetalle] = useState(false)
 
+
+
+
     useEffect(() => {
         dispatch(listOrders())
 
@@ -31,8 +34,14 @@ export default function OrdersAdmin() {
     }
 
     const items = list_orders.map(item => {
-        return (
-            <tr>
+            // Aca va a ir el filter !
+
+            var cod = document.getElementById("filtro").value;
+            console.log("cod =", cod);
+                if(item.estado == cod)
+
+                return ( 
+                <tr>
                 <td>{item.id}</td>
                 <td>{item.user}</td>
                 <td>{item.estado}</td>
@@ -45,8 +54,11 @@ export default function OrdersAdmin() {
                         <Button onClick={() =>  verDetalle(item.id)}>Ver detalles</Button>
                     </div>
                 </td>
-            </tr>
-        )
+            </tr> );
+                else {
+                     return
+                }
+
     })
 
     return (
@@ -56,7 +68,13 @@ export default function OrdersAdmin() {
                     <Navbar.Brand> Lista de ordenes  </Navbar.Brand>
                 </Navbar.Collapse>
             </Navbar>
-
+            <p> Seleccione: Estado de la orden </p>
+            <select name ='filtro' id= 'filtro' onChange={() => dispatch(listOrders())}>
+                 <option value="creada">Creada</option> 
+                 <option value="procesando">Procesando</option>
+                 <option value="completada" selected >Completada</option>
+                 <option value="cancelada">Cancelada</option>
+            </select>
             <Table responsive>
                 <thead>
                     <tr>
