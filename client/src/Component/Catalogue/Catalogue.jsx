@@ -1,32 +1,31 @@
 import React,{useState} from 'react';
 import style from './Catalogue.module.css'
 import MenuCategories from '../menuCategories/MenuCategories.jsx'
-import {useSelector} from 'react-redux';
+import {useSelector,useDispatch} from 'react-redux';
+
 import AllProducts from './AllProducts.jsx'
+import {mostrarProductos} from '../../actions/products'
+import { useEffect } from 'react';
 
 export default function Catalogue(props) {
-
-const [verMenu, setVerMenu] = useState(true)
-
+    useEffect(() => {
+        dispatch(mostrarProductos())
+    },[])
 const productsl = useSelector(state=>state.products);
-
- let products = productsl.products;
-
- if (products!= undefined){
-  let sinStock = products.filter(el => el.stock===0)
-  let conStock= products.filter(el=> el.stock > 0)
-    products = conStock.concat(sinStock)
-}
-
+const dispatch = useDispatch();
+let products = productsl.products;
+console.log(products)
 
     return (
         <div className={style.container}>
-                <MenuCategories  />
+            <div className={style.menu}>
+                 <MenuCategories   />
+
+            </div>
             <div id="contenido">
-                <AllProducts />
+                <AllProducts productos={products}/>
             </div>
 
         </div>
     )
 }
-
