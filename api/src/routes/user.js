@@ -436,8 +436,7 @@ server.get('/:id/address', (req,res)=>{
 //Obtener todos los productos favoritos de un usuario
 server.get('/:id/favorite', async(req, res) => {
     const userId = req.params.id;
-    const productId =req.body.productId
-
+     const productId =req.body.productId
 
     let favorite = await Favorite.findAll({
         where: { userId: userId }

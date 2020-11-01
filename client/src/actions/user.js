@@ -50,8 +50,6 @@ export function isLogged(){
 }
 
 
-
-
 export function loginUser(username, password){
     var cart=localStorage.getItem('carritoLocal')
 

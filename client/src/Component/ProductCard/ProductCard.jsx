@@ -11,8 +11,6 @@ import { useState } from 'react';
 import axios from 'axios';
 import Cookies from 'universal-cookie'
 
-
-
 export default function ProductCard({userlog,Product}) {
 
     let base64ToString;
@@ -69,6 +67,7 @@ export default function ProductCard({userlog,Product}) {
             setHeart(<AiOutlineHeart className={styles.heart}/>);
             setvalueHeart(false)
             deleteFavorite(idUser, productId)
+
             
           }
       }

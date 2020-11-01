@@ -24,6 +24,7 @@ export default function MenuCategories(props) {
                     <div className={styles.centrar}>
                         Categorias
                     </div>
+                    <hr class="w-100"></hr>
                     <Link onClick={()=>{dispatch(mostrarProductos())}} className={`text-decoration-none ${styles.text}`} to='/products'
                         className={styles.text}>
                         Todos

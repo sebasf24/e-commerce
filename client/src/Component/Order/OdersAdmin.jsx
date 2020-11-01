@@ -39,6 +39,23 @@ export default function OrdersAdmin() {
 
             var cod = document.getElementById("filtro").value;
             console.log("cod =", cod);
+                if(cod == "Todos"){
+                    return ( 
+                        <tr>
+                        <td>{item.id}</td>
+                        <td>{item.user}</td>
+                        <td>{item.estado}</td>
+                        <td><button className='btn btn-outline-primary btn-sm ml-1' onClick={() => dispatch(cambiarEstado(item.id))}>+</button></td>
+                        <td><button className='btn btn-outline-danger btn-sm ml-1' onClick={() => dispatch(cancelarEstadoOrden(item.id))}>-</button></td>
+                        <td>{item.createdAt}</td>
+                        <td>{item.updatedAt}</td>
+                        <td>
+                            <div style={{ width: "110px" }}>
+                                <Button onClick={() =>  verDetalle(item.id)}>Ver detalles</Button>
+                            </div>
+                        </td>
+                    </tr> );
+                } else {
                 if(item.estado == cod)
 
                 return ( 
@@ -59,7 +76,7 @@ export default function OrdersAdmin() {
                 else {
                      return
                 }
-
+}
     })
 
     return (
@@ -73,10 +90,12 @@ export default function OrdersAdmin() {
             <Card.Body className={styles.p}>Seleccioné: Estado de la orden </Card.Body>
             </Card>
             <select className={styles.select} name ='filtro' id= 'filtro' onChange={() => dispatch(listOrders())}>
+                 <option value="Todos" selected>Todos</option>
                  <option value="creada">Creada</option> 
                  <option value="procesando">Procesando</option>
-                 <option value="completada" selected >Completada</option>
+                 <option value="completada">Completada</option>
                  <option value="cancelada">Cancelada</option>
+                 
             </select>
             <Table responsive>
                 <thead>
