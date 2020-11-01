@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Container, Button, Col, Table, Navbar, Nav } from 'react-bootstrap';
+import { Container, Button, Col, Table, Navbar, Nav, Card } from 'react-bootstrap';
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import styles from './tablaOrdenes.module.css';
 import {listOrders, cambiarEstado, cancelarEstadoOrden } from '../../actions/order'
 import findbyId from '../../actions/order'
 import axios from 'axios'
+
 
 export default function OrdersAdmin() {
     const dispatch = useDispatch()
@@ -68,8 +69,10 @@ export default function OrdersAdmin() {
                     <Navbar.Brand> Lista de ordenes  </Navbar.Brand>
                 </Navbar.Collapse>
             </Navbar>
-            <p> Seleccione: Estado de la orden </p>
-            <select name ='filtro' id= 'filtro' onChange={() => dispatch(listOrders())}>
+            <Card className={styles.card}>
+            <Card.Body>Seleccioné: Estado de la orden </Card.Body>
+            </Card>
+            <select className={styles.select} name ='filtro' id= 'filtro' onChange={() => dispatch(listOrders())}>
                  <option value="creada">Creada</option> 
                  <option value="procesando">Procesando</option>
                  <option value="completada" selected >Completada</option>
