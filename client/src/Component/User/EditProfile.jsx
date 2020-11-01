@@ -34,9 +34,6 @@ export default function EditProfile() {
     const classes = useStyles();
     const usuario = useSelector(store => store.user)
    const user=usuario.user
-   console.log(user)
-   
-   console.log(user)
     const [data, setData]=useState(user)
    
     const dispatch=useDispatch();
@@ -46,10 +43,10 @@ export default function EditProfile() {
         [e.target.name]:e.target.value
        })   
     }
-    console.log(data)
+  
     const handlerSubmit=(e)=>{
         e.preventDefault();
-        console.log(data)
+    
         // dispatch(editUser(updateData))
 
     }
