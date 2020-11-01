@@ -23,7 +23,7 @@ switch(actions.type){
         return{
             ...state,
             stockProduct:actions.orderLines,
-            total:actions.orderLines.reduce((acc,curr)=>{return acc = acc + (parseInt(curr.price)*curr.cantidad)},0)
+            total:actions.orderLines?actions.orderLines.reduce((acc,curr)=>{return acc = acc + (parseInt(curr.price)*curr.cantidad)},0):0
         }
     case MODIFICAR_STOCK:
         let nuevoStock=state.stockProduct.map(prod=>{

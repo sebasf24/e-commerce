@@ -1,11 +1,11 @@
 
 .main_menu {
+    min-height: auto !important;
     font-size: 1.10rem;
     font-weight: 400;
     margin-left: 30px;
     margin-top: 10px;
     background:#ffffff;
-    height: 100vh;
     width:13.75rem;
     box-shadow: 0 0.125rem 9.375rem rgba(90,97,105,.1), 
                 0 0.25rem 0.5rem rgba(90,97,105,.12), 
@@ -20,6 +20,8 @@
         padding: .7em;
         color:#999;
         font-family: 'Titillium Web';
+        border-left: solid 3px transparent;
+        transition: all cubic-bezier(0.215, 0.610, 0.355, 1) .4s;
     }
     .text:hover{
         border-left: solid 3px #4659ff;
@@ -29,6 +31,4 @@
         height: 60px;
         display: grid;
         place-items: center;
-        border-bottom: solid 1px #c9c9c9
     }
-    

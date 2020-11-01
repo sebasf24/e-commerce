@@ -4,7 +4,6 @@ import productsReducer from '../reducers/productReducer.js';
 import categoryReducer from '../reducers/categoryReducer.js';
 import userReducer from '../reducers/userReducer';
 import cartReducer from '../reducers/cartReducer'
-import cartUserReducer from '../reducers/cartUserReducer.js'
 import ordesReducer from '../reducers/ordesReducer.js'
 import usersReducer from '../reducers/usersReducer'
 import addressReducer from '../reducers/addressReducer'
