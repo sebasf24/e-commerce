@@ -1,9 +1,8 @@
 import {SumarRestarCantidad,eliminarItems} from '../carrito/localStorage'
-import axios from 'axios'
 import Cookies from 'universal-cookie'
-import React,{useState,useEffect} from 'react';
+import React,{useState} from 'react';
 import {Link} from 'react-router-dom'
-import {Card, Image,Button, Form} from 'react-bootstrap';
+import {Card,Button, Form} from 'react-bootstrap';
 import { BiTrash} from "react-icons/bi";
 import styles from "./ItemCart.module.css";
 import { useDispatch, useSelector, useStore } from 'react-redux';

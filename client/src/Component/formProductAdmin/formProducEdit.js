@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { editarProducto } from "../../actions/products.js";
 import { listCategory, listCategoryProduct } from '../../actions/category';
-import { useHistory, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 const FormProductEdit = (productEdit) => {
@@ -65,7 +65,6 @@ const FormProductEdit = (productEdit) => {
         fReader.readAsDataURL(input.files[0]);
         fReader.onloadend = function (event) {
             var base64 = event.target.result;
-            let buff = new Buffer(base64, 'base64');
 
             setProduct({
                 ...product,
@@ -171,7 +170,7 @@ const FormProductEdit = (productEdit) => {
                     name='img'
                     onChange={encodeImageFileAsURL}
                 />
-                <img src={product.img} style={{ width: '150px' }} />
+                <img src={product.img} style={{ width: '150px' }} alt='' />
 
                 <Form.Group controlId="formBasic">
                     <Button type="button" className='mt-3' variant="primary" onClick={() => {

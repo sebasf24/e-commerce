@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {enviarAlCarritoLocalStorage,sumarCarritoLocal} from '../carrito/localStorage'
 import styles from './ProductCard.module.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Card,Button} from 'react-bootstrap';
 import {Link} from 'react-router-dom'
-import { BiArrowBack,BiCart} from "react-icons/bi";
-import {useDispatch, useSelector } from 'react-redux';
+import {useDispatch,useSelector} from 'react-redux';
 import {agregarProductoCarrito,modificarStock} from '../../actions/cart.js';
+import { AiOutlineHeart, AiFillHeart} from "react-icons/ai";
+import { useState } from 'react';
+import axios from 'axios';
+import {getFavorites} from '../../actions/users.js'
+
+
 
 export default function ProductCard({userlog,Product}) {
 
@@ -15,8 +20,38 @@ export default function ProductCard({userlog,Product}) {
     
     const productId=Product.id
     const cantidad =1
+
+    const dispatch=useDispatch()
+    /* useEffect(() => {
+        dispatch(getFavorites(1))
+    },[]) */
+
+    /* const favorites = useSelector(state =>state.users).favorites
+    console.log('favorites',favorites);
+    let productFav = favorites.find(prod => prod.id === productId); */
+   
+    const [heart,setHeart]=useState(<AiOutlineHeart className={styles.heart}/>)
+      const [valueHeart,setvalueHeart]=useState(0)
+     
+     
+     const handleFav=()=>{
+         console.log('valueHeart',valueHeart)
+          if(valueHeart===0){
+              console.log('ENTRAMOS al 0')
+            axios.post(`http://localhost:3000/user/${1}/favorite`, {productId: productId},{
+                headers:{"Content-type":"application/json; charset=UTF-8"}})
+            setHeart(<AiFillHeart className={styles.heart}/>);
+            setvalueHeart(1)
+          }else if(valueHeart===1){
+            console.log('ENTRAMOS al 1')
+            setHeart(<AiOutlineHeart className={styles.heart}/>);
+            setvalueHeart(0)
+            axios.delete(`http://localhost:3000/user/${1}/favorite`, {productId: productId})
+            
+          }
+      }
     
-const dispatch=useDispatch()
+
 
 let prodStock = JSON.parse(localStorage.stock)[Product.id] 
 
@@ -57,7 +92,7 @@ const sumarAlCarrito = ()=>{
                 return 
             }
         }
-
+        
      
     let botones=
             <div className={styles.botonlink}>
@@ -81,12 +116,19 @@ const sumarAlCarrito = ()=>{
     
         
     return (
-        
+    
+
+
             <Card className={styles.card}>
                 <Card.Title className={styles.title}>
                     <Link className={styles.textLink} to={`/products/${Product.id}`}>{Product.name}</Link>
                 </Card.Title>
-                <div className={styles.imagen }>
+            <div id='fav' className={styles.heartdiv} onClick={handleFav}>
+                {heart}
+            </div>
+                
+            <div className={styles.imagen}>
+  
                     <Card.Img  className={Product.stock==0 ? styles.imgGris : styles.img} 
                     src={base64ToString}/>
                 </div>
