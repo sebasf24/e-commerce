@@ -1,46 +1,70 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { isLogged } from '../../actions/user';
-import { Card, Container} from '@material-ui/core';
+import { Card, Container } from '@material-ui/core';
 import style from './UserProfile.module.css'
+import NavbarUser from './NavBarUser/NavbarUser'
+import Tooggle from './NavBarUser/toogle'
+import EditProfile from './EditProfile'
+import user1 from './user1.jpg'
 
 
 export default function UserProfile() {
 
-    const [userLog, setUserlog] = useState('')
+
+    const [sidebarOpen, setSidebarOpen] = useState(false)
     const usuario = useSelector(store => store.user)
-   
+
     const dispatch = useDispatch()
     useEffect(() => {
-        console.log('entro')
         dispatch(isLogged())
 
     }, [])
+    const openHandler = () => {
+        if (!sidebarOpen) {
+            setSidebarOpen(true)
+        } else {
+            setSidebarOpen(false)
+        }
+    }
+    const sidebarCloseHandler = () => {
+        setSidebarOpen(false)
+
+    }
+    let sidebar
+    if (sidebarOpen) {
+        sidebar = <NavbarUser close={sidebarCloseHandler} sidebar={"sidebar"} />
+        console.log(sidebar)
+    }
 
     return (
-        <Container className={style.container}>
-            
-                <h3>My Info</h3>
+        <>
+         <div>
+                {sidebar}
+                <Tooggle onClick={openHandler} />
+            </div>
+
+        <Container component="main" maxWidth="lg"   background-color=" #fff">
                 <Card className={style.card}>
-                <ul>
-                    <li className="list-group-item justify-content-between">
-                        <strong>Name: </strong><span>{usuario.user.name}</span>
+                    <Card classname={style.avatar}>
+                        <br />
+                        <img classname={style.img} src={user1} width="210" />
+                        <br />
+                        <h4>{usuario.user.name}</h4>
+                        <span>{usuario.user.email}</span>
 
-                    </li>
-                    <li className="list-group-item justify-content-between">
-                        <strong> Lastname: </strong> <span>{usuario.user.lastname}</span>
-                    </li>
-                    <li className="list-group-item justify-content-between">
-                        <strong>Email: </strong> <span>{usuario.user.email}</span>
-                    </li>
-                    <li className="list-group-item justify-content-between">
-                        <strong> Username: </strong>
-                    </li>
-                </ul>
+                    </Card>
 
-            </Card>
+                    <Container className={style.container} >
+                        <EditProfile />
 
+                    </Container>
+
+                </Card>
         </Container>
+        </>
 
     )
 }
+

@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import Cookies from 'universal-cookie'
 
 
 export const LOGIN_USER='LOGIN_USER';
@@ -7,6 +7,14 @@ export const ENVIAR_EMAIL = 'ENVIAR_EMAIL';
 export const RESET_PASSWORD = 'RESET_PASSWORD';
 export const LOGOUT_USER='LOGOUT_USER';
 export const USER_PROFILE='USER_PROFILE';
+
+const crearCookie=(user)=>{
+    const cookies=new Cookies();
+    cookies.set('id',user.id,{path: '/'})
+    cookies.set('username', user.username,{path: '/'})
+    cookies.set('name', user.username,{path: '/'})
+    cookies.set('typeUser', user.typeUser, {path:'/'})
+}
 
 export function isLogged(){
     return function(dispatch){
@@ -24,9 +32,6 @@ export function isLogged(){
         })
     }
 }
-
-
-
 
 export function loginUser(username, password){
     var cart=localStorage.getItem('carritoLocal')
@@ -50,7 +55,7 @@ export function loginUser(username, password){
                     type: LOGIN_USER,
                     user:response.user
                 })
-               
+               crearCookie(response.user)
             //  window.location.href='./me'
             }
      
@@ -76,7 +81,7 @@ export function loginUser(username, password){
                         type: LOGIN_USER,
                         user:response.user
                     })
-                    console.log(response.success)
+                crearCookie(response.user)
                 agregarProdUsuario(response.user.id)
                 localStorage.clear();
                 window.location.href='./me'

@@ -9,11 +9,20 @@ import {Avatar, MenuItem} from '@material-ui/core';
 import {AiOutlineShoppingCart} from 'react-icons/ai';
 import {BiHome} from 'react-icons/bi';
 import {logoutUser} from '../../actions/user'
+import Cookies from 'universal-cookie'
 
 export default function NavBar (islog){
     const prodUsuario = useSelector(store => store.productsCart).productos
     let prodLStorage = JSON.parse(localStorage.getItem("carritoLocal"))
     let notProd = prodUsuario.length ? prodUsuario.length : prodLStorage.length
+    const limpiarCookies=()=>{
+        const cookies=new Cookies();
+        cookies.remove('id',{path: '/'})
+        cookies.remove('username', {path: '/'})
+        cookies.remove('name', {path: '/'})
+        cookies.remove('typeUser',{path:'/'})
+    
+    }
 
     const dispatch=useDispatch();
     const usuario=islog.islog 
@@ -58,19 +67,22 @@ return (
             ?
             <>
             <span className={styles.navSec}>{usuario.username}</span>
-            <NavDropdown>
-                <MenuItem onClick={()=>{window.location.href='./me'}}>My Profile</MenuItem>
+            <NavDropdown> 
+                <MenuItem onClick={()=>{window.location.href='./me'}} >My Profile</MenuItem>
                 <MenuItem>Your gits</MenuItem>
                 <MenuItem>Starred gists</MenuItem>
-                <MenuItem onClick={()=>{dispatch(logoutUser())}} >Sign out</MenuItem>
+                <MenuItem onClick={()=>{ limpiarCookies();
+                    dispatch(logoutUser())}} >Sign out</MenuItem>
             </NavDropdown>
             </>
             : 
             <div></div>
             }
-            <Link to='/login'>
-                <Avatar className={styles.iconos}/>
-            </Link>
+             {
+             usuario && usuario.id?
+             <Avatar  />:
+             <Link to='/login'><Avatar   /> </Link>
+            }
         </div>
     </nav>
     <div className={styles.background}></div>

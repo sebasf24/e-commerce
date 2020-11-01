@@ -1,11 +1,10 @@
-import React,{useEffect} from 'react';
+import React from 'react';
 import './App.css';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 import FormCategory from './Component/FormCategory/FormCategory.jsx'
 import Product from './Component/Product/Product.jsx'
 import Catalogue from './Component/Catalogue/Catalogue.jsx'
 import LoginUser from './Component/LoginUser/LoginUser'
-import homeCategories from './Component/FormCategory/HomeCategories'
 import Cart from './Component/carrito/Cart.jsx'
 import { useSelector } from 'react-redux';
 import ListUser from './Component/User/ListUser'
@@ -24,6 +23,8 @@ import UserProfile from './Component/User/UserProfile'
 import Shipping from './Component/Checkout/Shipping'
 import Checkout from './Component/Checkout/Checkout'
 import Payment from './Component/Checkout/Payment'
+import FavoriteProducts from './Component/User/FavoriteProducts'
+import ComprasUser from './Component/User/ComprasUser'
 import GoogleLoginSuccess from './Component/LoginUser/GoogleLoginSuccess'
 
 !localStorage.carritoLocal && localStorage.setItem("carritoLocal",JSON.stringify([]))
@@ -45,7 +46,6 @@ function App() {
     <Route exact path='/cart' render={()=><Cart islog={us? us : undefined}/>}/>
     <Route exact path={['/products','/products/category/:id']} component={Catalogue} />
     <Route exact path='/products/:id' component={Product} onEnter={userlog}/>
-    <Route exact path='/listCategory' component={homeCategories} onEnter={userlog}/>
     <Route path='/addCategory' component={FormCategory}/>
     <Route exact path='/search' render={()=> <Catalogue Products={productsl.products}/>} />
     <Route path='/login' component={LoginUser}/>
@@ -60,6 +60,8 @@ function App() {
     <Route exact path='/checkout' component={Checkout}/>
     <Route exact path='/shipping' component={Shipping}/>
     <Route exact path='/payment' component={Payment}/>
+    <Route exact path='/favoritos' component={FavoriteProducts}/>
+    <Route exact path='/compras' component={ComprasUser}/>
     <Route exact path='/about' component={About} onEnter={userlog}/>
     <Route path='/' component={ Footer } />
 
