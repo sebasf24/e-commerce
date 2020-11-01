@@ -70,7 +70,7 @@ export default function OrdersAdmin() {
                 </Navbar.Collapse>
             </Navbar>
             <Card className={styles.card}>
-            <Card.Body>Seleccioné: Estado de la orden </Card.Body>
+            <Card.Body className={styles.p}>Seleccioné: Estado de la orden </Card.Body>
             </Card>
             <select className={styles.select} name ='filtro' id= 'filtro' onChange={() => dispatch(listOrders())}>
                  <option value="creada">Creada</option> 
