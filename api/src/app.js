@@ -40,7 +40,11 @@ server.use((req, res, next) => {
 });
 
 
-
+const corsOptions = {
+  origin: 'http://localhost:3006',
+  credentials : true
+}
+server.use(cors(corsOptions));
 
 server.use('/', routes);
 server.use('/',(req,res)=>{

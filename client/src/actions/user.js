@@ -25,22 +25,6 @@ export function isLogged(){
     }
 }
 
-export function loginGoogle(){
-    return function(dispatch){
-        return axios.get('http://localhost:3000/auth/sucess')
-        .then((resp)=>{
-            console.log(resp);
-            if(resp.data){
-                
-                dispatch({
-                    type: LOGIN_USER,
-                    user:resp.user
-                })
-            }
-            // console.log(resp.data.user)
-        })
-    }
-}
 
 
 
