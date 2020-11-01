@@ -4,9 +4,8 @@ import axios from 'axios';
 import { Button, Form, Container,Row,Col} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { mostrarProductos, agregarProducto } from "../../actions/products.js";
+import { mostrarProductos} from "../../actions/products.js";
 import { listCategory } from '../../actions/category';
-import { Link } from 'react-router-dom'
 
 const FormProductAdd = () => {
     //const dispatch=useDispatch()

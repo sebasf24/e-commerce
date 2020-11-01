@@ -18,7 +18,7 @@ console.log("CANTIDAD STORAGE = ", cantidadLStorage);
 
     return(
         
-            <Card className={styles.container}>
+            <Card className={styles.card1}>
 
                 <div className={styles.descrip}>
                 <Link to={`/products/${producto.id}`}>   

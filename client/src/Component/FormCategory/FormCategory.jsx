@@ -4,8 +4,6 @@ import { Container, Form, Button, Col, Card } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { addCategory, listCategory } from '../../actions/category';
 import style from './FormCategory.module.css';
-import { BiArrowBack } from "react-icons/bi";
-import {Link} from 'react-router-dom'
 import Swal from 'sweetalert2';
 
 
@@ -61,13 +59,9 @@ export default function FormCategory() {
 
     return (
         <div>
-            <Container>
+            <Container className='container-fluid col-lg-12 col-sm-12 p-3 bg-white'  >
                 <br />
-            <Card className={style.card}>
-            <Link className={style.botonlink} to={`./admin`}>
-                        <BiArrowBack/>
-                    </Link>
-
+            <Card className='container-fluid col-lg-8 col-sm-12 p-3 bg-transparent'style={{ boxShadow: "0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12), 0 1px 5px 0 rgba(0,0,0,.2)"}}>
                 <Form id="form"  className="card-boy" onSubmit={(e)=>{handleSubmit(e)}}>
                     <Form.Label className={style.h3}><h3>Ingresar Nueva Categoria</h3></Form.Label>
                     <br /><br /><br />
@@ -98,7 +92,9 @@ export default function FormCategory() {
                     </Form.Row>
                     <br />
 
-                    <Button  className={style.button}  type="submit"
+                    <Button  className={style.boton} 
+                    style={{marginLeft:"230px"}}
+                      type="submit"
                     // onClick={() => {
                     //     Swal.fire({
                     //         position: 'top-center',
