@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Container, Button, Col, Table, Navbar, Nav } from 'react-bootstrap';
+import { Container, Button, Col, Table, Navbar, Nav, Card } from 'react-bootstrap';
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import styles from './tablaOrdenes.module.css';
@@ -8,12 +8,16 @@ import {listOrders, cambiarEstado, cancelarEstadoOrden } from '../../actions/ord
 import findbyId from '../../actions/order'
 import axios from 'axios'
 
+
 export default function OrdersAdmin() {
     const dispatch = useDispatch()
     const orders = useSelector(store => store.order)
     const list_orders = orders.order
 
     const [detalle, setDetalle] = useState(false)
+
+
+
 
     useEffect(() => {
         dispatch(listOrders())
@@ -31,8 +35,14 @@ export default function OrdersAdmin() {
     }
 
     const items = list_orders.map(item => {
-        return (
-            <tr>
+            // Aca va a ir el filter !
+
+            var cod = document.getElementById("filtro").value;
+            console.log("cod =", cod);
+                if(item.estado == cod)
+
+                return ( 
+                <tr>
                 <td>{item.id}</td>
                 <td>{item.user}</td>
                 <td>{item.estado}</td>
@@ -45,8 +55,11 @@ export default function OrdersAdmin() {
                         <Button onClick={() =>  verDetalle(item.id)}>Ver detalles</Button>
                     </div>
                 </td>
-            </tr>
-        )
+            </tr> );
+                else {
+                     return
+                }
+
     })
 
     return (
@@ -56,7 +69,15 @@ export default function OrdersAdmin() {
                     <Navbar.Brand> Lista de ordenes  </Navbar.Brand>
                 </Navbar.Collapse>
             </Navbar>
-
+            <Card className={styles.card}>
+            <Card.Body className={styles.p}>Seleccioné: Estado de la orden </Card.Body>
+            </Card>
+            <select className={styles.select} name ='filtro' id= 'filtro' onChange={() => dispatch(listOrders())}>
+                 <option value="creada">Creada</option> 
+                 <option value="procesando">Procesando</option>
+                 <option value="completada" selected >Completada</option>
+                 <option value="cancelada">Cancelada</option>
+            </select>
             <Table responsive>
                 <thead>
                     <tr>
