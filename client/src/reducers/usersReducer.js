@@ -2,14 +2,12 @@ import {
     ADD_USER,
     LIST_USERS, 
     EDIT_USER, 
-    DELETE_USER,
-    GET_FAVORITES
+    DELETE_USER
 } from '../actions/users';
 
 
 const initialState = {
-users: [],
-favorites:[]
+users: []
 }
 export default (state = initialState, actions) => {
 switch (actions.type) {
@@ -38,11 +36,7 @@ switch (actions.type) {
         console.log(actions)
     return {users: state.users.filter( id=>id !== actions.users.id)}
 
-    case GET_FAVORITES:
-        return {
-            ...state,
-            favorites: actions.favs.data
-        }
+   
         
     default:
         return state;

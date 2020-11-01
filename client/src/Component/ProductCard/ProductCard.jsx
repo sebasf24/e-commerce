@@ -4,49 +4,70 @@ import styles from './ProductCard.module.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Card,Button} from 'react-bootstrap';
 import {Link} from 'react-router-dom'
-import {useDispatch,useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {agregarProductoCarrito,modificarStock} from '../../actions/cart.js';
 import { AiOutlineHeart, AiFillHeart} from "react-icons/ai";
 import { useState } from 'react';
 import axios from 'axios';
-import {getFavorites} from '../../actions/users.js'
-
-
+import Cookies from 'universal-cookie'
 
 export default function ProductCard({userlog,Product}) {
 
     let base64ToString;
     (Product.img) && (base64ToString = Buffer.from(Product.img.data, "base64").toString())
-    
+    const cookies= new Cookies();
+    const idUser=cookies.get('id')
     const productId=Product.id
     const cantidad =1
+    const [heart,setHeart]=useState(<AiOutlineHeart className={styles.heart}/>)
+    const [valueHeart,setvalueHeart]=useState(false)
+   
 
     const dispatch=useDispatch()
-    /* useEffect(() => {
-        dispatch(getFavorites(1))
-    },[]) */
-
-    /* const favorites = useSelector(state =>state.users).favorites
-    console.log('favorites',favorites);
-    let productFav = favorites.find(prod => prod.id === productId); */
-   
-    const [heart,setHeart]=useState(<AiOutlineHeart className={styles.heart}/>)
-      const [valueHeart,setvalueHeart]=useState(0)
-     
-     
-     const handleFav=()=>{
-         console.log('valueHeart',valueHeart)
-          if(valueHeart===0){
-              console.log('ENTRAMOS al 0')
-            axios.post(`http://localhost:3000/user/${1}/favorite`, {productId: productId},{
-                headers:{"Content-type":"application/json; charset=UTF-8"}})
+     useEffect(() => {
+        if(Product.like===true){
             setHeart(<AiFillHeart className={styles.heart}/>);
-            setvalueHeart(1)
-          }else if(valueHeart===1){
-            console.log('ENTRAMOS al 1')
+            setvalueHeart(true)
+
+        }else{
+            setHeart(<AiOutlineHeart className={styles.heart}/>)
+            setvalueHeart(false)
+        }
+       
+    },[]) 
+
+
+    const deleteFavorite=async(idUser, productId)=>{
+        return await  axios.delete(`http://localhost:3000/user/${idUser}/favorite/${productId}`)
+        .then((resp)=>{
+            // console.log(resp)
+
+        })
+        .catch((err)=>{
+            console.log('error:', err)
+
+        })
+        
+    }
+   
+     const handleFav=()=>{
+        
+          if(valueHeart===false && idUser){
+              console.log(idUser)
+            axios.post(`http://localhost:3000/user/${idUser}/favorite`, {productId:productId})
+            .then((fav)=>{
+                // console.log(fav)
+
+            })           
+            setHeart(<AiFillHeart className={styles.heart}/>);
+            setvalueHeart(true)
+          }
+          if(valueHeart===true && idUser){
+           
             setHeart(<AiOutlineHeart className={styles.heart}/>);
-            setvalueHeart(0)
-            axios.delete(`http://localhost:3000/user/${1}/favorite`, {productId: productId})
+            setvalueHeart(false)
+            deleteFavorite(idUser, productId)
+
             
           }
       }
@@ -124,7 +145,8 @@ const sumarAlCarrito = ()=>{
                     <Link className={styles.textLink} to={`/products/${Product.id}`}>{Product.name}</Link>
                 </Card.Title>
             <div id='fav' className={styles.heartdiv} onClick={handleFav}>
-                {heart}
+                { idUser?
+                heart: <></>}
             </div>
                 
             <div className={styles.imagen}>

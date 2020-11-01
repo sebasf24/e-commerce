@@ -7,6 +7,7 @@ import { Row, Col } from 'react-bootstrap';
 import Checkout from './Checkout'
 import {addressUser} from '../../actions/address'
 import Swal from 'sweetalert2';
+import Cookies from 'universal-cookie';
 import './estilos.css'
 
 
@@ -19,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.primary .main,
+    backgroundColor: '#03a9f4'
   },
   form: {
     width: '100%', 
@@ -35,8 +36,8 @@ export default function Shipping(props) {
     const classes=useStyles()
     const [address, setAddress]=useState('')
     const dispatch=useDispatch();
-    const user=useSelector(store=>store.user)
-    console.log(user.user.id)
+    const cookies = new Cookies();
+    const id_user = cookies.get('id');
     const changeAddress=(e)=>{
       setAddress({
         ...address,
@@ -47,8 +48,8 @@ export default function Shipping(props) {
     const dir=useSelector(store=>store.address)
     const submitHandler=(e)=>{
       e.preventDefault();
-      if(user.user.id){
-        dispatch(addressUser(user.user.id, address))
+      if(id_user){
+        dispatch(addressUser(id_user, address))
         console.log(dir)
         
         props.history.push('/payment')
@@ -64,7 +65,7 @@ export default function Shipping(props) {
       }
      
     }
- console.log(address)
+
   return (
     <div>
     {/* <Checkout step1 step2></Checkout> */}

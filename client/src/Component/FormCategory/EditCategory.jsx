@@ -1,12 +1,9 @@
-
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Form, Button, Col, Card } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { editCategory, listCategory } from '../../actions/category';
 import style from './FormCategory.module.css';
-import { BiArrowBack } from "react-icons/bi";
-import { Link } from 'react-router-dom'
 import Swal from 'sweetalert2';
 
 
@@ -14,7 +11,6 @@ import Swal from 'sweetalert2';
 export default function EditCategory(category) {
 
     const dispatch = useDispatch();
-    console.log(category.data)
 
     const [formData, updateFormData] = useState(category.data);
 
@@ -31,6 +27,7 @@ export default function EditCategory(category) {
     }
 
     useEffect(() => {
+
         dispatch(listCategory())
         return () => {
 

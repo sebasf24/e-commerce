@@ -2,11 +2,13 @@ import axios from 'axios';
 import Cookies from 'universal-cookie'
 
 
+export const GET_FAVORITES='GET_FAVORITES';
 export const LOGIN_USER='LOGIN_USER';
 export const ENVIAR_EMAIL = 'ENVIAR_EMAIL';
 export const RESET_PASSWORD = 'RESET_PASSWORD';
 export const LOGOUT_USER='LOGOUT_USER';
 export const USER_PROFILE='USER_PROFILE';
+
 
 const crearCookie=(user)=>{
     const cookies=new Cookies();
@@ -15,6 +17,20 @@ const crearCookie=(user)=>{
     cookies.set('name', user.username,{path: '/'})
     cookies.set('typeUser', user.typeUser, {path:'/'})
 }
+
+export function getFavorites(userId){
+    return function(dispatch){
+        return axios.get(`http://localhost:3000/user/${userId}/favorite/`)
+        .then((favorites)=>{
+            dispatch({
+                type: GET_FAVORITES,
+                favs:favorites
+            })
+            
+        })
+    }
+}
+
 
 export function isLogged(){
     return function(dispatch){
@@ -32,6 +48,7 @@ export function isLogged(){
         })
     }
 }
+
 
 export function loginUser(username, password){
     var cart=localStorage.getItem('carritoLocal')

@@ -21,6 +21,9 @@ module.exports = (sequelize) => {
     },
     img: {
       type: DataTypes.BLOB('long')
+    },
+    like:{
+      type: DataTypes.BOOLEAN,
     }
   });
 };

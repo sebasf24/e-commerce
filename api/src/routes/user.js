@@ -415,10 +415,28 @@ server.post('/:id/address', (req, res) => {
         .catch(error => res.json(error));
 
 })
+server.get('/:id/address', (req,res)=>{
+    const {id}=req.params;
+    Address.findOne({
+        where:{
+          userId:id
+      }},{
+          include:[User]
+      
+    }).then((add)=>{
+        
+        res.send(add)
+    })
+    .catch(()=>{
+        res.send('Direccion Inexistente')
+    })
+    
+
+})
 //Obtener todos los productos favoritos de un usuario
 server.get('/:id/favorite', async(req, res) => {
     const userId = req.params.id;
-    const {productId} =req.body
+     const productId =req.body.productId
 
     let favorite = await Favorite.findAll({
         where: { userId: userId }
@@ -440,6 +458,7 @@ server.get('/:id/favorite', async(req, res) => {
     
 
 })
+
 //agregar un producto a favoritos
 server.post('/:id/favorite', (req, res) => {
 
@@ -455,13 +474,37 @@ server.post('/:id/favorite', (req, res) => {
         return res.send('Ese producto ya esta en favoritos');
     })
 
+    Product.findOne({
+        where: {id: productId}
+    }).then((prod)=>{
+        console.log(prod)
+        Product.update(
+            {
+                name: prod.name,
+                description: prod.description,
+                price: prod.price,
+                stock: prod.stock,
+                img: prod.img,
+                like:'true'
+            },
+            {
+                where:
+                    { id: prod.id }
+            })
+            .then(()=>{
+                res.send('Producto Actualizado')
+            })
+        
+
+    })
+
 })
 
 //borrar un producto favorito
-
-server.delete('/:id/favorite', (req, res) => {
+server.delete('/:id/favorite/:idprod', (req, res) => {
     const userId = req.params.id;
-    const productId = req.body.productId
+    const productId = req.params.idprod
+    console.log(req.body)
 
     //buscamos si existe la relacion de Usuario y producto como favorito
     Favorite.findOne({
@@ -469,10 +512,35 @@ server.delete('/:id/favorite', (req, res) => {
     }).then(favorite => {
         //si existe lo eliminamos
         if (favorite) {
+            Product.findOne({
+                where: {id: productId}
+            }).then((prod)=>{
+                console.log(prod)
+                Product.update(
+                    {
+                        name: prod.name,
+                        description: prod.description,
+                        price: prod.price,
+                        stock: prod.stock,
+                        img: prod.img,
+                        like:'false'
+                    },
+                    {
+                        where:
+                            { id: prod.id }
+                    })
+                    .then(()=>{
+                        res.send('Producto Actualizado')
+                    })
+                
+        
+            })
             Favorite.destroy({
                 where: { id: favorite.id }
             }).then(dFavorite => {
+                console.log(dFavorite)
                 return res.status(200).send("El favorito fue eliminado")
+               
             })
         } else {
             return res.status(200).send("Este producto no esta en tus favoritos")
