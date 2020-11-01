@@ -31,16 +31,18 @@ server.use(passport.session());
 
 server.use(morgan('dev'));
 server.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://accounts.google.com/');
-  res.header('Access-Control-Allow-Origin', '*'); // update to match the domain you will make the request from
+  res.header('Access-Control-Allow-Origin', 'https://accounts.google.com/'); // update to match the domain you will make the request from
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
   res.header('Access-Control-Allow-Credentials', 'true');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
 
-
-
+const corsOptions = {
+  origin: 'http://localhost:3006',
+  // credentials : true
+}
+server.use(cors(corsOptions));
 
 server.use('/', routes);
 server.use('/',(req,res)=>{
