@@ -87,9 +87,7 @@ export default function EditProfile() {
                     name="username" 
                     onChange={onChangeDate} 
                     defaultValue={usuario.user.username} />
-                    
-                     <Button className={style.boton}
-                      onClick={(e)=>{handlerSubmit(e)}}>Update</Button>
+
                 
                    </Card>  
             

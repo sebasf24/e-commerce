@@ -217,6 +217,7 @@ export default function ListUser() {
             }
              {click.clicked}
             </Container>
+            <br/>
             <div>
                 <Table responsive className='table-sm table-bordered table-hover table-responsive-md table-responsive-sm'>
                     <thead className={style.thead}>
