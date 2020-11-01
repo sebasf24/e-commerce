@@ -62,12 +62,7 @@ const handlerOnchange=(e)=>{
 
   var googleLogin = window.open(`http://localhost:3000/auth/google`, 'googleLogin', 'height=500, width=500');
   googleLogin.moveTo(100,100)
-<<<<<<< HEAD
-  //setTimeout(()=>{dispatch(loginGoogle())},5000);
-=======
   
-
->>>>>>> 27da9c50642cd4ac9a8e4a74325d9cd540f797e6
 };
 
   return (
