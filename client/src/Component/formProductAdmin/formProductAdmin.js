@@ -1,16 +1,14 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import { Button, Form, Container, Table,Row,Col } from 'react-bootstrap';
+import { Button, Container, Table,Row,Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useDispatch, useSelector, useStore } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import FormAdd from './formProductAdd';
 import FormEdit from './formProducEdit';
-import style from '../Catalogue/Catalogue.module.css';
 import { Link } from 'react-router-dom'
 import { mostrarProductos, eliminarProducto } from "../../actions/products.js";
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import Swal from 'sweetalert2';
-import { TableBody } from '@material-ui/core';
 
 const FormProductAdmin = () => {
 

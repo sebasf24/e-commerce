@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Logo from './technav1.png';
-import { Nav, NavDropdown,Navbar,Form,FormControl} from 'react-bootstrap';
+import { NavDropdown} from 'react-bootstrap';
 import styles from './navbar.module.css';
 import {useDispatch,useSelector} from 'react-redux'
 import SearchBar from '../SearchBar/SearchBar.js';
-import {Avatar, Button, makeStyles, MenuItem} from '@material-ui/core';
-import {AiOutlineShoppingCart,AiOutlineUser} from 'react-icons/ai';
+import {Avatar, MenuItem} from '@material-ui/core';
+import {AiOutlineShoppingCart} from 'react-icons/ai';
 import {BiHome} from 'react-icons/bi';
 import {logoutUser} from '../../actions/user'
 import Cookies from 'universal-cookie'

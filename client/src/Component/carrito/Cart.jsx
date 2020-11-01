@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react';
-import axios from 'axios'
 import { Container, Card, Button, Navbar, Nav } from 'react-bootstrap';
 import ItemCart from './ItemCart.jsx';
 import styles from './Cart.module.css';
 import { Link } from 'react-router-dom';
 import { modificarStock, listPorductCart, orderLine,mostraTotal,quitarProdCarrito } from "../../actions/cart";
-import { useDispatch, useSelector, useStore } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Cookies from 'universal-cookie'
 
 

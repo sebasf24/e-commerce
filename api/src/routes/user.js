@@ -418,6 +418,7 @@ server.post('/:id/address', (req, res) => {
 //Obtener todos los productos favoritos de un usuario
 server.get('/:id/favorite', async(req, res) => {
     const userId = req.params.id;
+    const {productId} =req.body
 
     let favorite = await Favorite.findAll({
         where: { userId: userId }
@@ -427,7 +428,13 @@ server.get('/:id/favorite', async(req, res) => {
         let product = await Product.findOne({
             where: { id: favorite[i].productId }
         })
+        if(productId===product.id){
+            return res.send(true)
+        }
         arrayProducts.push(product);
+    }
+    if(productId){
+        return res.send(false)
     }
     res.send(arrayProducts);
     

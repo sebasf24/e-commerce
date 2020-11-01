@@ -118,4 +118,20 @@
     display: grid;
     align-items: flex-end;
 }
+.heart:hover{
+  color:#4280ff;
+  font-size: 37px;
+  cursor: pointer;
+  bottom: 0.5px;
+}
+.heartdiv{
+  display: flex;
+  justify-content: flex-end;
+}
+.heart{
+  color: #4280ff;
+  font-size: 30px;
+  position: absolute;
+  top: 40px;
+}
    

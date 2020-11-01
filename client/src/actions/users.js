@@ -4,6 +4,7 @@ export const ADD_USER='ADD_USER';
 export const LIST_USERS='LIST_USERS';
 export const DELETE_USER='DELETE_USER';
 export const EDIT_USER= 'EDIT_USER';
+export const GET_FAVORITES='GET_FAVORITES';
 
 export function listUser(){
     return function(dispatch){
@@ -14,6 +15,21 @@ export function listUser(){
                 type: LIST_USERS,
                 users:user
             })
+        })
+    }
+}
+export function getFavorites(userId,productId){
+    return function(dispatch){
+        return axios.get(`http://localhost:3000/user/${userId}/favorite/`,{productId: productId}, {
+            withCredentials:true
+        })
+        .then((favorites)=>{
+            //console.log('favoritesGet',favorites)
+            dispatch({
+                type: GET_FAVORITES,
+                favs:favorites
+            })
+            
         })
     }
 }

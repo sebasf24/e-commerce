@@ -38,6 +38,7 @@ server.use((req, res, next) => {
   next();
 });
 
+
 const corsOptions = {
   origin: 'http://localhost:3006',
   // credentials : true

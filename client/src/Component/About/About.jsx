@@ -7,7 +7,7 @@ import flor from "./images/flor.jpg"
 import mati from "./images/mati.jpg"
 import leandro from "./images/leandro.jpg"
 import lucio from "./images/lucio.jpg"
-import { Card, CardColumns, CardGroup, Button } from 'react-bootstrap';
+import { Card, CardColumns, Button } from 'react-bootstrap';
 
 
 export default function About() {

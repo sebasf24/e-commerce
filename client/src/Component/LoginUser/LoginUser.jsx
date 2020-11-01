@@ -1,13 +1,12 @@
-import React, {useState, useEffect} from 'react';
-import {useDispatch, useSelector} from 'react-redux'
+import React, {useState} from 'react';
+import {useDispatch} from 'react-redux'
 import Avatar from '@material-ui/core/Avatar';
 import {Button, CssBaseline,TextField, FormControlLabel,Checkbox,Grid} from '@material-ui/core';
-import { makeStyles, Typography, Container,Box } from '@material-ui/core';
+import { makeStyles, Typography, Container} from '@material-ui/core';
 import style from '../User/FormAddUser.module.css';
 import {Link} from 'react-router-dom';
-import {loginUser,loginGoogle} from '../../actions/user';
+import {loginUser} from '../../actions/user';
 import Cookies from 'universal-cookie';
-import axios from 'axios';
 import {FcGoogle} from 'react-icons/fc'
 // import useUser from './useUser';
 
@@ -63,7 +62,12 @@ const handlerOnchange=(e)=>{
 
   var googleLogin = window.open(`http://localhost:3000/auth/google`, 'googleLogin', 'height=500, width=500');
   googleLogin.moveTo(100,100)
+<<<<<<< HEAD
   //setTimeout(()=>{dispatch(loginGoogle())},5000);
+=======
+  
+
+>>>>>>> 27da9c50642cd4ac9a8e4a74325d9cd540f797e6
 };
 
   return (
