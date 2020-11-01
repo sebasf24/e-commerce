@@ -46,6 +46,7 @@ const corsOptions = {
 }
 server.use(cors(corsOptions));
 
+
 server.use('/', routes);
 server.use('/',(req,res)=>{
   req.session.username= req.body.username

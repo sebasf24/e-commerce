@@ -56,7 +56,7 @@
   .total {
     padding: 10px;
     width: 100%;
-    height: 200px;
+    height: 150px;
     grid-template-areas:
       "items"
       "precioFinal"
