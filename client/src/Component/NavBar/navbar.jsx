@@ -13,10 +13,14 @@ import Cookies from 'universal-cookie'
 
 export default function NavBar (islog){
     const prodUsuario = useSelector(store => store.productsCart).productos
+    const cookies=new Cookies();
     let prodLStorage = JSON.parse(localStorage.getItem("carritoLocal"))
+    let id_user=cookies.get('id')
+    let username=cookies.get('username')
+    let typeUser= cookies.get('typeUser')
     let notProd = prodUsuario.length ? prodUsuario.length : prodLStorage.length
     const limpiarCookies=()=>{
-        const cookies=new Cookies();
+        
         cookies.remove('id',{path: '/'})
         cookies.remove('username', {path: '/'})
         cookies.remove('name', {path: '/'})
@@ -55,7 +59,7 @@ return (
                         : ''
                     }
             </Link>
-                {  usuario && usuario.typeUser==='Admin'
+                {  typeUser && typeUser==='Admin'
                     ? 
                     <Link className={styles.navSec +" "+styles.navBoton} to={'/admin'}>Admin</Link>
                     : <div></div>
@@ -63,12 +67,12 @@ return (
         </div>
         <div className={styles.user}> 
                 {
-            usuario && usuario.id
-            ?
+           
+           id_user && id_user ?
             <>
-            <span className={styles.navSec}>{usuario.username}</span>
+            <span className={styles.navSec}>{username}</span>
             <NavDropdown> 
-                <MenuItem onClick={()=>{window.location.href='./me'}} >My Profile</MenuItem>
+                <MenuItem onClick={()=>{window.location.href='/me'}} >My Profile</MenuItem>
                 <MenuItem>Your gits</MenuItem>
                 <MenuItem>Starred gists</MenuItem>
                 <MenuItem onClick={()=>{ limpiarCookies();
@@ -79,9 +83,9 @@ return (
             <div></div>
             }
              {
-             usuario && usuario.id?
-             <Avatar  />:
-             <Link to='/login'><Avatar   /> </Link>
+             id_user && id_user?
+             <Link to='/me'><Avatar style={{background:"#3f50b5"}}  /> </Link>:
+             <Link to='/login'><Avatar style={{background:"#3f50b5"}}/> </Link>
             }
         </div>
     </nav>

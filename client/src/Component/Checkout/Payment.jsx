@@ -1,4 +1,5 @@
 import React,{useState}  from 'react';
+import {Link} from 'react-router-dom'
 import { useSelector } from 'react-redux';
 import Avatar from '@material-ui/core/Avatar';
 import {Button, CssBaseline, FormControlLabel,Checkbox} from '@material-ui/core';
@@ -55,6 +56,7 @@ Swal.fire({
 })
 }
 
+
 export default function Payment(props) {
   let total = useSelector(store => store.productsCart).total;
   const [buttonMP , setButtonMP] = useState(0);
@@ -96,7 +98,7 @@ export default function Payment(props) {
     <Container component="main" maxWidth="xs"> 
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className="avatar"><CreditCardIcon/></Avatar>
+        <Avatar className="avatar" style={{backgroundColor: '#03a9f4'}}><CreditCardIcon/></Avatar>
         <Typography component="h1" variant="h5">Payment</Typography>
         <br/>
         <form className={classes.form} noValidate onSubmit={()=>{submitHandler()}}>
@@ -114,17 +116,16 @@ export default function Payment(props) {
        }
        /><p className=' ml-1 center' id='mercadopago'></p>
        
-      
-      
+      <div>
+     
             <Button
             className="boton"
             type="submit"
             fullWidth
             variant="contained"
-            color="primary"
           >
-            Continue
-          </Button>
+            Continuar
+          </Button></div>
         </form>
       </div>
       

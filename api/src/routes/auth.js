@@ -3,6 +3,7 @@ const server = express.Router();
 const  {User} =require('../db');
 const passport = require('passport');
 
+
 isLogged= (req, res, next)=>{
     if (req.isAuthenticated() ) {return next()}
     else{
@@ -83,15 +84,24 @@ server.get('/logout', isLogged, (req, res)=> {
         res.json({ message: 'Logged out!' });
 });
 
-server.post('/promote/:id', (req, res)=>{
+server.put('/promote/:id', isLogged,(req, res)=>{
   const {id}=req.params
-  User.update({
-    typeUser: 'Admin'
-  },{where: id})
-  .then(user=>{
-    res.send(user)
-  })
+  User.findOne({
+    where: {id:id}
+  }).then((us)=>{
+    if(us){
+      User.update({
+        typeUser: 'Admin'
+      },{where: {id:us.id}})
+      .then(user=>{
+        res.send('Usuario Actualizado')
+      })
+    
 
+    }
+
+  })
+ 
 })
 
 module.exports =server;

@@ -26,6 +26,7 @@ import Payment from './Component/Checkout/Payment'
 import FavoriteProducts from './Component/User/FavoriteProducts'
 import ComprasUser from './Component/User/ComprasUser'
 import GoogleLoginSuccess from './Component/LoginUser/GoogleLoginSuccess'
+import Cookies from 'universal-cookie';
 
 !localStorage.carritoLocal && localStorage.setItem("carritoLocal",JSON.stringify([]))
 !localStorage.stock && localStorage.setItem("stock",JSON.stringify({}))
@@ -33,7 +34,8 @@ import GoogleLoginSuccess from './Component/LoginUser/GoogleLoginSuccess'
 
 function App() {  
   const productsl = useSelector(state=>state.products);
-
+ const cookies=new Cookies();
+  const typeUser=cookies.get('typeUser')
   const userlog=useSelector(state=>state.user)
   const us=userlog.user
   
@@ -42,7 +44,7 @@ function App() {
     <Route path='/' render={()=> <NavBar islog={us? us : undefined}/>} />
     <Route exact path='/' render={Home}/>
     <Route exact path='/order' component={Order}/>
-    <Route exact path='/admin' component={us && us.typeUser==='Admin' ?DashboardAdmin : Catalogue}/>
+    <Route exact path='/admin' component={typeUser && typeUser==='Admin' ?DashboardAdmin : Catalogue}/>
     <Route exact path='/cart' render={()=><Cart islog={us? us : undefined}/>}/>
     <Route exact path={['/products','/products/category/:id']} component={Catalogue} />
     <Route exact path='/products/:id' component={Product} onEnter={userlog}/>

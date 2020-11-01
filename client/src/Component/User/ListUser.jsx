@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { listUser, deleteUser } from '../../actions/users'
-import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { Container, Button, Col, Table, Row, InputGroup } from 'react-bootstrap';
 import { FiEdit } from "react-icons/fi";
@@ -13,8 +12,7 @@ import Swal from 'sweetalert2';
 
 
 export default function ListUser() {
-    const [show, setShow] = useState(false)
-    const [userSeleccionada, setuserSeleccionada] = useState('')
+  
     const [click, setclick] = useState({
         clicked: ''
     })
