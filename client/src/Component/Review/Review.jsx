@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card,Container} from 'react-bootstrap';
+import {Card} from 'react-bootstrap';
 import {AiFillStar} from "react-icons/ai"
 import style from './Review.module.css';
 
@@ -20,6 +20,10 @@ export default function Review({Review}){
             break;
         case 5:
             subtitle='Excelente';
+            break;
+
+        default:
+            subtitle='Malo';
             break;
 
     }
