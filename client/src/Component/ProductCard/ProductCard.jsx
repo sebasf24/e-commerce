@@ -21,7 +21,7 @@ export default function ProductCard({userlog,Product}) {
     const cantidad =1
     const [heart,setHeart]=useState(<AiOutlineHeart className={styles.heart}/>)
     const [valueHeart,setvalueHeart]=useState(false)
-    const [newfav, setNewfav]=useState('')
+
     const favoritos=()=>{
         axios.get(`http://localhost:3000/user/${idUser}/favorite`)
         .then((favorites)=>{
@@ -53,8 +53,6 @@ export default function ProductCard({userlog,Product}) {
 
     const dispatch=useDispatch()
   
-    
-
 
     const deleteFavorite=async(idUser, productId)=>{
         return await  axios.delete(`http://localhost:3000/user/${idUser}/favorite/${productId}`)
