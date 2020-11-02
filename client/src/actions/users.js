@@ -4,6 +4,7 @@ export const ADD_USER='ADD_USER';
 export const LIST_USERS='LIST_USERS';
 export const DELETE_USER='DELETE_USER';
 export const EDIT_USER= 'EDIT_USER';
+export const ORDER_USER='ORDER_USER';
 
 
 export function listUser(){
@@ -14,6 +15,19 @@ export function listUser(){
             dispatch({
                 type: LIST_USERS,
                 users:user
+            })
+        })
+    }
+}
+
+export function listOrder(idUser){
+    return function(dispatch){
+        return axios.get(`http://localhost:3000/user/${idUser}/orders`,
+        {withCredentials: true})
+        .then(ord=>{
+            dispatch({
+                type: ORDER_USER,
+                orders:ord
             })
         })
     }

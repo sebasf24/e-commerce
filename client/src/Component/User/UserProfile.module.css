@@ -83,11 +83,11 @@
         margin-bottom: 15px;
         position: relative;
         width:auto;
-       
         height: 300px;
         box-shadow: 0 2px 0 rgba(90,97,105,.11), 0 4px 8px rgba(90,97,105,.12), 0 10px 10px rgba(90,97,105,.06), 0 7px 70px rgba(90,97,105,.1);
 
 }
+
 .comprasBotones{
         background-color: #3e52a1;
         background-image: -webkit-linear-gradient(#3e52a1,#2d3277);
