@@ -44,7 +44,7 @@ export default function About() {
               Provincia (no me acuerdo perdon)<br />
               algun dato interesante
               </Card.Text>
-            <a href="https://www.linkedin.com/feed/" target="_blank">
+            <a href="https://www.linkedin.com/in/sebasti%C3%A1n-ferreyra-2276b31b0/" target="_blank">
               <Button variant="primary">Contactar</Button>
             </a>
           </Card.Body>

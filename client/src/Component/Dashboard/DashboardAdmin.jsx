@@ -28,7 +28,7 @@ export default function DashboardAdmin(){
            <ListUser />
         </Tab>
         <Tab eventKey="orders" title="Orders">
-          {/* <OdersAdmin /> */}
+          <OdersAdmin />
         </Tab>
       </Tabs>
 
