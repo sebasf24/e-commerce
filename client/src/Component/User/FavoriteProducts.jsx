@@ -40,7 +40,7 @@ export default function FavoriteProducts() {
 
     const favoritos=()=>{
         let newfav="";
-        axios.get(`http://localhost:3000/user/${idUser}/favorite/`)
+        axios.get(`http://localhost:3000/user/${idUser}/favorite`)
         .then((favorites)=>{
             
             // console.log(favorites.data)
@@ -71,8 +71,7 @@ export default function FavoriteProducts() {
     useEffect(()=>{
         favoritos()
     },[])
-    console.log(newfav)
-
+    
     return (
 
         <>

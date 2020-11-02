@@ -21,21 +21,38 @@ export default function ProductCard({userlog,Product}) {
     const cantidad =1
     const [heart,setHeart]=useState(<AiOutlineHeart className={styles.heart}/>)
     const [valueHeart,setvalueHeart]=useState(false)
-   
+
+    const favoritos=()=>{
+        axios.get(`http://localhost:3000/user/${idUser}/favorite`)
+        .then((favorites)=>{
+           return (favorites.data);  
+        })
+        .then(fav=>{
+            console.log(fav)
+            const element=fav.find((element)=>element.id===productId)
+            console.log(element)
+            if(element){
+                setHeart(<AiFillHeart className={styles.heart}/>);
+                setvalueHeart(true)
+
+            }else{
+                setHeart(<AiOutlineHeart className={styles.heart}/>)
+                setvalueHeart(false)
+
+            }
+            
+        })
+     
+    }
+ 
+   useEffect(()=>{
+       favoritos();
+     
+},[])
+
 
     const dispatch=useDispatch()
-     useEffect(() => {
-        if(Product.like===true){
-            setHeart(<AiFillHeart className={styles.heart}/>);
-            setvalueHeart(true)
-
-        }else{
-            setHeart(<AiOutlineHeart className={styles.heart}/>)
-            setvalueHeart(false)
-        }
-       
-    },[]) 
-
+  
 
     const deleteFavorite=async(idUser, productId)=>{
         return await  axios.delete(`http://localhost:3000/user/${idUser}/favorite/${productId}`)

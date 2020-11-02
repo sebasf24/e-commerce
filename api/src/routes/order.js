@@ -1,5 +1,5 @@
 const server = require('express').Router();
-const {Order, User, Order_line}=require('../db');
+const {Order, User,Order_line}=require('../db');
 const nodemailer = require('nodemailer');
 
 
@@ -46,6 +46,7 @@ server.get('/:id',(req,res)=>{
     Order_line.findAll({
         where:{orderId: orderId}
     }).then((resp)=>{
+        console.log(resp)
         res.send(resp)
     })
 

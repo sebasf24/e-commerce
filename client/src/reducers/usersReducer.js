@@ -2,12 +2,14 @@ import {
     ADD_USER,
     LIST_USERS, 
     EDIT_USER, 
-    DELETE_USER
+    DELETE_USER,
+    ORDER_USER
 } from '../actions/users';
 
 
 const initialState = {
-users: []
+users: [],
+orders:[]
 }
 export default (state = initialState, actions) => {
 switch (actions.type) {
@@ -17,6 +19,11 @@ switch (actions.type) {
             ...state,
             users: actions.users.data
         }
+    case ORDER_USER:
+        return {
+                ...state,
+                orders: actions.orders.data
+            }
     case ADD_USER:
             console.log(actions)
             return {
