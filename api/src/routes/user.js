@@ -371,12 +371,15 @@ server.post('/:idUser/passwordReset', (req, res) => {
         })
             .then(user => {
 
-                var transporter = nodemailer.createTransport({
+                let transporter = nodemailer.createTransport({
                     service: 'Gmail',
                     auth: {
                         user: 'ecomerceft1@gmail.com',
                         pass: 'ecomerce1547'
-                    }
+                    },
+                    tls: {
+                        rejectUnauthorized: false
+                    },
                 });
 
 
@@ -384,7 +387,7 @@ server.post('/:idUser/passwordReset', (req, res) => {
                     from: 'TechShop',
                     to: user.email,
                     subject: 'Restauracion de Contraseña',
-                    html: `<img alt=logo src="https://i.postimg.cc/vZsQxVPF/fondotech.jpg" style="width:100% ;max-height:150px"/>
+                    html: `<img alt=logo src="https://i.postimg.cc/HkK8ZKHm/header.jpg" style="width:100% ;max-height:150px"/>
                                     <div style="text-align: justify; font-size: 16px">
                                     <h1>Muchas gracias por elegirnos</h1>
                                     <p>¿Olvidaste tu contraseña?<br/>Hemos recibido una peticion para restaurar tu contraseña. Por favor has click en el boton para reestablecer una contraseña para ti.(Si no fuiste tu o si ya la recordaste ignora este mensaje).</p>
