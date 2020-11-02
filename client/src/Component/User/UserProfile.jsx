@@ -8,6 +8,7 @@ import NavbarUser from './NavBarUser/NavbarUser'
 import Tooggle from './NavBarUser/toogle'
 import EditProfile from './EditProfile'
 import user1 from './user1.jpg'
+import Cookies from 'universal-cookie';
 
 
 export default function UserProfile() {
@@ -15,12 +16,27 @@ export default function UserProfile() {
 
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const usuario = useSelector(store => store.user)
-
+    console.log(usuario.user.id)
+    const cookies=new Cookies();
+    
     const dispatch = useDispatch()
     useEffect(() => {
-        dispatch(isLogged())
-
+        dispatch(isLogged());
+        
     }, [])
+    const obtenerUser = ()=>{
+        setTimeout(() => {
+
+            if (!cookies.get('id')) {
+    
+                cookies.set('id', (usuario.user.id), { path: '/' })
+                cookies.set('username', usuario.user.name, { path: '/' })
+                cookies.set('typeUser', usuario.user.typeUser, { path: '/' })
+            }
+    
+        }, 1000)
+    }
+   
     const openHandler = () => {
         if (!sidebarOpen) {
             setSidebarOpen(true)
@@ -64,7 +80,5 @@ export default function UserProfile() {
                 </Card>
         </Container>
         </>
-
     )
 }
-

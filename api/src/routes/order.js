@@ -46,6 +46,7 @@ server.get('/:id',(req,res)=>{
     Order_line.findAll({
         where:{orderId: orderId}
     }).then((resp)=>{
+        console.log(resp)
         res.send(resp)
     })
 

@@ -156,7 +156,7 @@ server.post('/:idUser/cart', (req, res) => {
 
     //Si existe una orden con el estado carrito la usa y si no la crea
     Order.findOrCreate({
-        where: { userId: idUser },
+        where: { userId: idUser, estado:'carrito' },
         defaults: { estado: estado, userId: idUser },
     })
         .then(respuesta => {
