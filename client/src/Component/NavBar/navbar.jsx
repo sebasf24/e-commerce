@@ -68,9 +68,9 @@ return (
         <div className={styles.user}> 
                 {
            
-           id_user && id_user ?
+          ( (id_user && id_user)||(usuario.id) ) ?
             <>
-            <span className={styles.navSec}>{username}</span>
+            <span className={styles.navSec}>{username ? username : usuario.name }</span>
             <NavDropdown> 
                 <MenuItem onClick={()=>{window.location.href='/me'}} >My Profile</MenuItem>
                 <MenuItem>Your gits</MenuItem>
@@ -83,7 +83,7 @@ return (
             <div></div>
             }
              {
-             id_user && id_user?
+              ( (id_user && id_user)||(usuario.id) )?
              <Link to='/me'><Avatar style={{background:"#3f50b5"}}  /> </Link>:
              <Link to='/login'><Avatar style={{background:"#3f50b5"}}/> </Link>
             }
