@@ -23,7 +23,7 @@ export default function ReviewContainer({ Reviews }) {
     
 
         return (
-            <Container className={style.Container}>
+            
                 <Card className={style.cardRContainer}>
                     <Card.Title>Opiniones sobre el producto</Card.Title>
                     <p className={style.pProm}>
@@ -42,7 +42,7 @@ export default function ReviewContainer({ Reviews }) {
                         })
                     }
                 </Card>
-            </Container>
+            
         )
     } else {
         return (<Container className={style.cardRContainer}>No hay Reviews de este producto</Container>)
