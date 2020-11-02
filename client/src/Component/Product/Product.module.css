@@ -6,6 +6,24 @@
   margin-top: 20px;
 }
 
+.heart:hover{
+  color:#4280ff;
+  font-size: 37px;
+  cursor: pointer;
+  bottom: 0.5px;
+}
+.heartdiv{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.heart{
+  color: #4280ff;
+  font-size: 30px;
+  position: absolute;
+  top: 40px;
+}
+
 .botonlink{
   display: grid;
   place-items: center;

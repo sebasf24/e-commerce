@@ -5,6 +5,9 @@ import { useDispatch, useSelector} from 'react-redux';
 import Cookies from 'universal-cookie';
 import FormReview from '../Review/FormReview.jsx';
 import Reviews from '../Review/ReviewContainer.jsx';
+import { AiOutlineHeart, AiFillHeart} from "react-icons/ai";
+import axios from 'axios';
+
 //ACTIONS
 import {mostrarProducto_id,mostrarReviews} from "../../actions/products.js";
 import {agregarProductoCarrito} from '../../actions/cart.js';
@@ -31,22 +34,72 @@ export default function Product(props) {
     
     //estado local
     const [cantidad, setCantidad] = useState(1)
+    const [heart,setHeart]=useState(<AiOutlineHeart className={styles.heart}/>)
+    const [valueHeart,setvalueHeart]=useState(false)
+
+    //id user de cookies
+    const cookies= new Cookies();
+    const idUserCookie=cookies.get('id')
     
 
 //obtengo id de usuario log
 const userlog=useSelector(state=>state.user)
 const idUser=userlog.user.id
 console.log(idUser)
+//console.log('SELECTED PRODUCT',selectedProduct)
     
     useEffect(()=>{
         
+        if(selectedProduct.like===true){
+            setHeart(<AiFillHeart className={styles.heart}/>);
+            setvalueHeart(true)
+
+        }else{
+            setHeart(<AiOutlineHeart className={styles.heart}/>)
+            setvalueHeart(false)
+        }
         setCantidad(1)
         dispatch(mostrarProducto_id(id))
         dispatch(mostrarReviews(id))
+
     },[])
 
     const actualizarReviews=()=>{
         dispatch(mostrarReviews(id))
+    }
+
+    const deleteFavorite=async(idUser, productId)=>{
+        return await  axios.delete(`http://localhost:3000/user/${idUser}/favorite/${productId}`)
+        .then((resp)=>{
+            // console.log(resp)
+
+        })
+        .catch((err)=>{
+            console.log('error:', err)
+
+        })
+        
+    }
+
+    const handleFav=()=>{
+        
+        if(valueHeart===false && idUserCookie){
+          axios.post(`http://localhost:3000/user/${idUserCookie}/favorite`, {productId:id})
+          .then((fav)=>{
+              // console.log(fav)
+
+          })           
+          setHeart(<AiFillHeart className={styles.heart}/>);
+          setvalueHeart(true)
+        }
+        if(valueHeart===true && idUserCookie){
+         
+          setHeart(<AiOutlineHeart className={styles.heart}/>);
+          setvalueHeart(false)
+          deleteFavorite(idUserCookie, id)
+
+          
+        }
     }
 
     //store carrito  
@@ -122,6 +175,7 @@ const sumarAlCarrito = ()=>{
     return (<div>
         <Container className={styles.container}>
             <Card className={styles.card}>
+            
                     <Link className={styles.botonlink} to={`/products`}>
                         <BiArrowBack/>
                     </Link>
@@ -132,6 +186,10 @@ const sumarAlCarrito = ()=>{
                         </div>
                     </div>
                     <Card.Title className={styles.titulo}>
+                    <div id='fav' className={styles.heartdiv} onClick={handleFav}>
+                { idUserCookie?
+                heart: <></>}
+            </div>
                         {name}
 
                     </Card.Title>
@@ -155,11 +213,12 @@ const sumarAlCarrito = ()=>{
                     </Card.Footer>
                   
             </Card>
-        </Container>
+        
         <p></p>
         <Reviews Reviews={reviewsP}></Reviews>
         <p></p>
         <FormReview id={id} ></FormReview>
+        </Container>
         </div>
     )
 

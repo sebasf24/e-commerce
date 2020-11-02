@@ -1,5 +1,5 @@
 const server = require('express').Router();
-const { User, Order, Order_line, Product, Address, Favorite } = require('../db');
+const { User, Order, Order_line, Product, Address, Favorite,Review } = require('../db');
 const nodemailer = require('nodemailer');
 
 //Ruta que retorne todos los Usuarios
@@ -93,6 +93,50 @@ server.get('/:idUser/orderLines', (req, res) => {
             return res.send(prod)
         })
 })
+
+server.get('/:idUser/productoComprado/:idProduct', (req, res) => {
+    const { idUser,idProduct } = req.params;
+
+    if(!idUser || !idProduct){
+        return res.send(false);
+    }
+    Order.findAll({
+        where:{userId:idUser, estado:'completada'},
+        include: [{
+            model: Order_line,
+            where:{productId:idProduct}
+        }]
+    })
+        .then(prod => {
+            //console.log('PROD: ',);
+            let valor
+            (prod.length<1) ? valor=false: valor=true;
+            
+            
+            
+                if(!valor){
+                   return res.send(false); 
+                }
+    
+                let orderline = prod[0].order_lines[0];
+                //console.log('PROD',orderline.productId)
+            Review.findAll({
+                where:{userId:idUser,productId:orderline.productId}
+            }).then(review=>{
+                console.log('REVIEW:',review);
+                let valorR
+            (review.length<1) ? valorR=false: valorR=true;
+                if(valorR){
+                    return res.send(false);
+                }else{
+                    return res.send(true);
+                }
+            }
+
+            )
+        })
+})
+
 //ruta que devuelve todos los items del carrito
 server.get('/:idUser/cart', (req, res) => {
     const { idUser } = req.params;
@@ -156,7 +200,7 @@ server.post('/:idUser/cart', (req, res) => {
 
     //Si existe una orden con el estado carrito la usa y si no la crea
     Order.findOrCreate({
-        where: { userId: idUser },
+        where: { userId: idUser,estado:'carrito' },
         defaults: { estado: estado, userId: idUser },
     })
         .then(respuesta => {

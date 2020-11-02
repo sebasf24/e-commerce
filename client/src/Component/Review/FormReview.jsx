@@ -1,11 +1,13 @@
-import React,{ useState} from 'react';
-import {Container,Form,Button} from 'react-bootstrap';
+import React,{ useEffect,useState} from 'react';
+import {Form,Button} from 'react-bootstrap';
 import { useDispatch} from 'react-redux';
 import { makeStyles,withStyles } from '@material-ui/core/styles';
 import { Rating } from '@material-ui/lab';
 import style from './FormReview.module.css'
 import Box from '@material-ui/core/Box';
 import {enviarReview} from "../../actions/products.js";
+import Cookies from 'universal-cookie';
+import axios from 'axios';
 
 const labels = {
   1: 'Malo',
@@ -32,9 +34,26 @@ const StyledRating = withStyles({
     },
   })(Rating);  
 
+  //id user de cookies
+  const cookies= new Cookies();
+  const idUserCookie=cookies.get('id')
+
 
 export default function FormReview({id}){
     const dispatch=useDispatch();
+    const [formReview,setformReview] = useState(false);
+
+    useEffect(()=>{
+        
+        if(idUserCookie){
+            axios.get(`http://localhost:3000/user/${idUserCookie}/productoComprado/${id}`)
+        .then(resp=>{
+            console.log('resp',resp.data);
+            setformReview(resp.data);
+        })
+        }
+
+    },[formReview])
 
     const [value, setValue] = React.useState(1);
     const [hover, setHover] = React.useState(-1);
@@ -51,17 +70,17 @@ export default function FormReview({id}){
         const review={
             calificacion:value,
             descripcion:description,
-            userId:1
+            userId:idUserCookie
         }
      
         dispatch(enviarReview(id,review))
         setDescription(" ")
+        setformReview(false)
         setValue(1)
     }
 
     return(
-        <Container className={style.Container}>
-            <Form onSubmit={(e) => handleSubmit(e)}>
+            (idUserCookie && formReview) ? <Form onSubmit={(e) => handleSubmit(e)} className={style.Container}>
                 <Form.Group className={style.starContainer} ><StyledRating className={classes.star}
                     value={value}
                     precision={1}
@@ -85,7 +104,6 @@ export default function FormReview({id}){
                 <Form.Group className={style.reviewbutton}>
                     <Button  type='submit' variant="primary" >Enviar Review</Button>
                 </Form.Group>
-            </Form>
-        </Container>
+            </Form>:<></>
     )
 }
