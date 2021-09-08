@@ -60,7 +60,7 @@ function App() {
     <Route exact path='/administrarAdd' component={typeUser && typeUser==='Admin'? FormAdminAdd: Home}/>
     <Route exact path='/resetPass' component={resetPassword}/>
     <Route exact path='/newPass' component={newPassword}/>
-    <Route exact path='/me' component={idus && idus!==undefined ? UserProfile: LoginUser}/>
+    <Route exact path='/me' component={(idus && idus!==undefined) || (us) ? UserProfile: LoginUser}/>
     <Route exact path='/checkout' component={idus && idus!==undefined ?Checkout:LoginUser}/>
     <Route exact path='/shipping' component={idus && idus!==undefined ?Shipping:LoginUser}/>
     <Route exact path='/payment' component={idus && idus!==undefined ?Payment:LoginUser}/>

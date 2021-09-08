@@ -54,57 +54,104 @@ export function loginUser(username, password){
     var cart=localStorage.getItem('carritoLocal')
 
     return function(dispatch){
-        if(!cart){
-          return  axios({
-                method: "POST",
-                data: {
-                    username,
-                    password
-                },
-                withCredentials: true,
-                url: "http://localhost:3000/auth/login",
-            })
-        .then(res=>{
-            return res.data})
-        .then(response=>{
-            if(response.success){
-                dispatch({
-                    type: LOGIN_USER,
-                    user:response.user
+        if(!username & !password){
+            if(!cart){
+                return  axios({
+                      method: "GET",
+                      url: "http://localhost:3000/auth/success",
+                  })
+              .then(res=>{
+                  return res.data})
+              .then(response=>{
+                  console.log('RESPONSE GOOGLE',response)
+                  if(response.success){
+                      dispatch({
+                          type: LOGIN_USER,
+                          user:response.user
+                      })
+                     crearCookie(response.user)
+                  //  window.location.href='./me'
+                  }
+           
+              })
+             
+              }
+              else{
+                  return  axios({
+                    method: "GET",
+                    url: "http://localhost:3000/auth/success",
                 })
-               crearCookie(response.user)
-            //  window.location.href='./me'
-            }
-     
-        })
-       
-        }
-        else{
-            return  axios({
-                method: "POST",
-                data: {
-                    username,
-                    password
-                },
-                withCredentials: true,
-                url: "http://localhost:3000/auth/login",
-            })
-            .then((res)=>{
-                return res.data
-            })
-            .then(response=>{
-                if(response.success){
-                    dispatch({
-                        type: LOGIN_USER,
-                        user:response.user
-                    })
-                crearCookie(response.user)
-                agregarProdUsuario(response.user.id)
-                localStorage.clear();
-                window.location.href='./me'
-               
-                }
-            })
+                  .then((res)=>{
+                      return res.data
+                  })
+                  .then(response=>{
+                      if(response.success){
+                          dispatch({
+                              type: LOGIN_USER,
+                              user:response.user
+                          })
+                      crearCookie(response.user)
+                      agregarProdUsuario(response.user.id)
+                      localStorage.clear();
+                      window.location.href='./me'
+                     
+                      }
+                  })
+              }
+
+        }else{
+            if(!cart){
+                return  axios({
+                      method: "POST",
+                      data: {
+                          username,
+                          password
+                      },
+                      withCredentials: true,
+                      url: "http://localhost:3000/auth/login",
+                  })
+              .then(res=>{
+                  return res.data})
+              .then(response=>{
+                  if(response.success){
+                      dispatch({
+                          type: LOGIN_USER,
+                          user:response.user
+                      })
+                     crearCookie(response.user)
+                  //  window.location.href='./me'
+                  }
+           
+              })
+             
+              }
+              else{
+                  return  axios({
+                      method: "POST",
+                      data: {
+                          username,
+                          password
+                      },
+                      withCredentials: true,
+                      url: "http://localhost:3000/auth/login",
+                  })
+                  .then((res)=>{
+                      return res.data
+                  })
+                  .then(response=>{
+                      if(response.success){
+                          dispatch({
+                              type: LOGIN_USER,
+                              user:response.user
+                          })
+                      crearCookie(response.user)
+                      agregarProdUsuario(response.user.id)
+                      localStorage.clear();
+                      window.location.href='./me'
+                     
+                      }
+                  })
+              }
         }
  }
 }

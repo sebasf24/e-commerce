@@ -16,17 +16,11 @@ export default function UserProfile() {
 
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const usuario = useSelector(store => store.user)
-    console.log(usuario.user.id)
+    //console.log('usuario',usuario.user.id)
     const cookies=new Cookies();
-    
-    const dispatch = useDispatch()
-    useEffect(() => {
-        dispatch(isLogged());
-        
-    }, [])
     const obtenerUser = ()=>{
-        setTimeout(() => {
-
+        
+        console.log('USUARIO ADENTRO DE OBTENER USER',usuario.user.id)
             if (!cookies.get('id')) {
     
                 cookies.set('id', (usuario.user.id), { path: '/' })
@@ -34,8 +28,15 @@ export default function UserProfile() {
                 cookies.set('typeUser', usuario.user.typeUser, { path: '/' })
             }
     
-        }, 1000)
+        
     }
+    
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(isLogged());
+        
+    }, [])
+    
    
     const openHandler = () => {
         if (!sidebarOpen) {
